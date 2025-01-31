@@ -1,0 +1,54 @@
+.faq{
+    margin-top: 20px;
+}
+.faq .ask-con{
+    display: flex;
+    justify-content: center;
+}
+.faq .ask{
+    color: #fff;
+    font-size: 22px;
+    text-decoration: underline;
+    padding: 10px 40px;
+    background-color: #00a7c4;
+    border-radius: 5px;
+}
+.faq .items{
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 20px;
+}
+.faq .title{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+.faq .title h1{
+    color: #666;
+    text-decoration: underline;
+    border: 1px solid #666;
+    padding: 4px 50px;
+    font-size: 22px;
+    background-color: #99ffff;
+}
+.faq .section{
+    margin-top: 20px;
+}
+.faq .section h1{
+    font-size: 25px;
+    font-weight: bold;
+}
+.faq .section div{
+    margin-top: 5px;
+    border: 1px solid #666;
+    color: #666;
+    padding: 4px;
+    font-size: 14px;
+    background-color: #f2f2f2;
+}
+.faq .section span{
+    color: #8fbddb;
+    font-size: 14px;
+}
+.faq{}
+.faq{}
