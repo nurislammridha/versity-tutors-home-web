@@ -1,4 +1,4 @@
-import { getCartPrice, getSubTotal } from "../../assets/function/globalFunction";
+import { getCartPrice, getSubTotal } from "../../public/function/globalFunction";
 import { showToast } from "../../utils/ToastHelper";
 import * as Types from "./Types";
 import Axios from "axios";

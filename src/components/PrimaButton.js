@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
 import PrimaText from './PrimaText'
-import icn from '../assets/icons/TikTok.png'
+import icn from '../public/icons/TikTok.png'
 import Image from 'next/image'
 function PrimaButton({
     content = "Prima Button",

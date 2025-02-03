@@ -1,8 +1,14 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import "./styles.css";
-import 'font-awesome/css/font-awesome.css'
+import '../../public/scss/main.scss';
+// import 'bootstrap/dist/css/bootstrap.min.css';
+// import '../../public/css/feather.css'
+// import '../../public/css/select2.min.css'
+// import '../../public/css/splide.min.css'
+// import '../../public/css/main.css'
 
+// import 'font-awesome/css/font-awesome.css'
+import Script from 'next/script';
 
 
 // import "../services/axios";
@@ -25,11 +31,38 @@ export const metadata = {
 // console.log('12222222222', 12222222222)
 export default function RootLayout({ children }) {
   return (<Providers>
-    <html lang="en">
+    <html class="no-js" lang="zxx">
+      <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <title>BootStrap HTML5 CSS3 Theme</title>
+        <meta name="description" content="" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+        <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+        <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/feather.css" />
+        <link rel="stylesheet" href="css/fontawesome/fontawesome.css" />
+        <link rel="stylesheet" href="css/select2.min.css" />
+        <link rel="stylesheet" href="css/splide.min.css" />
+        <link rel="stylesheet" href="css/main.css" />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
 
         {children}
-
+        {/* <Script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          strategy="afterInteractive"
+        /> */}
+        {/* <Script src="/js/vendor/jquery.min.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/popper-core.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/appear.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/countTo.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/splide.min.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/select2.min.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/tippy.js" strategy="afterInteractive" />
+        <Script src="/js/vendor/typed.min.js" strategy="afterInteractive" />
+        <Script src="/js/main.js" strategy="afterInteractive" /> */}
 
       </body>
     </html>
