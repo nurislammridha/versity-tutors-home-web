@@ -35,7 +35,7 @@ export const sendEmailOtp = (data) => (dispatch) => {
     mailOrPhone.substring(0, 2) === "01" ? buyerPhone = mailOrPhone : buyerEmail = mailOrPhone
     const postData = { firstName, lastName, password, email: buyerEmail, phone: buyerPhone, isTutorAccount }
     localStorage.setItem("signUpData", JSON.stringify(postData))
-    const url = `${process.env.NEXT_PUBLIC_API_URL}buyer/send-email-otp`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/send-email-otp`;
     dispatch({ type: Types.IS_EMAIL_OTP_LOADING, payload: true })
     try {
         Axios.post(url, { email: buyerEmail }).then((res) => {
@@ -59,7 +59,7 @@ export const SignUpSubmit = (data, otp) => (dispatch) => {
         return 0
     }
     const postData = { ...data, otp }
-    const url = `${process.env.NEXT_PUBLIC_API_URL}buyer`;
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client`;
     dispatch({ type: Types.IS_SIGNUP_LOADING, payload: true })
     try {
         Axios.post(url, postData).then((res) => {
@@ -85,7 +85,7 @@ export const SignUpSubmit = (data, otp) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
-export const LoginSubmit = (data, createPassword) => (dispatch) => {
+export const LoginSubmit = (data) => (dispatch) => {
     const { mailOrPhone, password } = data
     // console.log('data', data)
     if (mailOrPhone.length === 0) {
@@ -98,12 +98,11 @@ export const LoginSubmit = (data, createPassword) => (dispatch) => {
         showToast("error", "Password length should be at least 6 character!")
         return 0
     }
-    let buyerEmail = ""
-    let buyerPhone = ""
-    mailOrPhone.substring(0, 2) === "01" ? buyerPhone = mailOrPhone : buyerEmail = mailOrPhone
-    const postData = { password, buyerEmail, buyerPhone, createPassword }
-
-    const url = `${process.env.NEXT_PUBLIC_API_URL}buyer/login`;
+    let email = ""
+    let phone = ""
+    mailOrPhone.substring(0, 2) === "01" ? phone = mailOrPhone : email = mailOrPhone
+    const postData = { password, email, phone }
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/login`;
     dispatch({ type: Types.IS_LOGIN_LOADING, payload: true })
     try {
         Axios.post(url, postData).then((res) => {
@@ -112,10 +111,10 @@ export const LoginSubmit = (data, createPassword) => (dispatch) => {
                 dispatch({ type: Types.IS_LOGIN_LOADING, payload: false });
                 showToast("success", res.data.message);
                 if (res.data.isLogin) {
+                    // console.log('123rrr', "123rrr")
                     localStorage.setItem("isLogin", true)
                     localStorage.setItem("clientData", JSON.stringify(res.data.result))
                     localStorage.setItem("access_token", res.data.token)
-                    dispatch(GetCartListByBuyer(res.data.result._id))
                     dispatch({ type: Types.IS_LOGIN_COMPLETE, payload: true });
                 } else {
                     localStorage.setItem("isLogin", false)
@@ -198,7 +197,7 @@ export const SetPasswordSubmit = (resetInfo, otp) => (dispatch) => {
 };
 export const CreatePasswordSubmit = (data) => (dispatch) => {
     const { password, cPassword } = data
-    console.log('data', data)
+    // console.log('data', data)
     if (password.length === 0) {
         showToast("error", "Password should n't be empty!")
         return 0;
@@ -215,12 +214,12 @@ export const CreatePasswordSubmit = (data) => (dispatch) => {
         showToast("error", "Password and confirm password not matche!")
         return 0;
     }
-    const buyerEmail = localStorage.getItem('email')
+    const email = localStorage.getItem('email')
     localStorage.setItem("resetInfo", JSON.stringify({ password, email }))
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/forget-password-otp`;
     dispatch({ type: Types.IS_CREATE_PASSWORD_LOADING, payload: true })
     try {
-        Axios.post(url, { buyerEmail }).then((res) => {
+        Axios.post(url, { email }).then((res) => {
             if (res.data.status) {
                 // console.log('res', res)
                 dispatch({ type: Types.IS_CREATE_PASSWORD_LOADING, payload: false });

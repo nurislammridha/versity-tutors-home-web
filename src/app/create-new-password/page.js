@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { CreatePasswordSubmit, GetSignUpInput, sendEmailOtp } from '@/redux/_redux/CommonAction';
+import { CreatePasswordSubmit, FalseIsLoginComplete, GetSignUpInput, sendEmailOtp } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -29,7 +29,7 @@ const page = () => {
             dispatch(FalseIsLoginComplete())
         }
     }, [isPasswordCreated])
-
+    // console.log('isPasswordCreated', isPasswordCreated)
     return (
         <>
             <main>
@@ -70,6 +70,8 @@ const page = () => {
                                                     <em>*</em>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div className="form-group">
                                             <div className="tu-placeholderholder">
                                                 <input
                                                     type="password"

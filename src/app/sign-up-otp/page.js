@@ -1,10 +1,11 @@
 "use client"
 import PrimaButton from '@/components/PrimaButton'
 import PrimaText from '@/components/PrimaText'
-import { sendEmailOtp, SignUpSubmit } from '@/redux/_redux/CommonAction'
+import { FalseIsLoginComplete, sendEmailOtp, SignUpSubmit } from '@/redux/_redux/CommonAction'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { ToastContainer } from 'react-toastify'
 
 const page = () => {
     const dispatch = useDispatch()
@@ -151,6 +152,7 @@ const page = () => {
                     </div>
                 </div>
             </main>
+            <ToastContainer />
         </>
     )
 }

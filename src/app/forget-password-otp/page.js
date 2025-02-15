@@ -66,6 +66,7 @@ const page = () => {
             dispatch(FalseIsLoginComplete())
         }
     }, [isPasswordCreated])
+    console.log('resetInfo', resetInfo)
     return (
         <>
             <main>
@@ -85,7 +86,7 @@ const page = () => {
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
                             <h2>Welcome!</h2>
-                            <h3>Otp was send to {signUpInput.email}</h3>
+                            <h3>Otp was send to {resetInfo.email}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>

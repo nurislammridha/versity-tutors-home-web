@@ -21,6 +21,7 @@ const initialState = {
   isSetPasswordLoading: false,
   isSetPasswordComplete: false,
   isCreatePasswordLoading: false,
+  isPasswordCreated: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -87,6 +88,11 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isCreatePasswordLoading: action.payload,
+      };
+    case Types.PASSWORD_CREATED:
+      return {
+        ...state,
+        isPasswordCreated: action.payload,
       };
     default:
       break;

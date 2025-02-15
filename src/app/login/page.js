@@ -1,6 +1,6 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { GetSignUpInput, sendEmailOtp } from '@/redux/_redux/CommonAction';
+import { FalseIsLoginComplete, GetSignUpInput, LoginSubmit, sendEmailOtp } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
@@ -14,13 +14,11 @@ const page = () => {
     const loginInput = useSelector((state) => state.homeInfo.signUpInput);
     const isLoginLoading = useSelector((state) => state.homeInfo.isLoginLoading);
     const isLoginComplete = useSelector((state) => state.homeInfo.isLoginComplete);
-    const userInfo = useSelector((state) => state.homeInfo.userInfo);
-    const [createPassword, setCreatePassword] = useState(false)
     const handleChange = (name, value) => {
         dispatch(GetSignUpInput(name, value))
     }
     const handleSubmit = () => {
-        dispatch(LoginSubmit(loginInput, createPassword))
+        dispatch(LoginSubmit(loginInput))
     }
     const googleLogin = async () => {
         setGoogle(true)
@@ -39,35 +37,19 @@ const page = () => {
 
     useEffect(() => {
         if (isLoginComplete) {
-            const reDetails = localStorage.getItem("redirect_details") || ""
-            const reUrl = localStorage.getItem("redirect_url") || ""
             setGoogle(false)
-            setFacebook(false)
-            reDetails.length > 0 ? reUrl === "shop" ? router.push(`/shop/${reDetails}`) : router.push(`/details/${reDetails}`) : router.push('/')
-            localStorage.setItem("redirect_details", "")
+            router.push('/')
             dispatch(FalseIsLoginComplete())
         }
     }, [isLoginComplete])
+    // console.log('isLoginComplete', isLoginComplete)
+    // useEffect(() => {
+    //     let phone = loginInput.mailOrPhone
+    //     if (phone.substring(0, 2) == "01" && phone.length == 11) {
+    //         dispatch(PhoneSubmit(phone))
+    //     }
+    // }, [loginInput.mailOrPhone])
 
-    useEffect(() => {
-        let phone = loginInput.mailOrPhone
-        if (phone.substring(0, 2) == "01" && phone.length == 11) {
-            dispatch(PhoneSubmit(phone))
-        }
-    }, [loginInput.mailOrPhone])
-    const decision = () => {
-        let createPassword = false
-        if (userInfo && userInfo?.isPresent) {
-
-            if (userInfo?.result?.isPassword === false) {
-                createPassword = true
-            }
-        }
-        return createPassword
-    }
-    useEffect(() => {
-        setCreatePassword(decision())
-    }, [userInfo])
     return (
         <>
             <main>
@@ -150,14 +132,14 @@ const page = () => {
                                         <div className="tu-lost-password form-group">
                                             <a
                                                 href
-                                                onClick={() => router.push("/login")}
+                                                onClick={() => router.push("/sign-up")}
                                             >
                                                 Joi us today
                                             </a>
                                             <a
                                                 // href="lost-password.html"
                                                 className="tu-password-clr_light"
-                                                onClick={() => router.push('/forgot-password-otp')}
+                                                onClick={() => router.push('/email')}
                                             >
                                                 Lost password?
                                             </a>
