@@ -13,7 +13,14 @@ const initialState = {
   isEmailOtpLoading: false,
   isEmailOtpComplete: false,
   isSignUpLoading: false,
-  isSignUpComplete
+  isSignUpComplete: false,
+  isLoginComplete: false,
+  isLoginLoading: false,
+  isCheckBuyerLoading: false,
+  isCheckBuyerCompleted: false,
+  isSetPasswordLoading: false,
+  isSetPasswordComplete: false,
+  isCreatePasswordLoading: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -45,6 +52,41 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isSignUpComplete: action.payload,
+      };
+    case Types.IS_LOGIN_COMPLETE:
+      return {
+        ...state,
+        isLoginComplete: action.payload,
+      };
+    case Types.IS_LOGIN_LOADING:
+      return {
+        ...state,
+        isLoginLoading: action.payload,
+      };
+    case Types.IS_CHECK_BUYER_LOADING:
+      return {
+        ...state,
+        isCheckBuyerLoading: action.payload,
+      };
+    case Types.CHECK_BUYER_COMPLETED:
+      return {
+        ...state,
+        isCheckBuyerCompleted: action.payload,
+      };
+    case Types.IS_SET_PASSWORD_LOADING:
+      return {
+        ...state,
+        isSetPasswordLoading: action.payload,
+      };
+    case Types.SET_PASSWORD_COMPLETE:
+      return {
+        ...state,
+        isSetPasswordComplete: action.payload,
+      };
+    case Types.IS_CREATE_PASSWORD_LOADING:
+      return {
+        ...state,
+        isCreatePasswordLoading: action.payload,
       };
     default:
       break;
