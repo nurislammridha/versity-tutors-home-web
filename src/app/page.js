@@ -429,7 +429,7 @@ export default function Home({ navigation }) {
           <div id="tu-featurelist" className="splide tu-featurelist  tu-splidedots ">
             <div className="splide__track">
               <ul className="splide__list">
-                {[1, 2, 3, 4, 5, 6].map((item) => (
+                {[1, 2, 3, 4, 5, 6].map((item, index) => (
                   <li className="splide__slide" key={item}>
                     <div className="tu-featureitem">
                       <figure>
@@ -503,7 +503,7 @@ export default function Home({ navigation }) {
               <div className="splide__track">
                 <ul className="splide__list">
                   {[1, 2, 3, 4, 5].map((item, index) => (
-                    <li className="splide__slide">
+                    <li className="splide__slide" key={index}>
                       <div className="tu-sucesstor">
                         <div className="tu-sucesstor_Image">
                           <figure>

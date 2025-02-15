@@ -1,11 +1,12 @@
 import localFont from "next/font/local";
 import "./globals.css";
-import '../../public/scss/main.scss';
 // import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../../public/css/feather.css'
-// import '../../public/css/select2.min.css'
-// import '../../public/css/splide.min.css'
-// import '../../public/css/main.css'
+import '../../public/css/bootstrap.min.css'
+import '../../public/css/feather.css'
+import '../../public/css/fontawesome/fontawesome.css'
+import '../../public/css/select2.min.css'
+import '../../public/css/splide.min.css'
+import '../../public/css/main.css'
 
 // import 'font-awesome/css/font-awesome.css'
 import Script from 'next/script';
@@ -40,16 +41,17 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="icon" href="images/favicon.png" type="image/x-icon" />
-        <link rel="stylesheet" href="css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/feather.css" />
-        <link rel="stylesheet" href="css/fontawesome/fontawesome.css" />
-        <link rel="stylesheet" href="css/select2.min.css" />
-        <link rel="stylesheet" href="css/splide.min.css" />
-        <link rel="stylesheet" href="css/main.css" />
+        {/* <link rel="stylesheet" href="css/bootstrap.min.css" /> */}
+        {/* <link rel="stylesheet" href="css/feather.css" /> */}
+        {/* <link rel="stylesheet" href="css/fontawesome/fontawesome.css" /> */}
+        {/* <link rel="stylesheet" href="css/select2.min.css" /> */}
+        {/* <link rel="stylesheet" href="css/splide.min.css" /> */}
+        {/* <link rel="stylesheet" href="css/main.css" /> */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
 
         {children}
+
         {/* <Script
           src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
           strategy="afterInteractive"
