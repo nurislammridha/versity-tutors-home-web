@@ -1,7 +1,9 @@
 import localFont from "next/font/local";
 import "./globals.css";
 // import 'bootstrap/dist/css/bootstrap.min.css';
-import '../../public/css/bootstrap.min.css'
+// import '../../public/css/bootstrap.min.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import '../../public/css/feather.css'
 import '../../public/css/fontawesome/fontawesome.css'
 import '../../public/css/select2.min.css'
@@ -14,6 +16,7 @@ import Script from 'next/script';
 
 // import "../services/axios";
 import { Providers } from "./Providers";
+import BootstrapClient from "../../public/BootstrapClient";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -49,7 +52,7 @@ export default function RootLayout({ children }) {
         {/* <link rel="stylesheet" href="css/main.css" /> */}
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-
+        <BootstrapClient /> {/* Load Bootstrap JS on the client */}
         {children}
 
         {/* <Script
