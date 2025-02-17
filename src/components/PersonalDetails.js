@@ -1,6 +1,43 @@
-import React from 'react'
+import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const PersonalDetails = () => {
+    const dispatch = useDispatch()
+    const [clientData, setClientData] = useState("")
+    const personal = useSelector((state) => state.homeInfo.personal);
+    const divisionList = useSelector((state) => state.homeInfo.divisionList);
+    const districtList = useSelector((state) => state.homeInfo.districtList);
+    const subDistrictList = useSelector((state) => state.homeInfo.subDistrictList);
+    const areaList = useSelector((state) => state.homeInfo.areaList);
+    const isPersonalLoading = useSelector((state) => state.homeInfo.isPersonalLoading);
+    const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
+        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = personal
+    const handleInput = (name, value) => {
+        dispatch(GetPersonalInput(name, value))
+    }
+    const handleSubmit = () => {
+        dispatch(PersonalSubmit(personal, clientData._id))
+    }
+    useEffect(() => {
+        setClientData(JSON.parse(localStorage.getItem("clientData")))
+        // dispatch(GetClientById());
+        dispatch(GetDivisionList());
+    }, []);
+    useEffect(() => {
+        dispatch(SetPersonalData(clientData));
+    }, [clientData]);
+
+    useEffect(() => {
+        divisionId?.length > 0 && dispatch(DistrictByDivisionId(divisionId));
+    }, [divisionId]);
+    useEffect(() => {
+        districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
+    }, [districtId]);
+    useEffect(() => {
+        subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
+    }, [subDistrictId]);
+    console.log('personal', personal)
     return (
         <>
             <div className="col-lg-8 col-xl-9">
@@ -20,7 +57,14 @@ const PersonalDetails = () => {
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">First name</label>
                                                     <div className="tu-placeholderholder">
-                                                        <input type="text" className="form-control" required="" placeholder="Your first name" />
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your first name"
+                                                            value={firstName}
+                                                            onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        />
                                                         <div className="tu-placeholder">
                                                             <span>Your first name</span>
                                                             <em>*</em>
@@ -30,7 +74,14 @@ const PersonalDetails = () => {
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">Last name</label>
                                                     <div className="tu-placeholderholder">
-                                                        <input type="text" className="form-control" required="" placeholder="Your last name" />
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your last name"
+                                                            value={lastName}
+                                                            onChange={(e) => handleInput("lastName", e.target.value)}
+                                                        />
                                                         <div className="tu-placeholder">
                                                             <span>Your last name</span>
                                                             <em>*</em>
@@ -40,7 +91,14 @@ const PersonalDetails = () => {
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">Your tagline</label>
                                                     <div className="tu-placeholderholder">
-                                                        <input type="text" className="form-control" required="" placeholder="Add your tagline" />
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Add your tagline"
+                                                            value={tagline}
+                                                            onChange={(e) => handleInput("tagline", e.target.value)}
+                                                        />
                                                         <div className="tu-placeholder">
                                                             <span>Add your tagline</span>
                                                         </div>
@@ -49,7 +107,14 @@ const PersonalDetails = () => {
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">Hourly fee</label>
                                                     <div className="tu-placeholderholder">
-                                                        <input type="number" className="form-control" required="" placeholder="Your hourly fee" />
+                                                        <input
+                                                            type="number"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your hourly fee"
+                                                            value={hourlyFee}
+                                                            onChange={(e) => handleInput("hourlyFee", e.target.value)}
+                                                        />
                                                         <div className="tu-placeholder">
                                                             <span>Your hourly fee</span>
                                                             <em>*</em>
@@ -57,86 +122,123 @@ const PersonalDetails = () => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Country</label>
+                                                    <label className="tu-label">Division</label>
                                                     <div className="tu-select">
-                                                        <select id="selectv8" data-placeholder="Select Country from list" data-placeholderinput="Select Country from list" className="form-control" required>
-                                                            <option label="Select Country from list"></option>
-                                                            <option value="Belize">Belize</option>
-                                                            <option value="Benin">Benin</option>
-                                                            <option value="Bermuda">Bermuda</option>
-                                                            <option value="Bhutan">Bhutan</option>
-                                                            <option value="Bolivia">Bolivia</option>
-                                                            <option value="Bonaire">Bonaire</option>
-                                                            <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
-                                                            <option value="Botswana">Botswana</option>
-                                                            <option value="Brazil">Brazil</option>
-                                                            <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
-                                                            <option value="Brunei">Brunei</option>
-                                                            <option value="Bulgaria">Bulgaria</option>
-                                                            <option value="Burkina Faso">Burkina Faso</option>
-                                                            <option value="Burundi">Burundi</option>
-                                                            <option value="Cambodia">Cambodia</option>
-                                                            <option value="Cameroon">Cameroon</option>
-                                                            <option value="Canada">Canada</option>
-                                                            <option value="Canary Islands">Canary Islands</option>
-                                                            <option value="Cape Verde">Cape Verde</option>
-                                                            <option value="Cayman Islands">Cayman Islands</option>
-                                                            <option value="Central African Republic">Central African Republic</option>
-                                                            <option value="Chad">Chad</option>
-                                                            <option value="Channel Islands">Channel Islands</option>
-                                                            <option value="Chile">Chile</option>
-                                                            <option value="China">China</option>
-                                                            <option value="Christmas Island">Christmas Island</option>
-                                                            <option value="Cocos Island">Cocos Island</option>
+                                                        <select
+                                                            data-placeholder="Select Division"
+                                                            data-placeholderinput="Select Division"
+                                                            className="form-control"
+                                                            required
+                                                            value={divisionId}
+                                                            onChange={(e) => {
+                                                                handleInput("divisionId", e.target.value)
+                                                                handleInput("divisionInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label="Select Division"></option>
+                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.divisionName}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">City</label>
+                                                    <label className="tu-label">District</label>
                                                     <div className="tu-select">
-                                                        <select id="selectv9" data-placeholder="Select city" data-placeholderinput="Select city" className="form-control" required>
-                                                            <option label="Select City from list"></option>
-                                                            <option value="Belize">Belize</option>
-                                                            <option value="Benin">Benin</option>
-                                                            <option value="Bermuda">Bermuda</option>
-                                                            <option value="Bhutan">Bhutan</option>
-                                                            <option value="Bolivia">Bolivia</option>
-                                                            <option value="Bonaire">Bonaire</option>
-                                                            <option value="Bosnia & Herzegovina">Bosnia & Herzegovina</option>
-                                                            <option value="Botswana">Botswana</option>
-                                                            <option value="Brazil">Brazil</option>
-                                                            <option value="British Indian Ocean Ter">British Indian Ocean Ter</option>
-                                                            <option value="Brunei">Brunei</option>
-                                                            <option value="Bulgaria">Bulgaria</option>
-                                                            <option value="Burkina Faso">Burkina Faso</option>
-                                                            <option value="Burundi">Burundi</option>
-                                                            <option value="Cambodia">Cambodia</option>
-                                                            <option value="Cameroon">Cameroon</option>
-                                                            <option value="Canada">Canada</option>
-                                                            <option value="Canary Islands">Canary Islands</option>
-                                                            <option value="Cape Verde">Cape Verde</option>
-                                                            <option value="Cayman Islands">Cayman Islands</option>
-                                                            <option value="Central African Republic">Central African Republic</option>
-                                                            <option value="Chad">Chad</option>
-                                                            <option value="Channel Islands">Channel Islands</option>
-                                                            <option value="Chile">Chile</option>
-                                                            <option value="China">China</option>
-                                                            <option value="Christmas Island">Christmas Island</option>
-                                                            <option value="Cocos Island">Cocos Island</option>
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={districtId}
+                                                            onChange={(e) => {
+                                                                handleInput("districtId", e.target.value)
+                                                                handleInput("districtInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label="Select District"></option>
+                                                            {districtList?.length > 0 && districtList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.districtName}</option>
+                                                            ))}
                                                         </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">Sub District</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={subDistrictId}
+                                                            onChange={(e) => {
+                                                                handleInput("subDistrictId", e.target.value)
+                                                                handleInput("subDistrictInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label="Select Sub District"></option>
+                                                            {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">Area</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={areaId}
+                                                            onChange={(e) => {
+                                                                handleInput("areaId", e.target.value)
+                                                                handleInput("areaInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label="Select Area"></option>
+                                                            {areaList?.length > 0 && areaList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.areaName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">Details Address</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required
+                                                            placeholder="Enter zipcode"
+                                                            value={address}
+                                                            onChange={(e) => handleInput("address", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>Details Address</span>
+                                                            {/* <em>*</em> */}
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">Zipcode</label>
                                                     <div className="tu-placeholderholder">
-                                                        <input type="number" className="form-control" required placeholder="Enter zipcode" />
+                                                        <input
+                                                            type="number"
+                                                            className="form-control"
+                                                            required placeholder="Enter zipcode"
+                                                            value={zipCode}
+                                                            onChange={(e) => handleInput("zipCode", e.target.value)}
+                                                        />
                                                         <div className="tu-placeholder">
                                                             <span>Enter zipcode</span>
-                                                            <em>*</em>
+                                                            {/* <em>*</em> */}
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div className="form-group">
+                                                {/* <div className="form-group">
                                                     <label className="tu-label">Languages</label>
                                                     <div className="tu-select">
                                                         <select id="selectv5" data-placeholder="Select languages you know" className="form-control" required>
@@ -153,14 +255,20 @@ const PersonalDetails = () => {
                                                         <li><span>Spanish <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
                                                         <li><span>German <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
                                                     </ul>
-                                                </div>
+                                                </div> */}
                                                 <div className="form-group">
                                                     <label className="tu-label">I can teach on</label>
                                                     <ul className="tu-status-filter">
                                                         <li>
                                                             <div className="tu-status-contnent">
                                                                 <div className="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="home" name="expcheck" checked="" />
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="home"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationTutorHome}
+                                                                        onChange={() => handleInput("isTeachingLocationTutorHome", !isTeachingLocationTutorHome)}
+                                                                    />
                                                                     <label for="home">My home</label>
                                                                 </div>
                                                             </div>
@@ -168,7 +276,13 @@ const PersonalDetails = () => {
                                                         <li>
                                                             <div className="tu-status-contnent">
                                                                 <div className="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="home1" name="expcheck" checked="" />
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="home1"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationStudentHome}
+                                                                        onChange={() => handleInput("isTeachingLocationStudentHome", !isTeachingLocationStudentHome)}
+                                                                    />
                                                                     <label for="home1">Student's home</label>
                                                                 </div>
                                                             </div>
@@ -176,7 +290,13 @@ const PersonalDetails = () => {
                                                         <li>
                                                             <div className="tu-status-contnent">
                                                                 <div className="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="online" name="expcheck" />
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="online"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationOnline}
+                                                                        onChange={() => handleInput("isTeachingLocationOnline", !isTeachingLocationOnline)}
+                                                                    />
                                                                     <label for="online">Online</label>
                                                                 </div>
                                                             </div>
@@ -186,14 +306,19 @@ const PersonalDetails = () => {
                                                 <div className="form-group">
                                                     <label className="tu-label">A brief introduction</label>
                                                     <div className="tu-placeholderholder">
-                                                        <textarea className="form-control" placeholder="Enter description"></textarea>
+                                                        <textarea
+                                                            className="form-control"
+                                                            placeholder="Enter description"
+                                                            value={tutorBriefIntroduction}
+                                                            onChange={(e) => tutorBriefIntroduction.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
+                                                        ></textarea>
                                                         <div className="tu-placeholder">
                                                             <span>Enter description</span>
                                                         </div>
                                                     </div>
                                                     <div className="tu-input-counter">
                                                         <span>Characters left:</span>
-                                                        <b>500</b>
+                                                        <b>{500 - tutorBriefIntroduction?.length}</b>
                                                         /
                                                         <em> 500</em>
                                                     </div>
@@ -207,7 +332,13 @@ const PersonalDetails = () => {
                     </div>
                     <div className="tu-btnarea-two">
                         <span>Save & update the latest changes to the live</span>
-                        <a href="profile-setting-b.html" className="tu-primbtn-lg tu-primbtn-orange">Save & update</a>
+                        <a
+                            href
+                            className="tu-primbtn-lg tu-primbtn-orange"
+                            onClick={() => !isPersonalLoading && handleSubmit()}
+                        >
+                            {isPersonalLoading ? "Saving.." : "Save & update"}
+                        </a>
                     </div>
                 </div>
             </div>

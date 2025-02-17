@@ -247,3 +247,132 @@ export const FalseIsLoginComplete = () => (dispatch) => {
     dispatch({ type: Types.PASSWORD_CREATED, payload: false })
     dispatch({ type: Types.CHECK_BUYER_COMPLETED, payload: false })
 }
+export const GetPersonalInput = (name, value) => (dispatch) => {
+    const formValue = { name, value }
+    dispatch({ type: Types.GET_PERSONAL_INPUT, payload: formValue });
+};
+export const GetDivisionList = () => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}division`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.DIVISION_LIST, payload: res.data.result });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const DistrictByDivisionId = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}district/by-division/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                // showToast("success", res.data.message);
+                dispatch({ type: Types.DISTRICT_LIST, payload: res.data.result });
+            } else {
+                showToast("error", "Something went wrong");
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const SubDistrictByDistrictId = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}sub-district/by-district/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                // showToast("success", res.data.message);
+                dispatch({ type: Types.SUBDISTRICT_LIST, payload: res.data.result });
+            } else {
+                showToast("error", "Something went wrong");
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const AreaBySubDistrictId = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}area/by-sub-district/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                // showToast("success", res.data.message);
+                dispatch({ type: Types.AREA_LIST, payload: res.data.result });
+            } else {
+                showToast("error", "Something went wrong");
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetClientById = (id) => (dispatch) => {
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                localStorage.setItem("clientData", JSON.stringify(res.data.result))
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const SetPersonalData = (data) => (dispatch) => {
+    dispatch({ type: Types.SET_PERSONAL_DATA, payload: data });
+}
+export const PersonalSubmit = (data, id) => (dispatch) => {
+    const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, division, districtId, districtInfo, district, subDistrictId, subDistrictInfo, subDistrict, areaId, areaInfo, area, zipCode, tutorBriefIntroduction, languageId,
+        languageInfo, language, isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = data
+    if (firstName.length === 0) {
+        showToast("error", "First name shouldn't be empty")
+        return 0
+    } else if (lastName.length === 0) {
+        showToast("error", "Last name shouldn't be empty")
+        return 0
+    } else if (tagline.length === 0) {
+        showToast("error", "Tag line shouldn't be empty")
+        return 0
+    } else if (hourlyFee.length < 0) {
+        showToast("error", "Hourly fee shouldn't be less than zero")
+        return 0
+    } else if (divisionId.length === 0) {
+        showToast("error", "Please select a division")
+        return 0
+    } else if (districtId.length === 0) {
+        showToast("error", "Please select a district")
+        return 0
+    } else if (subDistrictId.length === 0) {
+        showToast("error", "Please select a sub district")
+        return 0
+    } else if (areaId.length === 0) {
+        showToast("error", "Please select a area")
+        return 0
+    } else if (!isTeachingLocationTutorHome && !isTeachingLocationStudentHome && !isTeachingLocationOnline) {
+        showToast("error", "Please select a which can you teach on")
+        return 0
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    try {
+        Axios.put(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
