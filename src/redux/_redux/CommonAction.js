@@ -376,3 +376,88 @@ export const PersonalSubmit = (data, id) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const ContactSubmit = (data, id) => (dispatch) => {
+    const { phone, email, skype, whatsapp, website } = data
+    if (phone.length === 0) {
+        showToast("error", "Phone number shouldn't be empty")
+        return 0
+    } else if (email.length === 0) {
+        showToast("error", "Email shouldn't be empty")
+        return 0
+    }
+    // else if (skype.length === 0) {
+    //     showToast("error", "Skype shouldn't be empty")
+    //     return 0
+    // } else if (whatsapp.length < 0) {
+    //     showToast("error", "Whatsapp shouldn't be empty")
+    //     return 0
+    // } else if (website.length === 0) {
+    //     showToast("error", "Website shouldn't be empty")
+    //     return 0
+    // }
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    try {
+        Axios.put(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetEducationInput = (name, value) => (dispatch) => {
+    const formValue = { name, value }
+    dispatch({ type: Types.GET_EDUCATION_INPUT, payload: formValue });
+};
+export const AddEducationSubmit = (education, educations, id) => (dispatch) => {
+    const { degree, institute, location, startDate, endDate, description, isOngoing } = education || {}
+    if (degree.length === 0) {
+        showToast("error", "Degree shouldn't be empty")
+        return 0
+    } else if (institute.length === 0) {
+        showToast("error", "Institute shouldn't be empty")
+        return 0
+    } else if (location.length === 0) {
+        showToast("error", "Location shouldn't be empty")
+        return 0
+    } else if (startDate.length === 0) {
+        showToast("error", "Start date shouldn't be empty")
+        return 0
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    educations.push(education)
+    try {
+        Axios.put(url, { education: educations }).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                dispatch({ type: Types.MODIFY_EDUCATIONS, payload: educations });
+                dispatch({ type: Types.IS_EDUCATION_UPDATED, payload: true });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const FalseEducationUpdated = () => (dispatch) => {
+    dispatch({ type: Types.IS_EDUCATION_UPDATED, payload: false });
+}
+export const SetEducationData = (data) => (dispatch) => {
+    dispatch({ type: Types.MODIFY_EDUCATIONS, payload: data.education });
+}

@@ -1,6 +1,49 @@
-import React from 'react'
+"use client"
+import { AddEducationSubmit, FalseEducationUpdated, GetEducationInput, SetEducationData } from '@/redux/_redux/CommonAction';
+import React, { useEffect, useRef, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 
 const Education = () => {
+    const dispatch = useDispatch()
+    const [showModal, setShowModal] = useState(false);
+    const [clientData, setClientData] = useState(null)
+    const modalRef = useRef(null);
+    const [modalInstance, setModalInstance] = useState(null);
+    const education = useSelector((state) => state.homeInfo.education);
+    const educations = useSelector((state) => state.homeInfo.educations);
+    const isPersonalLoading = useSelector((state) => state.homeInfo.isPersonalLoading);
+    const isEducationUpdated = useSelector((state) => state.homeInfo.isEducationUpdated);
+    const { degree, institute, location, startDate, endDate, description, isOngoing } = education || {}
+    const handleChange = (name, value) => {
+        dispatch(GetEducationInput(name, value))
+    }
+    const handleSubmit = () => {
+        dispatch(AddEducationSubmit(education, educations, clientData._id))
+    }
+    useEffect(() => {
+        setClientData(JSON.parse(localStorage.getItem("clientData")))
+        import("bootstrap/dist/js/bootstrap.bundle.min.js").then((bootstrap) => {
+            if (modalRef.current) {
+                const instance = new bootstrap.Modal(modalRef.current);
+                setModalInstance(instance);
+            }
+        });
+    }, []);
+    useEffect(() => {
+        if (modalInstance) {
+            showModal ? modalInstance.show() : modalInstance.hide();
+        }
+    }, [showModal]);
+    useEffect(() => {
+        if (isEducationUpdated) {
+            setShowModal(false)
+            dispatch(FalseEducationUpdated())
+        }
+    }, [isEducationUpdated]);
+    useEffect(() => {
+        clientData !== null && dispatch(SetEducationData(clientData));
+    }, [clientData]);
+    console.log('educations', educations)
     return (
         <>
             <div className="col-lg-8 col-xl-9">
@@ -11,114 +54,63 @@ const Education = () => {
                             <div className="tu-boxsm">
                                 <div className="tu-boxsmtitle">
                                     <h4>Add education</h4>
-                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#popup-1">Add new</a>
+                                    <a href onClick={() => setShowModal(true)}>Add new</a>
                                 </div>
                             </div>
                             <div className="tu-box">
                                 <div className="accordion tu-accordionedu" id="accordionFlushExampleaa">
                                     <div id="tu-edusortable" className="tu-edusortable">
-                                        <div className="tu-accordion-item">
-                                            <div className="tu-expwrapper">
-                                                <div className="tu-accordionedu">
-                                                    <div className="tu-expinfo">
-                                                        <div className="tu-accodion-holder">
-                                                            <h5 className="collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneba" aria-expanded="true" aria-controls="flush-collapseOneba">MBBS, MD, DM rheumatology</h5>
-                                                            <ul className="tu-branchdetail">
-                                                                <li><i className="icon icon-home"></i><span>University of Florida</span></li>
-                                                                <li><i className="icon icon-map-pin"></i><span>San Francisco, TN</span></li>
-                                                                <li><i className="icon icon-calendar"></i><span>June 2018 - Present</span></li>
-                                                            </ul>
+                                        {educations && educations.length > 0 ?
+                                            educations.map((item, index) => (
+                                                <div className="tu-accordion-item" key={index}>
+                                                    <div className="tu-expwrapper">
+                                                        <div className="tu-accordionedu">
+                                                            <div className="tu-expinfo">
+                                                                <div className="tu-accodion-holder">
+                                                                    <h5 className="collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneba" aria-expanded="true" aria-controls="flush-collapseOneba">{item.degree}</h5>
+                                                                    <ul className="tu-branchdetail">
+                                                                        <li><i className="icon icon-home"></i><span>{item.institute}</span></li>
+                                                                        <li><i className="icon icon-map-pin"></i><span>{item.location}</span></li>
+                                                                        <li><i className="icon icon-calendar"></i><span>{item.startDate} - {item.isOngoing ? "Present" : item.endDate}</span></li>
+                                                                    </ul>
+                                                                </div>
+                                                                <div className="tu-icon-holder">
+                                                                    <a href="javascript:void(0)"><i className="icon icon-trash-2 tu-deleteclr"></i></a>
+                                                                    <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#popup-1"><i className="icon icon-edit-3 tu-editclr"></i></a>
+                                                                </div>
+                                                                <i className="icon icon-plus" role="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneba" aria-expanded="true" aria-controls="flush-collapseOneba"></i>
+                                                            </div>
                                                         </div>
-                                                        <div className="tu-icon-holder">
-                                                            <a href="javascript:void(0)"><i className="icon icon-trash-2 tu-deleteclr"></i></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#popup-1"><i className="icon icon-edit-3 tu-editclr"></i></a>
+                                                    </div>
+                                                    <div id="flush-collapseOneba" className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExampleaa">
+                                                        <div className="tu-edubodymain">
+                                                            <div className="tu-accordioneduc">
+                                                                <p>{item.description}</p>
+                                                            </div>
                                                         </div>
-                                                        <i className="icon icon-plus" role="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneba" aria-expanded="true" aria-controls="flush-collapseOneba"></i>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div id="flush-collapseOneba" className="accordion-collapse collapse show" data-bs-parent="#accordionFlushExampleaa">
-                                                <div className="tu-edubodymain">
-                                                    <div className="tu-accordioneduc">
-                                                        <p>Accusamus et iusto odioimie dignissie corrupti quos dolores etolestias excepo officiale deserunt mollitia animi edication estame laborum. Accusamus etae iusto odioignissie corrupti quos dolores.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="tu-accordion-item">
-                                            <div id="flush-headingOneaa" className="tu-expwrapper" >
-                                                <div className="tu-accordionedu">
-                                                    <div className="tu-expinfo">
-                                                        <div className="tu-accodion-holder">
-                                                            <h5 className="collapsed" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneaa" aria-expanded="false" aria-controls="flush-collapseOneaa">MBBS, MS, Mch neurosurgery</h5>
-                                                            <ul className="tu-branchdetail">
-                                                                <li><i className="icon icon-home"></i><span>University of Massachusetts-Amherst</span></li>
-                                                                <li><i className="icon icon-map-pin"></i><span>Kansas City, LA</span></li>
-                                                                <li><i className="icon icon-calendar"></i><span>January 2014 - May 2018</span></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="tu-icon-holder">
-                                                            <a href="javascript:void(0)"><i className="icon icon-trash-2 tu-deleteclr"></i></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#popup-1"><i className="icon icon-edit-3 tu-editclr"></i></a>
-                                                        </div>
-                                                        <i className="icon icon-plus" role="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneaa" aria-expanded="false" aria-controls="flush-collapseOneaa"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="flush-collapseOneaa" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExampleaa">
-                                                <div className="tu-edubodymain">
-                                                    <div className="tu-accordioneduc">
-                                                        <p>Accusamus et iusto odioimie dignissie corrupti quos dolores etolestias excepo officiale deserunt mollitia animi edication estame laborum. Accusamus etae iusto odioignissie corrupti quos dolores.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div className="tu-accordion-item">
-                                            <div className="collapsed tu-expwrapper">
-                                                <div className="tu-accordionedu">
-                                                    <div className="tu-expinfo">
-                                                        <div className="tu-accodion-holder">
-                                                            <h5 data-bs-toggle="collapse" data-bs-target="#flush-collapseOneca" aria-expanded="false" aria-controls="flush-collapseOneca">MBBS, MD pathology</h5>
-                                                            <ul className="tu-branchdetail">
-                                                                <li><i className="icon icon-home"></i><span>Auburn University</span></li>
-                                                                <li><i className="icon icon-map-pin"></i><span>Atlanta, CO</span></li>
-                                                                <li><i className="icon icon-calendar"></i><span>April 2011 - December 2013</span></li>
-                                                            </ul>
-                                                        </div>
-                                                        <div className="tu-icon-holder">
-                                                            <a href="javascript:void(0)"><i className="icon icon-trash-2 tu-deleteclr"></i></a>
-                                                            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#popup-1"><i className="icon icon-edit-3 tu-editclr"></i></a>
-                                                        </div>
-                                                        <i className="icon icon-plus" role="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneca" aria-expanded="false" aria-controls="flush-collapseOneca"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div id="flush-collapseOneca" className="accordion-collapse collapse" data-bs-parent="#accordionFlushExampleaa">
-                                                <div className="tu-edubodymain">
-                                                    <div className="tu-accordioneduc">
-                                                        <p>Accusamus et iusto odioimie dignissie corrupti quos dolores etolestias excepo officiale deserunt mollitia animi edication estame laborum. Accusamus etae iusto odioignissie corrupti quos dolores.</p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                            ))
+                                            : (<div>No educations data found</div>)}
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div className="tu-btnarea-two">
+                    {/* <div className="tu-btnarea-two">
                         <span>Save & update the latest changes to the live</span>
                         <a href="profile-setting-d.html" className="tu-primbtn-lg tu-primbtn-orange">Save & update</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
             {/* <!-- Education Start --> */}
-            <div className="modal fade" id="popup-1" tabindex="-1" aria-hidden="true">
+            <div className="modal fade" ref={modalRef} tabIndex={-1} aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5>Add/edit education</h5>
-                            <a href="javascript:void(0);" className="tu-close" data-bs-dismiss="modal" aria-label="Close"><i className="icon icon-x"></i></a>
+                            <a href className="tu-close" onClick={() => setShowModal(false)}><i className="icon icon-x"></i></a>
                         </div>
                         <div className="modal-body">
                             <form className="tu-themeform">
@@ -127,7 +119,14 @@ const Education = () => {
                                         <div className="form-group">
                                             <label className="tu-label">Degree/course title</label>
                                             <div className="tu-placeholderholder">
-                                                <input type="text" className="form-control tu-input-field" placeholder="Enter title here" required />
+                                                <input
+                                                    type="text"
+                                                    className="form-control tu-input-field"
+                                                    placeholder="Enter title here"
+                                                    required
+                                                    value={degree}
+                                                    onChange={(e) => handleChange("degree", e.target.value)}
+                                                />
                                                 <div className="tu-placeholder">
                                                     <span>Enter title here</span>
                                                     <em>*</em>
@@ -137,7 +136,14 @@ const Education = () => {
                                         <div className="form-group">
                                             <label className="tu-label">University/Institute title</label>
                                             <div className="tu-placeholderholder">
-                                                <input type="text" className="form-control tu-input-field" placeholder="Enter title here" required />
+                                                <input
+                                                    type="text"
+                                                    className="form-control tu-input-field"
+                                                    placeholder="Enter title here"
+                                                    required
+                                                    value={institute}
+                                                    onChange={(e) => handleChange("institute", e.target.value)}
+                                                />
                                                 <div className="tu-placeholder">
                                                     <span>Enter title here</span>
                                                     <em>*</em>
@@ -147,7 +153,13 @@ const Education = () => {
                                         <div className="form-group">
                                             <label className="tu-label">Loaction</label>
                                             <div className="tu-placeholderholder">
-                                                <input type="text" className="form-control tu-input-field" placeholder="Enter location" />
+                                                <input
+                                                    type="text"
+                                                    className="form-control tu-input-field"
+                                                    placeholder="Enter location"
+                                                    value={location}
+                                                    onChange={(e) => handleChange("location", e.target.value)}
+                                                />
                                                 <div className="tu-placeholder">
                                                     <span>Enter location</span>
                                                     <em>*</em>
@@ -160,29 +172,49 @@ const Education = () => {
                                             </div>
                                             <div className="form-group form-group-half">
                                                 <div className="tu-placeholderholder">
-                                                    <div className="tu-calendar">
-                                                        <input type="text" className="tu-datepicker form-control tu-input-field" placeholder="Enter start date" required />
-                                                        <div className="tu-placeholder">
-                                                            <span>Enter start date</span>
-                                                            <em>*</em>
-                                                        </div>
+                                                    {/* <div className="tu-calendar"> */}
+                                                    <input
+                                                        type="date"
+                                                        className="tu-datepicker form-control tu-input-field"
+                                                        placeholder="Enter start date"
+                                                        required
+                                                        value={startDate}
+                                                        onChange={(e) => handleChange("startDate", e.target.value)}
+                                                    />
+                                                    <div className="tu-placeholder">
+                                                        <span>Enter start date</span>
+                                                        <em>*</em>
                                                     </div>
+                                                    {/* </div> */}
                                                 </div>
                                             </div>
                                             <div className="form-group form-group-half">
                                                 <div className="tu-placeholderholder">
-                                                    <div className="tu-calendar">
-                                                        <input type="text" className="tu-datepicker form-control tu-input-field" placeholder="Enter end date" required />
-                                                        <div className="tu-placeholder">
-                                                            <span>Enter end date</span>
-                                                            <em>*</em>
-                                                        </div>
+                                                    {/* <div className="tu-calendar"> */}
+                                                    <input
+                                                        type="date"
+                                                        className="tu-datepicker form-control tu-input-field"
+                                                        placeholder="Enter end date"
+                                                        required
+                                                        value={endDate}
+                                                        onChange={(e) => handleChange("endDate", e.target.value)}
+                                                    />
+                                                    <div className="tu-placeholder">
+                                                        <span>Enter end date</span>
+                                                        <em>*</em>
                                                     </div>
+                                                    {/* </div> */}
                                                 </div>
                                             </div>
                                             <div className="form-group pt-0">
                                                 <div className="tu-check pt-1">
-                                                    <input type="checkbox" id="expcheck2" name="expcheck" />
+                                                    <input
+                                                        type="checkbox"
+                                                        id="expcheck2"
+                                                        name="expcheck"
+                                                        checked={isOngoing}
+                                                        onChange={() => handleChange("isOngoing", !isOngoing)}
+                                                    />
                                                     <label for="expcheck2">This degree/course is currently ongoing</label>
                                                 </div>
                                             </div>
@@ -190,7 +222,13 @@ const Education = () => {
                                         <div className="form-group">
                                             <label className="tu-label">Description</label>
                                             <div className="tu-placeholderholder">
-                                                <textarea className="form-control tu-input-field" placeholder="Enter description" required></textarea>
+                                                <textarea
+                                                    className="form-control tu-input-field"
+                                                    placeholder="Enter description"
+                                                    required
+                                                    value={description}
+                                                    onChange={(e) => description.length < 500 && handleChange("description", e.target.value)}
+                                                ></textarea>
                                                 <div className="tu-placeholder">
                                                     <span>Enter description</span>
                                                     <em>*</em>
@@ -198,13 +236,19 @@ const Education = () => {
                                             </div>
                                             <div className="tu-input-counter">
                                                 <span>Characters left:</span>
-                                                <b>500</b>
+                                                <b>{500 - description?.length}</b>
                                                 /
                                                 <em> 500</em>
                                             </div>
                                         </div>
                                         <div className="form-group tu-formbtn">
-                                            <a href="profile-setting-c.html" className="tu-primbtn-lg">Save & update changes</a>
+                                            <a
+                                                href
+                                                className="tu-primbtn-lg"
+                                                onClick={() => !isPersonalLoading && handleSubmit()}
+                                            >
+                                                {isPersonalLoading ? "Saving.." : "Save & update changes"}
+                                            </a>
                                         </div>
                                     </div>
                                 </fieldset>

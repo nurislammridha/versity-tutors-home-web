@@ -54,6 +54,17 @@ const initialState = {
   subDistrictList: null,
   areaList: null,
   isPersonalLoading: false,
+  isEducationUpdated: false,
+  education: {
+    degree: "",
+    institute: "",
+    location: "",
+    startDate: "",
+    endDate: "",
+    description: "",
+    isOngoing: false
+  },
+  educations: []
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -169,6 +180,25 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         personal: personalSet,
+      };
+    case Types.GET_EDUCATION_INPUT:
+      const { name: eName, value: eValue } = action.payload
+      const education = { ...state.education };
+      education[eName] = eValue;
+      return {
+        ...state,
+        education: education,
+      };
+    case Types.MODIFY_EDUCATIONS:
+      return {
+        ...state,
+        educations: action.payload,
+        education: { ...initialState.education }
+      };
+    case Types.IS_EDUCATION_UPDATED:
+      return {
+        ...state,
+        isEducationUpdated: action.payload
       };
     default:
       break;

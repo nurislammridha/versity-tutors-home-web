@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 const PersonalDetails = () => {
     const dispatch = useDispatch()
-    const [clientData, setClientData] = useState("")
+    const [clientData, setClientData] = useState(null)
     const personal = useSelector((state) => state.homeInfo.personal);
     const divisionList = useSelector((state) => state.homeInfo.divisionList);
     const districtList = useSelector((state) => state.homeInfo.districtList);
@@ -25,7 +25,7 @@ const PersonalDetails = () => {
         dispatch(GetDivisionList());
     }, []);
     useEffect(() => {
-        dispatch(SetPersonalData(clientData));
+        clientData !== null && dispatch(SetPersonalData(clientData));
     }, [clientData]);
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const PersonalDetails = () => {
     useEffect(() => {
         subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
     }, [subDistrictId]);
-    console.log('personal', personal)
+    // console.log('personal', personal)
     return (
         <>
             <div className="col-lg-8 col-xl-9">
