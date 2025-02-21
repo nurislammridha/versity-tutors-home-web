@@ -64,7 +64,16 @@ const initialState = {
     description: "",
     isOngoing: false
   },
-  educations: []
+  educations: [],
+  subject: {
+    categoryId: "",
+    categoryInfo: "",
+    subCategories: []
+  },
+  subjects: [],
+  categoryList: null,
+  subCategoryList: null,
+  isAvatarLoading: false
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -189,16 +198,69 @@ const CommonReducer = (state = initialState, action) => {
         ...state,
         education: education,
       };
+    case Types.GET_SUBJECT_INPUT:
+      const { name: sName, value: sValue } = action.payload
+      const subject = { ...state.subject };
+      if (sName === "subCategories") {
+        if (sValue.length === 0) {
+          subject.subCategories = []
+        } else {
+          subject.subCategories.push({
+            subCategoryId: sValue,
+            subCategoryInfo: sValue,
+          })
+        }
+
+      } else if (sName === "remove") {
+        subject.subCategories = subject.subCategories.filter(item => item.subCategoryId !== sValue)
+      } else {
+        subject[sName] = sValue;
+      }
+      return {
+        ...state,
+        subject: subject,
+      };
     case Types.MODIFY_EDUCATIONS:
       return {
         ...state,
         educations: action.payload,
         education: { ...initialState.education }
       };
+    case Types.MODIFY_SUBJECTS:
+      return {
+        ...state,
+        subjects: action.payload,
+        subject: { ...initialState.subject }
+      };
     case Types.IS_EDUCATION_UPDATED:
       return {
         ...state,
         isEducationUpdated: action.payload
+      };
+    case Types.SET_EDUCATION_UPDATE:
+      return {
+        ...state,
+        education: action.payload
+      };
+    case Types.SET_SUBJECT_UPDATE:
+      return {
+        ...state,
+        subject: action.payload
+      };
+    case Types.CATEGORY_LIST:
+      return {
+        ...state,
+        categoryList: action.payload,
+      };
+    case Types.SUB_CATEGORY_LIST:
+      return {
+        ...state,
+        subCategoryList: action.payload,
+      };
+    case Types.IS_AVATAR_LOADING:
+      return {
+        ...state,
+        isAvatarLoading: action.payload,
       };
     default:
       break;

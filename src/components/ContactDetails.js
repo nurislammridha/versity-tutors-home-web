@@ -2,9 +2,8 @@ import { ContactSubmit } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const ContactDetails = () => {
+const ContactDetails = ({ clientData }) => {
     const dispatch = useDispatch()
-    const [clientData, setClientData] = useState("")
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
     const [skype, setSkype] = useState("")
@@ -14,9 +13,7 @@ const ContactDetails = () => {
     const handleSubmit = () => {
         dispatch(ContactSubmit({ phone, email, skype, whatsapp, website }, clientData._id))
     }
-    useEffect(() => {
-        setClientData(JSON.parse(localStorage.getItem("clientData")))
-    }, []);
+
     useEffect(() => {
         setPhone(clientData?.phone || "")
         setEmail(clientData?.email || "")

@@ -315,6 +315,7 @@ export const GetClientById = (id) => (dispatch) => {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 localStorage.setItem("clientData", JSON.stringify(res.data.result))
+                dispatch({ type: Types.MODIFY_SUBJECTS, payload: res.data.result.subject });
             }
         }).catch((err) => {
             showToast("success", err);
@@ -361,7 +362,7 @@ export const PersonalSubmit = (data, id) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
     try {
-        Axios.put(url, data).then((res) => {
+        Axios.put(url, { ...data, isApproved: false }).then((res) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
                 showToast("success", res.data.message);
@@ -399,7 +400,7 @@ export const ContactSubmit = (data, id) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
     try {
-        Axios.put(url, data).then((res) => {
+        Axios.put(url, { ...data, isApproved: false }).then((res) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
                 showToast("success", res.data.message);
@@ -418,30 +419,91 @@ export const GetEducationInput = (name, value) => (dispatch) => {
     const formValue = { name, value }
     dispatch({ type: Types.GET_EDUCATION_INPUT, payload: formValue });
 };
-export const AddEducationSubmit = (education, educations, id) => (dispatch) => {
+export const GetSubjectInput = (name, value) => (dispatch) => {
+    const formValue = { name, value }
+    dispatch({ type: Types.GET_SUBJECT_INPUT, payload: formValue });
+};
+export const AddEducationSubmit = (education, educations, id, action, actionId = "1") => (dispatch) => {
     const { degree, institute, location, startDate, endDate, description, isOngoing } = education || {}
-    if (degree.length === 0) {
-        showToast("error", "Degree shouldn't be empty")
-        return 0
-    } else if (institute.length === 0) {
-        showToast("error", "Institute shouldn't be empty")
-        return 0
-    } else if (location.length === 0) {
-        showToast("error", "Location shouldn't be empty")
-        return 0
-    } else if (startDate.length === 0) {
-        showToast("error", "Start date shouldn't be empty")
-        return 0
+    if (action !== "delete") {
+        if (degree.length === 0) {
+            showToast("error", "Degree shouldn't be empty")
+            return 0
+        } else if (institute.length === 0) {
+            showToast("error", "Institute shouldn't be empty")
+            return 0
+        } else if (location.length === 0) {
+            showToast("error", "Location shouldn't be empty")
+            return 0
+        } else if (startDate.length === 0) {
+            showToast("error", "Start date shouldn't be empty")
+            return 0
+        }
     }
 
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
-    educations.push(education)
+    let arr = educations
+    if (action === "add") {
+        arr.push(education)
+    } else if (action === "delete") {
+        arr = educations.filter(item => item._id !== actionId);
+    } else if (action === "edit") {
+        arr = educations.map(item =>
+            item._id === actionId ? { ...item, ...education } : item
+        )
+    }
+    // console.log('arr', arr)
+    // return 0
     try {
-        Axios.put(url, { education: educations }).then((res) => {
+        Axios.put(url, { education: arr, isApproved: false }).then((res) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
-                dispatch({ type: Types.MODIFY_EDUCATIONS, payload: educations });
+                dispatch({ type: Types.MODIFY_EDUCATIONS, payload: arr });
+                dispatch({ type: Types.IS_EDUCATION_UPDATED, payload: true });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const AddSubjectSubmit = (subject, subjects, id, action, actionId = "1") => (dispatch) => {
+    const { categoryId, categoryInfo, subCategories } = subject || {}
+    if (action !== "delete") {
+        if (categoryId.length === 0) {
+            showToast("error", "Select a class")
+            return 0
+        } else if (subCategories.length === 0) {
+            showToast("error", "Select a subject")
+            return 0
+        }
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    let arr = subjects
+    if (action === "add") {
+        arr.push(subject)
+    } else if (action === "delete") {
+        arr = subjects.filter(item => item._id !== actionId);
+    } else if (action === "edit") {
+        arr = subjects.map(item =>
+            item._id === actionId ? { ...item, ...subject } : item
+        )
+    }
+    // console.log('arr', arr)
+    // return 0
+    try {
+        Axios.put(url, { subject: arr, isApproved: false }).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                // dispatch({ type: Types.MODIFY_SUBJECTS, payload: arr });
                 dispatch({ type: Types.IS_EDUCATION_UPDATED, payload: true });
                 showToast("success", res.data.message);
                 dispatch(GetClientById(id))
@@ -461,3 +523,84 @@ export const FalseEducationUpdated = () => (dispatch) => {
 export const SetEducationData = (data) => (dispatch) => {
     dispatch({ type: Types.MODIFY_EDUCATIONS, payload: data.education });
 }
+export const SetSubjectData = (data) => (dispatch) => {
+    dispatch({ type: Types.MODIFY_SUBJECTS, payload: data.subject });
+}
+export const SetEducationUpdate = (data) => (dispatch) => {
+    dispatch({ type: Types.SET_EDUCATION_UPDATE, payload: data });
+}
+export const SetSubjectUpdate = (data) => (dispatch) => {
+    dispatch({ type: Types.SET_SUBJECT_UPDATE, payload: data });
+}
+export const GetCategoryList = () => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}category`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.CATEGORY_LIST, payload: res.data.result });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetSubCategoryByCategoryList = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}sub-category/by-category/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.SUB_CATEGORY_LIST, payload: res.data.result });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+const PostImg = (img, id) => (dispatch) => {
+    // console.log('img', img)
+    const data = new FormData();
+    data.append("file", img);
+    data.append("upload_preset", "nurislam");
+    data.append("cloud_name ", "nurislammridha");
+    const url = "https://api.cloudinary.com/v1_1/nurislammridha/image/upload"
+    Axios.post(url, data).then((res) => {
+        // console.log('res.data', res.data)
+        if (res.data) {
+            let avatar = { publicId: res?.data?.public_id, url: res?.data?.url }
+            const url2 = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+            Axios.put(url2, { avatar }).then((res) => {
+                if (res.data.status) {
+                    dispatch({ type: Types.IS_AVATAR_LOADING, payload: false });
+                    showToast("success", res.data.message);
+                    dispatch(GetClientById(id))
+
+                }
+            }).catch((err) => {
+                dispatch({ type: Types.IS_AVATAR_LOADING, payload: false });
+                showToast("success", err);
+            });
+        }
+    }
+    )
+}
+export const UploadAvatarImg = (img, avatar = null, id) => (dispatch) => {
+    if (img.type === "image/jpeg" || img.type === "image/png") {
+        dispatch({ type: Types.IS_AVATAR_LOADING, payload: true });
+        const urlRemove = `${process.env.NEXT_PUBLIC_API_URL}helper/delete-cloudinary`;
+        let publicId = avatar === null ? null : avatar.publicId
+        // console.log('avatar', avatar)
+        if (publicId !== null) {
+            Axios.post(urlRemove, { publicId }).then((res) => {
+                if (res) {
+                    dispatch(PostImg(img, id))
+                }
+            })
+        } else {
+            dispatch(PostImg(img, id))
+        }
+    } else {
+        dispatch({ type: Types.IS_AVATAR_LOADING, payload: false });
+        showToast("error", "Image should be jpg/jpeg/png");
+    }
+
+};

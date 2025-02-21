@@ -5,11 +5,42 @@ import PersonalDetails from '@/components/PersonalDetails'
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
-import React, { useState } from 'react'
+import { UploadAvatarImg } from '@/redux/_redux/CommonAction'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
 const page = () => {
+    const dispatch = useDispatch()
     const [state, setState] = useState("personal")
+    const [clientData, setClientData] = useState(null)
+    const [avatar, setAvatar] = useState(null)
+    const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);
+    const [img, setImg] = useState(null)
+    useEffect(() => {
+        setClientData(JSON.parse(localStorage.getItem("clientData")))
+    }, [])
+    const handleUpload = () => {
+        dispatch(UploadAvatarImg(img, avatar, clientData._id));
+    }
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const publicId = avatar === null ? null : avatar?.publicId
+        if (file) {
+            setImg(file);
+            setAvatar({
+                url: URL.createObjectURL(file),// Create a temporary URL for preview
+                publicId
+            })
+        }
+    };
+    useEffect(() => {
+        if (clientData?.avatar) {
+            setAvatar(clientData?.avatar)
+        }
+    }, [clientData])
+
+    console.log('clientData', clientData)
     return (
         <>
             <PrimaHeader />
@@ -21,9 +52,17 @@ const page = () => {
                                 <aside className="tu-asider-holder">
                                     <div className="tu-asidebox">
                                         <figure>
-                                            <img src="images/profile/img-01.jpg" alt="image-description" />
+                                            <img
+                                                src={avatar ? avatar.url : "images/profile/img-01.jpg"}
+                                                alt="image-description"
+                                            />
                                             <figcaption className="tu-uploadimage">
-                                                <input type="file" id="dropbox" name="dropbox" />
+                                                <input
+                                                    type="file"
+                                                    id="dropbox"
+                                                    name="dropbox"
+                                                    onChange={(e) => handleImageChange(e)}
+                                                />
                                                 <label for="dropbox"><i className="icon icon-camera"></i></label>
                                             </figcaption>
                                         </figure>
@@ -33,7 +72,14 @@ const page = () => {
                                             </h6>
                                             <div className="tu-uploadimgbtn">
                                                 <input type="file" name="file" className="tu-primbtn" id="uploadimg" />
-                                                <label for="uploadimg" className="tu-primbtn">Upload photo</label>
+                                                <label
+                                                    // for="uploadimg"
+                                                    className="tu-primbtn"
+                                                    style={{ cursor: "pointer" }}
+                                                    onClick={() => !isAvatarLoading && handleUpload()}
+                                                >
+                                                    {isAvatarLoading ? "Uploading.'." : "Upload photo"}
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
@@ -61,7 +107,7 @@ const page = () => {
                                             <a
                                                 className={state === "subject" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("subject")}
-                                            ><i className="icon icon-book-open"></i><span>Subjects I can teach</span></a>
+                                            ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? "Subjects I can teach" : "Subjects I need learn"}</span></a>
                                         </li>
                                         {/* <li className="nav-item">
                                             <a href="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
@@ -69,10 +115,10 @@ const page = () => {
                                     </ul>
                                 </aside>
                             </div>
-                            {state === "personal" && <PersonalDetails />}
-                            {state === "contact" && <ContactDetails />}
-                            {state === "education" && <Education />}
-                            {state === "subject" && <SubjectICanTeach />}
+                            {state === "personal" && <PersonalDetails clientData={clientData} />}
+                            {state === "contact" && <ContactDetails clientData={clientData} />}
+                            {state === "education" && <Education clientData={clientData} />}
+                            {state === "subject" && <SubjectICanTeach clientData={clientData} />}
                         </div>
                     </div>
                 </div>

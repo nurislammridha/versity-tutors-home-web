@@ -2,9 +2,8 @@ import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonal
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const PersonalDetails = () => {
+const PersonalDetails = ({ clientData }) => {
     const dispatch = useDispatch()
-    const [clientData, setClientData] = useState(null)
     const personal = useSelector((state) => state.homeInfo.personal);
     const divisionList = useSelector((state) => state.homeInfo.divisionList);
     const districtList = useSelector((state) => state.homeInfo.districtList);
@@ -20,7 +19,6 @@ const PersonalDetails = () => {
         dispatch(PersonalSubmit(personal, clientData._id))
     }
     useEffect(() => {
-        setClientData(JSON.parse(localStorage.getItem("clientData")))
         // dispatch(GetClientById());
         dispatch(GetDivisionList());
     }, []);
