@@ -73,7 +73,9 @@ const initialState = {
   subjects: [],
   categoryList: null,
   subCategoryList: null,
-  isAvatarLoading: false
+  isAvatarLoading: false,
+  isProfilesLoading: false,
+  filteredProfiles: null,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -261,6 +263,16 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isAvatarLoading: action.payload,
+      };
+    case Types.IS_PROFILES_LOADING:
+      return {
+        ...state,
+        isProfilesLoading: action.payload,
+      };
+    case Types.FILTERED_PROFILES:
+      return {
+        ...state,
+        filteredProfiles: action.payload,
       };
     default:
       break;

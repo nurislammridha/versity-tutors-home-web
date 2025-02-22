@@ -604,3 +604,23 @@ export const UploadAvatarImg = (img, avatar = null, id) => (dispatch) => {
     }
 
 };
+
+export const GetProfiles = (data) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/filter`;
+    dispatch({ type: Types.IS_PROFILES_LOADING, payload: true })
+
+    try {
+        Axios.post(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PROFILES_LOADING, payload: false });
+                dispatch({ type: Types.FILTERED_PROFILES, payload: res.data.result });
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PROFILES_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
