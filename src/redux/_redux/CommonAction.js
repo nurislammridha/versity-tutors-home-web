@@ -544,7 +544,7 @@ export const GetCategoryList = () => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
-export const GetSubCategoryByCategoryList = (id) => (dispatch) => {
+export const GetSubCategoryByCategoryId = (id) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}sub-category/by-category/${id}`;
     try {
         Axios.get(url).then((res) => {
@@ -613,7 +613,7 @@ export const GetProfiles = (data) => (dispatch) => {
         Axios.post(url, data).then((res) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_PROFILES_LOADING, payload: false });
-                dispatch({ type: Types.FILTERED_PROFILES, payload: res.data.result });
+                dispatch({ type: Types.FILTERED_PROFILES, payload: res.data });
 
             }
         }).catch((err) => {
@@ -621,6 +621,25 @@ export const GetProfiles = (data) => (dispatch) => {
         });
     } catch (error) {
         dispatch({ type: Types.IS_PROFILES_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetProfileDetails = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PROFILE_DETAILS_LOADING, payload: true })
+
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PROFILE_DETAILS_LOADING, payload: false });
+                dispatch({ type: Types.PROFILE_DETAILS, payload: res.data.result });
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PROFILE_DETAILS_LOADING, payload: false });
         showToast("error", "Something went wrong");
     }
 };

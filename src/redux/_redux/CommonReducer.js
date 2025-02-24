@@ -48,6 +48,7 @@ const initialState = {
     isTeachingLocationOnline: false,
     isTeachingLocationTutorHome: false,
     isTeachingLocationStudentHome: false,
+    gender: true
   },
   divisionList: null,
   districtList: null,
@@ -75,7 +76,9 @@ const initialState = {
   subCategoryList: null,
   isAvatarLoading: false,
   isProfilesLoading: false,
+  isProfileDetailsLoading: false,
   filteredProfiles: null,
+  profileDetails: null,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -183,10 +186,10 @@ const CommonReducer = (state = initialState, action) => {
       };
     case Types.SET_PERSONAL_DATA:
       const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
-        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = action.payload
+        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender } = action.payload
       const personalSet = {
         firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
-        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address
+        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender
       };
       return {
         ...state,
@@ -273,6 +276,16 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredProfiles: action.payload,
+      };
+    case Types.PROFILE_DETAILS:
+      return {
+        ...state,
+        profileDetails: action.payload,
+      };
+    case Types.IS_PROFILE_DETAILS_LOADING:
+      return {
+        ...state,
+        isProfileDetailsLoading: action.payload,
       };
     default:
       break;

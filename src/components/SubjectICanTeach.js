@@ -1,4 +1,4 @@
-import { AddSubjectSubmit, FalseEducationUpdated, GetCategoryList, GetSubCategoryByCategoryList, GetSubjectInput, SetSubjectData, SetSubjectUpdate } from '@/redux/_redux/CommonAction';
+import { AddSubjectSubmit, FalseEducationUpdated, GetCategoryList, GetSubCategoryByCategoryId, GetSubjectInput, SetSubjectData, SetSubjectUpdate } from '@/redux/_redux/CommonAction';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { catIdToCatName, filteredArray, subCatIdToSubCatName } from '../../public/function/globalFunction';
@@ -56,7 +56,7 @@ const SubjectICanTeach = ({ clientData }) => {
         clientData !== null && dispatch(SetSubjectData(clientData));
     }, [clientData]);
     useEffect(() => {
-        subject.categoryId.length > 0 && dispatch(GetSubCategoryByCategoryList(subject.categoryId));
+        subject.categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(subject.categoryId));
     }, [subject]);
     console.log('subjects', subjects)
     // console.log('subCategoryList', subCategoryList)
@@ -149,7 +149,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                         handleChange("subCategories", "")
                                                     }}
                                                 >
-                                                    <option label="Select country from list"></option>
+                                                    <option label="Select education level"></option>
                                                     {categoryList?.length > 0 && categoryList.map((item, index) => (
                                                         <option key={index} value={item._id}>{item.categoryName}</option>
                                                     ))}

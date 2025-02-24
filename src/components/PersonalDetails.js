@@ -11,7 +11,7 @@ const PersonalDetails = ({ clientData }) => {
     const areaList = useSelector((state) => state.homeInfo.areaList);
     const isPersonalLoading = useSelector((state) => state.homeInfo.isPersonalLoading);
     const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
-        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = personal
+        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender } = personal
     const handleInput = (name, value) => {
         dispatch(GetPersonalInput(name, value))
     }
@@ -103,18 +103,18 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Hourly fee</label>
+                                                    <label className="tu-label">Monthly fee</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="number"
                                                             className="form-control"
                                                             required=""
-                                                            placeholder="Your hourly fee"
+                                                            placeholder="Your monthly fee"
                                                             value={hourlyFee}
                                                             onChange={(e) => handleInput("hourlyFee", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Your hourly fee</span>
+                                                            <span>Your monthly fee</span>
                                                             <em>*</em>
                                                         </div>
                                                     </div>
@@ -234,6 +234,26 @@ const PersonalDetails = ({ clientData }) => {
                                                             <span>Enter zipcode</span>
                                                             {/* <em>*</em> */}
                                                         </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">Gender</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={gender}
+                                                            onChange={(e) => {
+                                                                handleInput("gender", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label="Select Gender"></option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 {/* <div className="form-group">

@@ -1,15 +1,71 @@
-import { GetProfiles } from '@/redux/_redux/CommonAction';
-import React, { useEffect } from 'react'
+import { AreaBySubDistrictId, DistrictByDivisionId, GetCategoryList, GetDivisionList, GetProfiles, GetSubCategoryByCategoryId, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction';
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ProfilesBody = () => {
+    const router = useRouter()
     const dispatch = useDispatch()
+    const [categoryId, setCategoryId] = useState("")
+    const [subCategoryId, setSubCategoryId] = useState([])
+    const [divisionId, setDivisionId] = useState("")
+    const [districtId, setDistrictId] = useState("")
+    const [subDistrictId, setSubDistrictId] = useState("")
+    const [areaId, setAreaId] = useState("")
+    const [minPrice, setMinPrice] = useState("")
+    const [maxPrice, setMaxPrice] = useState("")
+    const [gender, setGender] = useState("")
+    const [search, setSearch] = useState("")
+    const [sortBy, setSortBy] = useState("Best Match")
+    const [currentPage, setCurrentPage] = useState(1)
+    const [isTeachingLocationOnline, setTeachingLocationOnline] = useState(false)
+    const [isTeachingLocationTutorHome, setTeachingLocationTutorHome] = useState(false)
+    const [isTeachingLocationStudentHome, setTeachingLocationStudentHome] = useState(false)
+
+    const categoryList = useSelector((state) => state.homeInfo.categoryList);
+    const subCategoryList = useSelector((state) => state.homeInfo.subCategoryList);
     const isProfilesLoading = useSelector((state) => state.homeInfo.isProfilesLoading);
-    const filteredProfiles = useSelector((state) => state.homeInfo.filteredProfiles);
+    const filteredProfile = useSelector((state) => state.homeInfo.filteredProfiles);
+    const divisionList = useSelector((state) => state.homeInfo.divisionList);
+    const districtList = useSelector((state) => state.homeInfo.districtList);
+    const subDistrictList = useSelector((state) => state.homeInfo.subDistrictList);
+    const areaList = useSelector((state) => state.homeInfo.areaList);
+    const { pagination, result: filteredProfiles } = filteredProfile || { pagination: {}, result: null }
+    const { total, page, limit, totalPages, } = pagination || {}
+    const handlePageChange = (newPage) => {
+        if (newPage > 0 && newPage <= totalPages) {
+            setCurrentPage(newPage)
+            // dispatch(GetProfiles({ filters: { isTutorAccount: true }, page: newPage, limit: 5 }))
+        }
+    };
+    const handleCheckboxChange = (id) => {
+        setSubCategoryId((prevIds) =>
+            prevIds.includes(id) ? prevIds.filter((item) => item !== id) : [...prevIds, id]
+        );
+    };
+
     useEffect(() => {
-        dispatch(GetProfiles({ filters: { isTutorAccount: true } }))
+        dispatch(GetCategoryList())
+        dispatch(GetDivisionList());
+        dispatch(GetProfiles({ filters: { isTutorAccount: true }, limit: 5 }))
     }, [])
-    console.log('filteredProfiles', filteredProfiles)
+    useEffect(() => {
+        categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(categoryId))
+        districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
+        divisionId?.length > 0 && dispatch(DistrictByDivisionId(divisionId));
+        subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
+    }, [categoryId, divisionId, districtId, subDistrictId])
+    useEffect(() => {
+        const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isTutorAccount: true, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
+        if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
+        if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
+        if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
+        if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
+
+        dispatch(GetProfiles(obj))
+    }, [currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
+
+    // console.log('maxPrice', maxPrice)
     return (
         <>
             <main class="tu-bgmain tu-main">
@@ -19,14 +75,19 @@ const ProfilesBody = () => {
                             <div class="col-lg-12">
                                 <div class="tu-listing-wrapper">
                                     <div class="tu-sort">
-                                        <h3>132,576 Search result in<span>“Mathematic”</span>tutors</h3>
+                                        <h3>{total} Search result in<span>{search}</span></h3>
                                         <div class="tu-sort-right-area">
                                             <div class="tu-sortby">
                                                 <span>Sort by: </span>
                                                 <div class="tu-select">
-                                                    <select class="form-control tu-selectv">
-                                                        <option>Price low to high </option>
-                                                        <option>Price high to low</option>
+                                                    <select
+                                                        class="form-control tu-selectv"
+                                                        value={sortBy}
+                                                        onChange={(e) => setSortBy(e.target.value)}
+                                                    >
+                                                        <option value={"Best Match"}>Best Match </option>
+                                                        <option value={"Price low to high"}>Price low to high </option>
+                                                        <option value={'Price high to low'}>Price high to low</option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -40,10 +101,16 @@ const ProfilesBody = () => {
                                         <div class="tu-appendinput">
                                             <div class="tu-searcbar">
                                                 <div class="tu-inputicon">
-                                                    <a href="javascript:void(0);"><i class="icon icon-search"></i></a>
-                                                    <input type="text" class="form-control" placeholder="What do you want to explore?" />
+                                                    <a href></a>
+                                                    <input
+                                                        type="text"
+                                                        class="form-control"
+                                                        placeholder="What do you want to explore?"
+                                                        value={search}
+                                                        onChange={(e) => setSearch(e.target.value)}
+                                                    />
                                                 </div>
-                                                <div class="tu-select">
+                                                {/* <div class="tu-select">
                                                     <i class="icon icon-layers"></i>
                                                     <select id="selectv8" data-placeholderinput="Select list" data-placeholder="Select category" class="form-control">
                                                         <option label="Select category"></option>
@@ -53,8 +120,8 @@ const ProfilesBody = () => {
                                                         <option >Child Care</option>
                                                         <option >House Cleaning</option>
                                                     </select>
-                                                </div>
-                                                <a href="search-listing.html" class="tu-primbtn-lg tu-primbtn-orange">Search now</a>
+                                                </div> */}
+                                                <a href="search-listing.html" class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="tu-listing-search">
@@ -64,7 +131,7 @@ const ProfilesBody = () => {
                                             <span>Start from here</span>
                                         </div>
                                     </div>
-                                    <ul class="tu-searchtags">
+                                    {/* <ul class="tu-searchtags">
                                         <li>
                                             <span>Pre-School <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
                                         </li>
@@ -83,7 +150,7 @@ const ProfilesBody = () => {
                                         <li>
                                             <span>Male only <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
                                         </li>
-                                    </ul>
+                                    </ul> */}
                                 </div>
                             </div>
                             <div class="col-xl-4 col-xxl-3">
@@ -92,72 +159,143 @@ const ProfilesBody = () => {
                                     <div class="tu-aside-menu">
                                         <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
-                                                <h5>Education level</h5>
+                                                <h5>Education level & subjects</h5>
                                             </div>
                                             <div id="side2" class="collapse show">
                                                 <div class="tu-aside-content">
                                                     <div class="tu-filterselect">
                                                         <div class="tu-select">
-                                                            <select id="selectv7" data-placeholder="Select education level" data-placeholderinput="Select education level" class="form-control tu-input-field">
-                                                                <option label="Select category"></option>
-                                                                <option value="selectparcat">Primary (Class 1-5)</option>
-                                                                <option value="selectparcat">Primary (Class 6-8)</option>
-                                                                <option value="selectparcat">Primary (Class 9-10)</option>
-                                                                <option value="selectparcat">Language courses</option>
-                                                                <option value="selectparcat">Short courses</option>
+                                                            <select
+                                                                id="selectv7"
+                                                                data-placeholder="Select education level"
+                                                                data-placeholderinput="Select education level"
+                                                                class="form-control tu-input-field"
+                                                                onChange={(e) => {
+                                                                    setCategoryId(e.target.value)
+                                                                    setSubCategoryId([])
+                                                                }}
+                                                            >
+                                                                <option label="Select education level"></option>
+                                                                {categoryList?.length > 0 && categoryList.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.categoryName}</option>
+                                                                ))}
                                                             </select>
                                                         </div>
                                                     </div>
+                                                    {subCategoryList !== null && subCategoryList.length > 0 &&
+                                                        <div class="tu-filterselect">
+                                                            <h6>Choose subjects</h6>
+                                                            <ul class="tu-categoriesfilter">
+                                                                {subCategoryList.map((item, index) => (
+                                                                    <li key={index}>
+                                                                        <div class="tu-check tu-checksm">
+                                                                            <input
+                                                                                type="checkbox"
+                                                                                id={`expcheck${index}`}
+                                                                                name="expcheck"
+                                                                                checked={subCategoryId.includes(item._id)}
+                                                                                onChange={() => handleCheckboxChange(item._id)}
+                                                                            />
+                                                                            <label htmlFor={`expcheck${index}`}>{item.subCategoryName}</label>
+                                                                        </div>
+                                                                    </li>
+                                                                ))}
+
+
+                                                            </ul>
+                                                            {/* <div class="show-more">
+                                                                <a href="javascript:void(0);" class="tu-readmorebtn tu-show_more">Show all</a>
+                                                            </div> */}
+                                                        </div>
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="tu-aside-holder">
+                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side21" role="button" aria-expanded="true">
+                                                <h5>Locations</h5>
+                                            </div>
+                                            <div id="side21" class="collapse show">
+                                                <div class="tu-aside-content">
                                                     <div class="tu-filterselect">
-                                                        <h6>Choose subjects</h6>
-                                                        <ul class="tu-categoriesfilter">
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2" name="expcheck" checked />
-                                                                    <label for="expcheck2">Social studies</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a" name="expcheck" />
-                                                                    <label for="expcheck2a">Urdu</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a1" name="expcheck" checked />
-                                                                    <label for="expcheck2a1">Mathematic</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a2" name="expcheck" />
-                                                                    <label for="expcheck2a2">English</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a3" name="expcheck" />
-                                                                    <label for="expcheck2a3">Drawing</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a4" name="expcheck" checked />
-                                                                    <label for="expcheck2a4">Computer science</label>
-                                                                </div>
-                                                            </li>
-                                                            <li>
-                                                                <div class="tu-check tu-checksm">
-                                                                    <input type="checkbox" id="expcheck2a21" name="expcheck" />
-                                                                    <label for="expcheck2a21">physics</label>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                        <div class="show-more">
-                                                            <a href="javascript:void(0);" class="tu-readmorebtn tu-show_more">Show all</a>
+                                                        <div class="tu-select">
+                                                            <select
+                                                                id="selectv7"
+                                                                data-placeholder="Select division"
+                                                                data-placeholderinput="Select division"
+                                                                class="form-control tu-input-field"
+                                                                value={divisionId}
+                                                                onChange={(e) => {
+                                                                    setDivisionId(e.target.value)
+                                                                    setDistrictId("")
+                                                                    setSubDistrictId("")
+                                                                    setAreaId("")
+                                                                }}
+                                                            >
+                                                                <option label="Select division"></option>
+                                                                {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.divisionName}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                        <div class="tu-select mt-3">
+                                                            <select
+                                                                id="selectv7"
+                                                                data-placeholder="Select district"
+                                                                data-placeholderinput="Select district"
+                                                                class="form-control tu-input-field"
+                                                                value={districtId}
+                                                                onChange={(e) => {
+                                                                    setDistrictId(e.target.value)
+                                                                    setSubDistrictId("")
+                                                                    setAreaId("")
+                                                                }}
+                                                            >
+                                                                <option label="Select district"></option>
+                                                                {districtList?.length > 0 && districtList.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.districtName}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                        <div class="tu-select mt-3">
+                                                            <select
+                                                                id="selectv7"
+                                                                data-placeholder="Select subdistrict"
+                                                                data-placeholderinput="Select subdistrict"
+                                                                class="form-control tu-input-field"
+                                                                value={subDistrictId}
+                                                                onChange={(e) => {
+                                                                    setSubDistrictId(e.target.value)
+                                                                    setAreaId("")
+                                                                }}
+                                                            >
+                                                                <option label="Select sub District"></option>
+                                                                {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                                ))}
+                                                            </select>
+                                                        </div>
+                                                        <div class="tu-select mt-3">
+                                                            <select
+                                                                id="selectv7"
+                                                                data-placeholder="Select area"
+                                                                data-placeholderinput="Select area"
+                                                                class="form-control tu-input-field"
+                                                                value={areaId}
+                                                                onChange={(e) => {
+                                                                    setAreaId(e.target.value)
+                                                                }}
+                                                            >
+                                                                <option label="Select Area"></option>
+                                                                {areaList?.length > 0 && areaList.map((item, index) => (
+                                                                    <option key={index} value={item._id}>{item.areaName}</option>
+                                                                ))}
+                                                            </select>
                                                         </div>
                                                     </div>
+
+
                                                 </div>
                                             </div>
                                         </div>
@@ -169,8 +307,24 @@ const ProfilesBody = () => {
                                                 <div class="tu-aside-content">
                                                     <div class="tu-rangevalue" data-bs-target="#tu-rangecollapse" role="list" aria-expanded="false">
                                                         <div class="tu-areasizebox">
-                                                            <input type="number" class="form-control tu-input-field" step="1" placeholder="Min price" id="tu-min-value" />
-                                                            <input type="number" class="form-control tu-input-field" step="1" placeholder="Max price" id="tu-max-value" />
+                                                            <input
+                                                                type="number"
+                                                                class="form-control tu-input-field"
+                                                                step="1"
+                                                                placeholder="Min price"
+                                                                id="tu-min-value"
+                                                                value={minPrice}
+                                                                onChange={(e) => setMinPrice(e.target.value)}
+                                                            />
+                                                            <input
+                                                                type="number"
+                                                                class="form-control tu-input-field"
+                                                                step="1"
+                                                                placeholder="Max price"
+                                                                id="tu-max-value"
+                                                                value={maxPrice}
+                                                                onChange={(e) => setMaxPrice(e.target.value)}
+                                                            />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -183,7 +337,7 @@ const ProfilesBody = () => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="tu-aside-holder">
+                                        {/* <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1a" role="button" aria-expanded="true">
                                                 <h5>Rating</h5>
                                             </div>
@@ -258,8 +412,8 @@ const ProfilesBody = () => {
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="tu-aside-holder">
+                                        </div> */}
+                                        {/* <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#Location" role="button" aria-expanded="true">
                                                 <h5>Location</h5>
                                             </div>
@@ -283,7 +437,7 @@ const ProfilesBody = () => {
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1ab" role="button" aria-expanded="true">
                                                 <h5>Miscellaneous</h5>
@@ -293,26 +447,62 @@ const ProfilesBody = () => {
                                                     <ul class="tu-categoriesfilter">
                                                         <li>
                                                             <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="nameaa" name="expcheck" checked />
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="nameaa"
+                                                                    name="expcheck"
+                                                                    checked={isTeachingLocationOnline}
+                                                                    onChange={() => setTeachingLocationOnline(!isTeachingLocationOnline)}
+                                                                />
                                                                 <label for="nameaa">Online bookings</label>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="namea" name="expcheck" />
-                                                                <label for="namea">Profile photos</label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="nameaa1"
+                                                                    name="expcheck"
+                                                                    checked={isTeachingLocationTutorHome}
+                                                                    onChange={() => setTeachingLocationTutorHome(!isTeachingLocationTutorHome)}
+                                                                />
+                                                                <label for="nameaa1">Tutor Home/Batch</label>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="namea1" name="expcheck" checked />
-                                                                <label for="namea1">Male only</label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="nameaa2"
+                                                                    name="expcheck"
+                                                                    checked={isTeachingLocationStudentHome}
+                                                                    onChange={() => setTeachingLocationStudentHome(!isTeachingLocationStudentHome)}
+                                                                />
+                                                                <label for="nameaa2">Student Home</label>
                                                             </div>
                                                         </li>
                                                         <li>
                                                             <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="namea2" name="expcheck" />
-                                                                <label for="namea2">Female only</label>
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="namea111"
+                                                                    name="expcheck"
+                                                                    checked={gender === "Male"}
+                                                                    onChange={() => setGender("Male")}
+                                                                />
+                                                                <label for="namea111">Male only</label>
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="tu-check tu-checksm">
+                                                                <input
+                                                                    type="checkbox"
+                                                                    id="namea21"
+                                                                    name="expcheck"
+                                                                    checked={gender === "Female"}
+                                                                    onChange={() => setGender("Female")}
+                                                                />
+                                                                <label for="namea21">Female only</label>
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -320,8 +510,8 @@ const ProfilesBody = () => {
                                             </div>
                                         </div>
                                         <div class="tu-filterbtns">
-                                            <a href="search-listing.html" class="tu-primbtn">Apply filters</a>
-                                            <a href="search-listing.html" class="tu-sb-sliver">Clear all filters</a>
+                                            {/* <a href="search-listing.html" class="tu-primbtn">Apply filters</a> */}
+                                            {/* <a href class="tu-sb-sliver">Clear all filters</a> */}
                                         </div>
                                     </div>
                                 </aside>
@@ -346,7 +536,7 @@ const ProfilesBody = () => {
                                                     </div>
                                                     <div class="tu-listinginfo_price">
                                                         <span>Starting from:</span>
-                                                        <h4>&#2547;{item.hourlyFee}/hr</h4>
+                                                        <h4>&#2547;{item.hourlyFee}/Month</h4>
                                                     </div>
                                                 </div>
                                                 <div class="tu-listinginfo_description">
@@ -388,8 +578,8 @@ const ProfilesBody = () => {
                                                     <i class="icon icon-heart"></i><span>Add to save</span>
                                                 </div>
                                                 <div class="tu-btnarea">
-                                                    <a href="login.html" class="tu-secbtn">Let’s chat</a>
-                                                    <a href="tutor-detail.html" class="tu-primbtn">View full profile</a>
+                                                    {/* <a href="login.html" class="tu-secbtn">Let’s chat</a> */}
+                                                    <a href class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -397,16 +587,22 @@ const ProfilesBody = () => {
 
 
                                 </div>
-                                <nav class="tu-pagination">
+                                <nav className="tu-pagination">
                                     <ul>
-                                        <li class="tu-pagination-prev"><a href="#"><i class="icon icon-chevron-left"></i></a> </li>
-                                        <li><a href="#">1</a> </li>
-                                        <li><a href="#">2</a> </li>
-                                        <li><a href="#">3</a> </li>
-                                        <li class="active"><a href="#">4</a> </li>
-                                        <li><a href="#">...</a> </li>
-                                        <li><a href="#">60</a> </li>
-                                        <li class="tu-pagination-next"><a href="#"><i class="icon icon-chevron-right"></i></a> </li>
+                                        <li className={`tu-pagination-prev ${page === 1 ? "disabled" : ""}`}>
+                                            <a onClick={() => handlePageChange(page - 1)}><i className="icon icon-chevron-left"></i></a>
+                                        </li>
+                                        {[...Array(totalPages)].map((_, index) => {
+                                            const pageNum = index + 1;
+                                            return (
+                                                <li key={pageNum} className={page === pageNum ? "active" : ""}>
+                                                    <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
+                                                </li>
+                                            );
+                                        })}
+                                        <li className={`tu-pagination-next ${page === totalPages ? "disabled" : ""}`}>
+                                            <a onClick={() => handlePageChange(page + 1)}><i className="icon icon-chevron-right"></i></a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
