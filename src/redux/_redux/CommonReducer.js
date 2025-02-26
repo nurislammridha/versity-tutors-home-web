@@ -79,6 +79,10 @@ const initialState = {
   isProfileDetailsLoading: false,
   filteredProfiles: null,
   profileDetails: null,
+  isReviewLoading: false,
+  isGetReviewLoading: false,
+  isReviewSubmitted: false,
+  reviewList: null
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -286,6 +290,26 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isProfileDetailsLoading: action.payload,
+      };
+    case Types.IS_REVIEW_LOADING:
+      return {
+        ...state,
+        isReviewLoading: action.payload,
+      };
+    case Types.IS_GET_REVIEW_LOADING:
+      return {
+        ...state,
+        isGetReviewLoading: action.payload,
+      };
+    case Types.REVIEW_LIST:
+      return {
+        ...state,
+        reviewList: action.payload,
+      };
+    case Types.IS_REVIEW_SUBMITTED:
+      return {
+        ...state,
+        isReviewSubmitted: action.payload,
       };
     default:
       break;

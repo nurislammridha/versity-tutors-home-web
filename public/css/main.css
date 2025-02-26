@@ -206,6 +206,26 @@ textarea {
   letter-spacing: 1px;
   font-family: "Font Awesome 6 Free";
   color: #DDDDDD;
+  /* content: "\f005\f005\f005\f005\f005"; */
+}
+.star1 span:after,
+.star1:before {
+   content: "\f005";
+}
+.star2 span:after,
+.star2:before {
+  content: "\f005\f005";
+}
+.star3 span:after,
+.star3:before {
+  content: "\f005\f005\f005";
+}
+.star4 span:after,
+.star4:before {
+  content: "\f005\f005\f005\f005";
+}
+.star5 span:after,
+.star5:before {
   content: "\f005\f005\f005\f005\f005";
 }
 

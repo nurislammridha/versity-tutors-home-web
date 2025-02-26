@@ -643,3 +643,51 @@ export const GetProfileDetails = (id) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const GetReviewByClientId = (clientId, page = 1, limit = 10) => (dispatch) => {
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}review/client?clientId=${clientId}&page=${page}&limit=${limit}`;
+    // console.log('url', url)
+    dispatch({ type: Types.IS_GET_REVIEW_LOADING, payload: true })
+
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_GET_REVIEW_LOADING, payload: false });
+                dispatch({ type: Types.REVIEW_LIST, payload: res.data });
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_GET_REVIEW_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const SubmitReview = (data) => (dispatch) => {
+    const { comment, clientId } = data || {}
+    if (comment.length === 0) {
+        showToast("success", "Comment shouldn't be empty")
+        return 0
+    }
+    const url = `${process.env.NEXT_PUBLIC_API_URL}review`;
+    dispatch({ type: Types.IS_REVIEW_LOADING, payload: true })
+
+    try {
+        Axios.post(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_REVIEW_LOADING, payload: false });
+                dispatch({ type: Types.IS_REVIEW_SUBMITTED, payload: true });
+                // dispatch(GetReviewByClientId(clientId))
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_REVIEW_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const FalseSubmitReview = (data) => (dispatch) => {
+    dispatch({ type: Types.IS_REVIEW_SUBMITTED, payload: false });
+}
