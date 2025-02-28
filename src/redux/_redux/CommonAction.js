@@ -691,3 +691,63 @@ export const SubmitReview = (data) => (dispatch) => {
 export const FalseSubmitReview = (data) => (dispatch) => {
     dispatch({ type: Types.IS_REVIEW_SUBMITTED, payload: false });
 }
+export const SubmitBook = (data) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}book`;
+    dispatch({ type: Types.IS_BOOK_LOADING, payload: true })
+
+    try {
+        Axios.post(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_BOOK_LOADING, payload: false });
+                showToast("success", "Book request has send")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_BOOK_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetBookingByBooker = (id, clientId = false, status = null) => (dispatch) => {
+    let url = ""
+    if (clientId) {
+        url = `${process.env.NEXT_PUBLIC_API_URL}book/booker?clientId=${id}&status=${status}`;
+    } else {
+        url = `${process.env.NEXT_PUBLIC_API_URL}book/booker?bookerId=${id}&status=${status}`;
+    }
+
+    dispatch({ type: Types.IS_BOOK_BY_BOOKER_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_BOOK_BY_BOOKER_LOADING, payload: false });
+                dispatch({ type: Types.BOOK_BY_BOOKER, payload: res?.data?.result });
+                // showToast("success", "Book request has send")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_BOOK_BY_BOOKER_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const UpdateBooking = (id, data, cId, status) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}book/${id}`;
+    dispatch({ type: Types.IS_UPDATE_BOOK_LOADING, payload: true })
+    try {
+        Axios.put(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_UPDATE_BOOK_LOADING, payload: false });
+                dispatch(GetBookingByBooker(cId, true, status))
+                // showToast("success", "Book request has send")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_UPDATE_BOOK_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};

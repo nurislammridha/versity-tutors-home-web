@@ -44,3 +44,13 @@ export const timeAgo = (timestamp) => {
     const diffInYears = Math.floor(diffInMonths / 12);
     return `${diffInYears.toString().padStart(2, '0')} years ago`;
 };
+export const formatDate = (dateString) => {
+    const date = new Date(dateString);
+
+    // Extract date components
+    const day = date.getUTCDate();
+    const month = date.toLocaleString('en-US', { month: 'short', timeZone: 'UTC' });
+    const time = date.toLocaleString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true, timeZone: 'UTC' });
+
+    return `${day} ${month} ${time}`;
+};

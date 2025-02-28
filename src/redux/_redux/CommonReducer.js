@@ -82,7 +82,11 @@ const initialState = {
   isReviewLoading: false,
   isGetReviewLoading: false,
   isReviewSubmitted: false,
-  reviewList: null
+  reviewList: null,
+  isBookLoading: false,
+  isBookByBookerLoading: false,
+  isUpdateBookLoading: false,
+  bookByBooker: null,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -310,6 +314,26 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isReviewSubmitted: action.payload,
+      };
+    case Types.IS_BOOK_LOADING:
+      return {
+        ...state,
+        isBookLoading: action.payload,
+      };
+    case Types.IS_BOOK_BY_BOOKER_LOADING:
+      return {
+        ...state,
+        isBookByBookerLoading: action.payload,
+      };
+    case Types.BOOK_BY_BOOKER:
+      return {
+        ...state,
+        bookByBooker: action.payload,
+      };
+    case Types.IS_UPDATE_BOOK_LOADING:
+      return {
+        ...state,
+        isUpdateBookLoading: action.payload,
       };
     default:
       break;

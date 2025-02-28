@@ -575,7 +575,7 @@ const ProfilesBody = () => {
                                             </div>
                                             <div class="tu-listinginfo_btn">
                                                 <div class="tu-iconheart">
-                                                    <i class="icon icon-heart"></i><span>Add to save</span>
+                                                    {/* <i class="icon icon-heart"></i><span>Add to save</span> */}
                                                 </div>
                                                 <div class="tu-btnarea">
                                                     {/* <a href="login.html" class="tu-secbtn">Let’s chat</a> */}

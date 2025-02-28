@@ -1,10 +1,12 @@
 "use client"
 import ContactDetails from '@/components/ContactDetails'
 import Education from '@/components/Education'
+import MyBookingStatus from '@/components/MyBookingStatus'
 import PersonalDetails from '@/components/PersonalDetails'
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
+import WhoBookedMe from '@/components/WhoBookedMe'
 import { UploadAvatarImg } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +14,7 @@ import { ToastContainer } from 'react-toastify'
 
 const page = () => {
     const dispatch = useDispatch()
-    const [state, setState] = useState("personal")
+    const [state, setState] = useState("whoBooked")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);
@@ -109,6 +111,18 @@ const page = () => {
                                                 onClick={() => setState("subject")}
                                             ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? "Subjects I can teach" : "Subjects I need learn"}</span></a>
                                         </li>
+                                        <li className="nav-item">
+                                            <a
+                                                className={state === "whoBooked" ? "active nav-link" : "nav-link"}
+                                                onClick={() => setState("whoBooked")}
+                                            ><i className="icon icon-book-open"></i><span>Who booked me</span></a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a
+                                                className={state === "myBooking" ? "active nav-link" : "nav-link"}
+                                                onClick={() => setState("myBooking")}
+                                            ><i className="icon icon-book-open"></i><span>My booking status</span></a>
+                                        </li>
                                         {/* <li className="nav-item">
                                             <a href="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
                                         </li> */}
@@ -119,6 +133,8 @@ const page = () => {
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}
                             {state === "subject" && <SubjectICanTeach clientData={clientData} />}
+                            {state === "whoBooked" && <WhoBookedMe clientData={clientData} />}
+                            {state === "myBooking" && <MyBookingStatus clientData={clientData} />}
                         </div>
                     </div>
                 </div>

@@ -2,7 +2,7 @@
 import PrimaFooter from '@/components/PrimaFooter';
 import PrimaHeader from '@/components/PrimaHeader';
 import Reviews from '@/components/Reviews';
-import { GetProfileDetails } from '@/redux/_redux/CommonAction';
+import { GetProfileDetails, SubmitBook } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,7 +14,11 @@ const page = ({ params }) => {
     const [clientData, setClientData] = useState(null)
     const isProfileDetailsLoading = useSelector((state) => state.homeInfo.isProfileDetailsLoading);
     const profileDetails = useSelector((state) => state.homeInfo.profileDetails);
+    const isBookLoading = useSelector((state) => state.homeInfo.isBookLoading);
     const { avatar, firstName, lastName, hourlyFee, tagline, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp } = profileDetails || {}
+    const handleBook = () => {
+        dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
+    }
     useEffect(() => {
         setClientData(JSON.parse(localStorage.getItem("clientData")))
         dispatch(GetProfileDetails(id))
@@ -82,10 +86,16 @@ const page = ({ params }) => {
                                             <ul className="tu-profilelinksbtn">
                                                 {/* <li>
                                                     <a className="tu-linkheart" href><i className="icon icon-heart"></i><span>Save</span></a>
-                                                </li> */}
-                                                {/* <li><a href="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
+                                                </li>
+                                                <li><a href="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
                                                 <li>
-                                                    <a href className="tu-primbtn">Book a tution</a>
+                                                    <a
+                                                        href
+                                                        className="tu-primbtn"
+                                                        onClick={() => !isBookLoading && handleBook()}
+                                                    >
+                                                        {isBookLoading ? "Booking.." : "Book a tution"}
+                                                    </a>
                                                 </li>
                                             </ul>
                                         </div>
