@@ -87,6 +87,11 @@ const initialState = {
   isBookByBookerLoading: false,
   isUpdateBookLoading: false,
   bookByBooker: null,
+  icConnectionLoading: false,
+  connectionData: null,
+  icConnectionByClientLoading: false,
+  connectionByClientData: null,
+  isPackageBuying: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -334,6 +339,31 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isUpdateBookLoading: action.payload,
+      };
+    case Types.IS_CONNECTION_LOADING:
+      return {
+        ...state,
+        icConnectionLoading: action.payload,
+      };
+    case Types.CONNECTION_DATA:
+      return {
+        ...state,
+        connectionData: action.payload,
+      };
+    case Types.CONNECTION_BY_CLIENT_DATA:
+      return {
+        ...state,
+        connectionByClientData: action.payload,
+      };
+    case Types.IS_CONNECTION_BY_CLIENT_LOADING:
+      return {
+        ...state,
+        icConnectionByClientLoading: action.payload,
+      };
+    case Types.IS_PACKAGE_BUYING_LOADING:
+      return {
+        ...state,
+        isPackageBuying: action.payload,
       };
     default:
       break;

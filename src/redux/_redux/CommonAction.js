@@ -751,3 +751,55 @@ export const UpdateBooking = (id, data, cId, status) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const GetConnectionPackage = () => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}connection-package`;
+    dispatch({ type: Types.IS_CONNECTION_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_CONNECTION_LOADING, payload: false });
+                dispatch({ type: Types.CONNECTION_DATA, payload: res?.data?.result });
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_CONNECTION_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetConnectionByClient = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}my-connection/by-client/${id}`;
+    dispatch({ type: Types.IS_CONNECTION_BY_CLIENT_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_CONNECTION_BY_CLIENT_LOADING, payload: false });
+                dispatch({ type: Types.CONNECTION_BY_CLIENT_DATA, payload: res?.data?.result });
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_CONNECTION_BY_CLIENT_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const SubmitBuyPackage = (data) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}my-connection`;
+    dispatch({ type: Types.IS_PACKAGE_BUYING_LOADING, payload: true })
+
+    try {
+        Axios.post(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PACKAGE_BUYING_LOADING, payload: false });
+                showToast("success", "You successfully buy connections")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PACKAGE_BUYING_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
