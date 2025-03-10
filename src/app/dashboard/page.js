@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 
 const page = () => {
     const dispatch = useDispatch()
-    const [state, setState] = useState("myConnections")//personal
+    const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);

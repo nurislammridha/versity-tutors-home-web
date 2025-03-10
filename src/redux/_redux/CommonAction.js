@@ -309,13 +309,13 @@ export const AreaBySubDistrictId = (id) => (dispatch) => {
     }
 };
 export const GetClientById = (id) => (dispatch) => {
-
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 localStorage.setItem("clientData", JSON.stringify(res.data.result))
                 dispatch({ type: Types.MODIFY_SUBJECTS, payload: res.data.result.subject });
+
             }
         }).catch((err) => {
             showToast("success", err);
@@ -800,6 +800,73 @@ export const SubmitBuyPackage = (data) => (dispatch) => {
         });
     } catch (error) {
         dispatch({ type: Types.IS_PACKAGE_BUYING_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const SubmitUnlockFeature = (arr, id, myId) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_UNLOCK_LOADING, payload: true })
+    try {
+        Axios.put(url, { unlockInfo: arr }).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false });
+                showToast("success", "Features Unlocked");
+                dispatch(GetProfileDetails(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const ReduceConnection = (arr, id, myId, item) => (dispatch) => {
+    const { _id, remainingConnection, spendConnection } = item
+    const url = `${process.env.NEXT_PUBLIC_API_URL}my-connection/${_id}`;
+    let rem = remainingConnection - 1
+    let spend = spendConnection + 1
+    try {
+        Axios.put(url, { remainingConnection: rem, spendConnection: spend }).then((res) => {
+            if (res.data.status) {
+                dispatch(SubmitUnlockFeature(arr, id, myId))
+            }
+        }).catch((err) => {
+            dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false })
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false })
+        showToast("error", "Something went wrong");
+    }
+}
+
+export const GetUnlock = (arr, id, myId) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}my-connection/by-client/${myId}`;
+    dispatch({ type: Types.IS_UNLOCK_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                const data = res?.data?.result
+                let remainingItem = null
+                for (const item of data) {
+                    if (item.remainingConnection > 0) {
+                        remainingItem = item;
+                        dispatch(ReduceConnection(arr, id, myId, item))
+                        break; // Stop the loop when condition is met
+                    }
+                }
+                if (remainingItem === null) {
+                    dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false })
+                    showToast("success", "You have no remaining connections. Firstly you should buy connection")
+                }
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false })
         showToast("error", "Something went wrong");
     }
 };

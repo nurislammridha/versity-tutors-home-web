@@ -85,13 +85,13 @@ const WhoBookedMe = ({ clientData }) => {
                                             {bookByBooker.map((item, index) => (
                                                 <tr>
                                                     <th scope="row">{index + 1}</th>
-                                                    <td>{item?.clientId?.firstName + " " + item?.clientId?.lastName}</td>
-                                                    <td>{item?.clientId?.phone}</td>
+                                                    <td>{item?.bookerId?.firstName + " " + item?.bookerId?.lastName}</td>
+                                                    <td>{item?.bookerId?.phone}</td>
                                                     <td>{formatDate(item?.createdAt)}</td>
                                                     <td>
                                                         <a
                                                             className='btn btn-sm btn-info'
-                                                            onClick={() => router.push(`/details/${item.clientId?._id}`)}
+                                                            onClick={() => router.push(`/details/${item.bookerId?._id}`)}
                                                         >Details</a>
                                                     </td>
                                                     <td>

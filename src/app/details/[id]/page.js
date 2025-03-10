@@ -2,28 +2,74 @@
 import PrimaFooter from '@/components/PrimaFooter';
 import PrimaHeader from '@/components/PrimaHeader';
 import Reviews from '@/components/Reviews';
-import { GetProfileDetails, SubmitBook } from '@/redux/_redux/CommonAction';
+import { GetProfileDetails, GetUnlock, SubmitBook } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { ToastContainer } from 'react-toastify';
 
 const page = ({ params }) => {
     const { id } = params; // Get dynamic ID from URL
     const router = useRouter()
     const dispatch = useDispatch()
     const [clientData, setClientData] = useState(null)
+    const [isUnlocked, setUnlocked] = useState(false)
     const isProfileDetailsLoading = useSelector((state) => state.homeInfo.isProfileDetailsLoading);
     const profileDetails = useSelector((state) => state.homeInfo.profileDetails);
     const isBookLoading = useSelector((state) => state.homeInfo.isBookLoading);
-    const { avatar, firstName, lastName, hourlyFee, tagline, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp } = profileDetails || {}
+    const isUnlockLoading = useSelector((state) => state.homeInfo.isUnlockLoading);
+    const { avatar, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo } = profileDetails || {}
     const handleBook = () => {
         dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
     }
+    const handleUnlock = () => {
+        let arr = unlockInfo || []
+        arr.push(clientData?._id)
+        confirmAlert({
+            title: "Confirm To Unlock",
+            message: `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            buttons: [
+                {
+                    label: "Yes",
+                    onClick: () => dispatch(GetUnlock(arr, id, clientData?._id)),
+                },
+                {
+                    label: "No",
+                },
+            ],
+        });
+    };
+    const handlePreBook = () => {
+        let arr = unlockInfo || []
+        arr.push(clientData?._id)
+        confirmAlert({
+            title: isUnlocked ? "Confirm To Book" : "Confirm To Unlock",
+            message: isUnlocked ? "Are you sure to book?" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            buttons: [
+                {
+                    label: "Yes",
+                    onClick: () => isUnlocked ? handleBook() : dispatch(GetUnlock(arr, id, clientData?._id)),
+                },
+                {
+                    label: "No",
+                },
+            ],
+        });
+    };
     useEffect(() => {
         setClientData(JSON.parse(localStorage.getItem("clientData")))
         dispatch(GetProfileDetails(id))
     }, [id])
-    // console.log('profileDetails', profileDetails)
+
+    useEffect(() => {
+        console.log('unlockInfo', unlockInfo)
+        console.log('clientData?._id', clientData)
+        profileDetails !== null && setUnlocked(unlockInfo.includes(clientData?._id))
+    }, [profileDetails, unlockInfo])
+
+    // console.log('isUnlocked', isUnlocked)
     return (
         <>
             <PrimaHeader />
@@ -92,7 +138,7 @@ const page = ({ params }) => {
                                                     <a
                                                         href
                                                         className="tu-primbtn"
-                                                        onClick={() => !isBookLoading && handleBook()}
+                                                        onClick={() => !isBookLoading && handlePreBook()}
                                                     >
                                                         {isBookLoading ? "Booking.." : "Book a tution"}
                                                     </a>
@@ -460,34 +506,45 @@ const page = ({ params }) => {
                                             <ul className="tu-listinfo">
                                                 <li>
                                                     <span className="tu-bg-maroon"><i className="icon icon-phone-call "></i></span>
-                                                    <h6>{phone}
+                                                    <h6>{isUnlocked ? phone : "01XXXXXXXXX"}
                                                         {/* <em>*** - ***</em> */}
                                                     </h6>
                                                 </li>
                                                 <li>
                                                     <span className="tu-bg-voilet"><i className="icon icon-mail"></i></span>
-                                                    <h6>{email}</h6>
+                                                    <h6>{isUnlocked ? email : "xyz@gmail.com"}</h6>
                                                 </li>
                                                 <li>
                                                     <span className="tu-bg-blue"><i className="fab fa-skype"></i></span>
-                                                    <h6>{skype}</h6>
+                                                    <h6>{isUnlocked ? skype : "xyz"}</h6>
                                                 </li>
                                                 <li>
                                                     <span className="tu-bg-green"><i className="fab fa-whatsapp"></i></span>
-                                                    <h6>{whatsapp} </h6>
+                                                    <h6>{isUnlocked ? whatsapp : "01XXXXXXXX"} </h6>
                                                 </li>
                                                 <li>
                                                     <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
-                                                    <a href>{website}</a>
+                                                    <a href>{isUnlocked ? website : "www.xyz.com"}</a>
                                                 </li>
                                             </ul>
                                         </div>
-                                        <div className="tu-unlockfeature text-center">
-                                            <h6>
-                                                Click the button below to buy a package & unlock the contact details
-                                            </h6>
-                                            <a href="package.html" className="tu-primbtn tu-btngreen"><span>Unlock feature</span><i className="icon icon-lock"></i></a>
-                                        </div>
+                                        {isUnlocked ?
+                                            <div className="tu-unlockfeature text-center">
+                                                <h3 className='text-center'>Full Address</h3>
+                                                <div>{`${areaInfo?.areaName}>${subDistrictInfo?.subDistrictName}.${districtInfo?.districtName}>${divisionInfo?.divisionName}`}</div>
+                                                <div>{address}</div>
+                                            </div> :
+                                            <div className="tu-unlockfeature text-center">
+                                                <h6>
+                                                    Click the button below to unlock the contact details
+                                                </h6>
+                                                <a
+                                                    href
+                                                    className="tu-primbtn tu-btngreen"
+                                                    onClick={() => !isUnlockLoading && handleUnlock()}
+                                                ><span>{isUnlockLoading ? "Unlocking.." : "Unlock feature"}</span><i className="icon icon-lock"></i></a>
+                                            </div>
+                                        }
                                     </aside>
                                 </div>
                             </div>
@@ -497,6 +554,7 @@ const page = ({ params }) => {
                 : <div>Loading</div>}
 
             <PrimaFooter />
+            <ToastContainer />
         </>
     )
 }

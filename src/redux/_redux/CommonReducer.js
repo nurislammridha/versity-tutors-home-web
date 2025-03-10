@@ -92,6 +92,7 @@ const initialState = {
   icConnectionByClientLoading: false,
   connectionByClientData: null,
   isPackageBuying: false,
+  isUnlockLoading: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -365,6 +366,12 @@ const CommonReducer = (state = initialState, action) => {
         ...state,
         isPackageBuying: action.payload,
       };
+    case Types.IS_UNLOCK_LOADING:
+      return {
+        ...state,
+        isUnlockLoading: action.payload,
+      };
+
     default:
       break;
   }

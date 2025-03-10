@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const ProfilesBody = () => {
+const ProfilesBody = ({ clientData }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const [categoryId, setCategoryId] = useState("")
@@ -45,10 +45,12 @@ const ProfilesBody = () => {
     };
 
     useEffect(() => {
-        dispatch(GetCategoryList())
-        dispatch(GetDivisionList());
-        dispatch(GetProfiles({ filters: { isTutorAccount: true }, limit: 5 }))
-    }, [])
+        if (clientData !== null) {
+            dispatch(GetCategoryList())
+            dispatch(GetDivisionList());
+            dispatch(GetProfiles({ filters: { isTutorAccount: !clientData?.isTutorAccount }, limit: 5 }))
+        }
+    }, [clientData])
     useEffect(() => {
         categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(categoryId))
         districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
@@ -56,13 +58,14 @@ const ProfilesBody = () => {
         subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
     }, [categoryId, divisionId, districtId, subDistrictId])
     useEffect(() => {
-        const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isTutorAccount: true, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
-        if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
-        if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
-        if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
-        if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
-
-        dispatch(GetProfiles(obj))
+        if (clientData !== null) {
+            const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isTutorAccount: !clientData?.isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
+            if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
+            if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
+            if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
+            if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
+            dispatch(GetProfiles(obj))
+        }
     }, [currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
 
     // console.log('maxPrice', maxPrice)

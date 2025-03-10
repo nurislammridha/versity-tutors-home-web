@@ -2,13 +2,17 @@
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
 import ProfilesBody from '@/components/ProfilesBody'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const page = () => {
+    const [clientData, setClientData] = useState(null)
+    useEffect(() => {
+        setClientData(JSON.parse(localStorage.getItem("clientData")))
+    }, [])
     return (
         <>
             <PrimaHeader />
-            <ProfilesBody />
+            <ProfilesBody clientData={clientData} />
             <PrimaFooter />
         </>
     )

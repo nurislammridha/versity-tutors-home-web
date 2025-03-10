@@ -26,6 +26,14 @@ const MyConnections = ({ clientData }) => {
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
                                     <h4>My Connections Status</h4>
+                                    <a
+                                        className='btn btn-success'
+                                        style={{ color: '#fff' }}
+                                        onClick={() => router.push("/connection")}
+                                    >
+                                        Buy new connection
+                                    </a>
+
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -56,7 +64,7 @@ const MyConnections = ({ clientData }) => {
 
                                         </tbody>
                                     </table>
-                                ) : (<div>No data found</div>)
+                                ) : (<div>No connection found</div>)
                                 }
 
                             </div>

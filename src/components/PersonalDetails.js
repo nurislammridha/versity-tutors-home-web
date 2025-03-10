@@ -13,6 +13,7 @@ const PersonalDetails = ({ clientData }) => {
     const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
         isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender } = personal
     const handleInput = (name, value) => {
+        console.log('name,value', name, value)
         dispatch(GetPersonalInput(name, value))
     }
     const handleSubmit = () => {
@@ -35,7 +36,7 @@ const PersonalDetails = ({ clientData }) => {
     useEffect(() => {
         subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
     }, [subDistrictId]);
-    // console.log('personal', personal)
+    console.log('personal', personal)
     return (
         <>
             <div className="col-lg-8 col-xl-9">
@@ -328,7 +329,7 @@ const PersonalDetails = ({ clientData }) => {
                                                             className="form-control"
                                                             placeholder="Enter description"
                                                             value={tutorBriefIntroduction}
-                                                            onChange={(e) => tutorBriefIntroduction.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
+                                                            onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                         ></textarea>
                                                         <div className="tu-placeholder">
                                                             <span>Enter description</span>
@@ -336,7 +337,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                     <div className="tu-input-counter">
                                                         <span>Characters left:</span>
-                                                        <b>{500 - tutorBriefIntroduction?.length}</b>
+                                                        <b>{500 - tutorBriefIntroduction?.length || 0}</b>
                                                         /
                                                         <em> 500</em>
                                                     </div>
