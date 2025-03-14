@@ -1,6 +1,6 @@
 "use client";
 import Script from "next/script";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import Typed from 'typed.js';
 import $ from 'jquery';
@@ -8,9 +8,14 @@ import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import PrimaHeader from "@/components/PrimaHeader";
 import PrimaFooter from "@/components/PrimaFooter";
+import { useRouter } from "next/navigation";
+import FeaturedTutor from "@/components/FeaturedTutor";
 export default function Home({ navigation }) {
+  const router = useRouter()
   const el = useRef(null); // Reference for the target element
   const typedInstance = useRef(null);
+  const [isLogin, setIsLogin] = useState(false)
+  const [clientData, setClientData] = useState(null)
   // const homeData = useSelector((state) => state.homeInfo.homeData);
   useEffect(() => {
     // Check if the DOM element is mounted
@@ -30,6 +35,7 @@ export default function Home({ navigation }) {
         typedInstance.current.destroy();
       }
     };
+
   }, []);
   useEffect(() => {
     const responsive = () => {
@@ -88,22 +94,7 @@ export default function Home({ navigation }) {
 
     countUp();
   }, []);
-  useEffect(() => {
-    const slider = new Splide('#tu-featurelist', {
-      type: 'loop',
-      perPage: 4,
-      perMove: 1,
-      gap: 24,
-      pagination: true,
-      arrows: false,
-      breakpoints: {
-        1400: { perPage: 3 },
-        991: { perPage: 2 },
-        767: { perPage: 1 },
-      },
-    });
-    slider.mount();
-  }, []);
+
   useEffect(() => {
     const sliderElement = document.getElementById('tu-sucesstorslider');
     if (sliderElement) {
@@ -124,33 +115,44 @@ export default function Home({ navigation }) {
         },
       });
       splideInstance.mount();
+      // Cleanup function to destroy the slider on unmount
+      return () => {
+        splideInstance.destroy();
+      };
     }
+
   }, []);
+  // useEffect(() => {
+  //   const sliderElement = document.getElementById('tu-categoriesslider');
+  //   if (sliderElement) {
+  //     const splideInstance = new Splide('#tu-categoriesslider', {
+  //       type: 'loop',
+  //       perPage: 4,
+  //       perMove: 1,
+  //       gap: '24px',
+  //       pagination: true,
+  //       arrows: false,
+  //       breakpoints: {
+  //         1199: {
+  //           perPage: 3,
+  //         },
+  //         991: {
+  //           perPage: 2,
+  //         },
+  //         575: {
+  //           perPage: 1,
+  //         },
+  //       },
+  //     });
+  //     splideInstance.mount();
+  //   }
+  // }, []);
   useEffect(() => {
-    const sliderElement = document.getElementById('tu-categoriesslider');
-    if (sliderElement) {
-      const splideInstance = new Splide('#tu-categoriesslider', {
-        type: 'loop',
-        perPage: 4,
-        perMove: 1,
-        gap: '24px',
-        pagination: true,
-        arrows: false,
-        breakpoints: {
-          1199: {
-            perPage: 3,
-          },
-          991: {
-            perPage: 2,
-          },
-          575: {
-            perPage: 1,
-          },
-        },
-      });
-      splideInstance.mount();
-    }
-  }, []);
+    setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
+    setClientData(JSON.parse(localStorage.getItem("clientData")))
+  }, [])
+
+
   return (<>
     {/* <!-- Preloader Start --> */}
     {/* <div className="tu-preloader">
@@ -161,7 +163,7 @@ export default function Home({ navigation }) {
     </div> */}
     {/* <!-- Preloader End --> */}
     {/* <!-- HEADER START --> */}
-    <PrimaHeader />
+    <PrimaHeader isLogin={isLogin} clientData={clientData} />
     {/* <!-- HEADER END --> */}
     {/* <!-- BANNER START --> */}
     <div className="tu-banner">
@@ -181,14 +183,19 @@ export default function Home({ navigation }) {
                     <span>Start from here</span>
                     <img src="/images/knob_line.svg" alt="logo" />
                   </div>
-                  <a href="signup.html" className="tu-primbtn tu-primbtn-gradient"><span>Start as student</span><i className="icon icon-chevron-right"></i></a>
+                  {!isLogin ?
+                    <a href onClick={() => router.push("/sign-up")} className="tu-primbtn tu-primbtn-gradient"><span>Start as Student / Instructor</span><em>It’s Free!</em><i className="icon icon-chevron-right"></i></a> :
+                    <a href className="tu-primbtn tu-primbtn-gradient"><span>You are Logged in as </span><em>{clientData?.isTutorAccount ? "Tutor" : "Student"}</em></a>
+                  }
+
+
                 </li>
-                <li><a href="signup.html" className="tu-secbtn"><span>Join as Instructor</span><em>It’s Free!</em></a></li>
+                {/* <li><a href="signup.html" className="tu-secbtn"><span>Join as Instructor</span><em>It’s Free!</em></a></li> */}
               </ul>
-              <div className="tu-banner_explore">
+              {/* <div className="tu-banner_explore">
                 <i className="icon icon-shield"></i>
-                <p>You can also join as parent to explore <a href="signup.html">Join today</a></p>
-              </div>
+                <p>You can also join as parent to explore <a href onClick={() => router.push("/sign-up")}>Join today</a></p>
+              </div> */}
             </div>
           </div>
           <div className="col-lg-6 d-none d-lg-block">
@@ -288,75 +295,7 @@ export default function Home({ navigation }) {
       </section>
       {/* <!-- COUNTER END --> */}
       {/* <!-- INSTRUCTOR START --> */}
-      <section className="tu-main-section">
-        <div className="container">
-          <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="tu-maintitle text-center">
-                <img src="/images/zigzag-line.svg" alt="Image" />
-                <h4>Our featured instructors</h4>
-                <h2>Every instructor is professional and highly qualified</h2>
-                <p>Accusamus et iusidio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos dolores etmquasa molestias epturi sint occaecati cupiditate non providente mikume molareshe.</p>
-              </div>
-            </div>
-          </div>
-          <div id="tu-featurelist" className="splide tu-featurelist  tu-splidedots ">
-            <div className="splide__track">
-              <ul className="splide__list">
-                {[1, 2, 3, 4, 5, 6].map((item, index) => (
-                  <li className="splide__slide" key={item}>
-                    <div className="tu-featureitem">
-                      <figure>
-                        <a href="tutor-detail.html"><img src={`/images/index/qualified/img-0${item}.jpg`} alt="image-description" /></a>
-                        <span className="tu-featuretag">FEATURED</span>
-                      </figure>
-                      <div className="tu-authorinfo">
-                        <div className="tu-authordetail">
-                          <figure>
-                            <img src="/images/index/professionol/img-01.jpg" alt="image-description" />
-                          </figure>
-                          <div className="tu-authorname">
-                            <h5><a href="tutor-detail.html"> Dwayne Garrett</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
-                            <span>Arlington, TN</span>
-                          </div>
-                          <ul className="tu-authorlist">
-                            <li>
-                              <span>Starting from:<em>$893.30/hr</em></span>
-                            </li>
-                            <li>
-                              <span>Mobile:<em>xxx-xxxxx-33</em></span>
-                            </li>
-                            <li>
-                              <span>Whatsapp:<em>xxx-xxxxx-11</em></span>
-                            </li>
-                            <li>
-                              <span>Qualification:<em>B.Tech/B.E.</em></span>
-                            </li>
-                          </ul>
-                        </div>
-                        <div className="tu-instructors_footer">
-                          <div className="tu-rating">
-                            <i className="fas fa-star"></i>
-                            <h6>5.0</h6>
-                            <span>(66,951)</span>
-                          </div>
-                          <div className="tu-instructors_footer-right">
-                            <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                ))}
-
-              </ul>
-            </div>
-          </div>
-          <div className="tu-mainbtn">
-            <a href="search-listing.html" className="tu-primbtn-lg"><span>Explore all instructors</span><i className="icon icon-chevron-right"></i></a>
-          </div>
-        </div>
-      </section>
+      <FeaturedTutor />
       {/* <!-- INSTRUCTOR END --> */}
 
       {/* <!-- SUCCESS START --> */}
@@ -376,7 +315,7 @@ export default function Home({ navigation }) {
             <div id="tu-sucesstorslider" className="splide tu-sucesstorslider tu-splidearrow">
               <div className="splide__track">
                 <ul className="splide__list">
-                  {[1, 2, 3, 4, 5].map((item, index) => (
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 2].map((item, index) => (
                     <li className="splide__slide" key={index}>
                       <div className="tu-sucesstor">
                         <div className="tu-sucesstor_Image">
@@ -404,7 +343,7 @@ export default function Home({ navigation }) {
       </section>
       {/* <!-- SUCCESS END --> */}
       {/* <!-- CATEGORIES START --> */}
-      <section className="tu-main-section">
+      {/* <section className="tu-main-section">
         <div className="container">
           <div className="row justify-content-center">
             <div className="col-lg-8">
@@ -516,7 +455,7 @@ export default function Home({ navigation }) {
             <a href="search-listing-two.html" className="tu-primbtn-lg"><span>Explore All categories</span><i className="icon icon-chevron-right"></i></a>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* <!-- CATEGORIES END --> */}
     </main>
     {/* <!-- MAIN END --> */}

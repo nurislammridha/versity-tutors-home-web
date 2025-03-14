@@ -308,14 +308,17 @@ export const AreaBySubDistrictId = (id) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const FalseUpdatedProfile = () => (dispatch) => {
+    dispatch({ type: Types.IS_UPDATED_PROFILE, payload: true });
+}
 export const GetClientById = (id) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 localStorage.setItem("clientData", JSON.stringify(res.data.result))
+                dispatch({ type: Types.IS_UPDATED_PROFILE, payload: true });
                 dispatch({ type: Types.MODIFY_SUBJECTS, payload: res.data.result.subject });
-
             }
         }).catch((err) => {
             showToast("success", err);
@@ -867,6 +870,26 @@ export const GetUnlock = (arr, id, myId) => (dispatch) => {
         });
     } catch (error) {
         dispatch({ type: Types.IS_UNLOCK_LOADING, payload: false })
+        showToast("error", "Something went wrong");
+    }
+};
+export const StatusSubmit = (data, id) => (dispatch) => {
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_STATUS_LOADING, payload: true })
+    try {
+        Axios.put(url, data).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
         showToast("error", "Something went wrong");
     }
 };

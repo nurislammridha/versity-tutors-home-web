@@ -93,6 +93,8 @@ const initialState = {
   connectionByClientData: null,
   isPackageBuying: false,
   isUnlockLoading: false,
+  isStatusLoading: false,
+  isUpdatedProfile: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -370,6 +372,16 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isUnlockLoading: action.payload,
+      };
+    case Types.IS_STATUS_LOADING:
+      return {
+        ...state,
+        isStatusLoading: action.payload,
+      };
+    case Types.IS_UPDATED_PROFILE:
+      return {
+        ...state,
+        isUpdatedProfile: action.payload,
       };
 
     default:

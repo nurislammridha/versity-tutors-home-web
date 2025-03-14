@@ -5,13 +5,15 @@ import ProfilesBody from '@/components/ProfilesBody'
 import React, { useEffect, useState } from 'react'
 
 const page = () => {
+    const [isLogin, setIsLogin] = useState(false)
     const [clientData, setClientData] = useState(null)
     useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))
     }, [])
     return (
         <>
-            <PrimaHeader />
+            <PrimaHeader isLogin={isLogin} clientData={clientData} />
             <ProfilesBody clientData={clientData} />
             <PrimaFooter />
         </>

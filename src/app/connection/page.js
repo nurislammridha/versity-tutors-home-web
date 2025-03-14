@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify'
 const page = () => {
     const dispatch = useDispatch()
     const [clickId, setClickId] = useState("")
+    const [isLogin, setIsLogin] = useState(false)
     const [clientData, setClientData] = useState(null)
     const icConnectionLoading = useSelector((state) => state.homeInfo.icConnectionLoading);
     const isPackageBuying = useSelector((state) => state.homeInfo.isPackageBuying);
@@ -18,13 +19,14 @@ const page = () => {
         dispatch(SubmitBuyPackage({ clientId: clientData?._id, spendConnection: 0, remainingConnection: item?.connections, connectionPackageId: item?._id }))
     }
     useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))
         dispatch(GetConnectionPackage())
     }, [])
 
     return (
         <>
-            <PrimaHeader />
+            <PrimaHeader isLogin={isLogin} clientData={clientData} />
             <main class="tu-main tu-bgmain">
                 <section class="tu-main-section">
                     <div class="container">

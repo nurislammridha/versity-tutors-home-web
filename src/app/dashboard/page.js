@@ -6,25 +6,33 @@ import MyConnections from '@/components/MyConnections'
 import PersonalDetails from '@/components/PersonalDetails'
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
+import Settings from '@/components/Settings'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import WhoBookedMe from '@/components/WhoBookedMe'
-import { UploadAvatarImg } from '@/redux/_redux/CommonAction'
+import { FalseUpdatedProfile, UploadAvatarImg } from '@/redux/_redux/CommonAction'
+import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
 const page = () => {
     const dispatch = useDispatch()
-    const [state, setState] = useState("personal")//personal
+    const router = useRouter()
+    const [state, setState] = useState("settings")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
+    const [isLogin, setIsLogin] = useState(false)
     const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);
+    const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
     const [img, setImg] = useState(null)
-    useEffect(() => {
-        setClientData(JSON.parse(localStorage.getItem("clientData")))
-    }, [])
+
     const handleUpload = () => {
         dispatch(UploadAvatarImg(img, avatar, clientData._id));
+    }
+    const handleLogout = () => {
+        localStorage.setItem("isLogin", false)
+        localStorage.setItem("clientData", null)
+        router.push("/login")
     }
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -42,11 +50,19 @@ const page = () => {
             setAvatar(clientData?.avatar)
         }
     }, [clientData])
-
-    console.log('clientData', clientData)
+    useEffect(() => {
+        if (isUpdatedProfile) {
+            setClientData(JSON.parse(localStorage.getItem("clientData")))
+            dispatch(FalseUpdatedProfile())
+        }
+    }, [isUpdatedProfile])
+    useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
+        setClientData(JSON.parse(localStorage.getItem("clientData")))
+    }, [])
     return (
         <>
-            <PrimaHeader />
+            <PrimaHeader isLogin={isLogin} clientData={clientData} />
             <main className="tu-main tu-bgmain">
                 <div className="tu-main-section">
                     <div className="container">
@@ -116,19 +132,31 @@ const page = () => {
                                             <a
                                                 className={state === "whoBooked" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("whoBooked")}
-                                            ><i className="icon icon-book-open"></i><span>Who booked me</span></a>
+                                            ><i className="icon icon-user"></i><span>Who booked me</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "myBooking" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("myBooking")}
-                                            ><i className="icon icon-book-open"></i><span>My booking status</span></a>
+                                            ><i className="icon icon-calendar"></i><span>My booking status</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "myConnections" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("myConnections")}
-                                            ><i className="icon icon-book-open"></i><span>My connections</span></a>
+                                            ><i className="icon icon-user-plus"></i><span>My connections</span></a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a
+                                                className={state === "settings" ? "active nav-link" : "nav-link"}
+                                                onClick={() => setState("settings")}
+                                            ><i className="icon icon-settings"></i><span>Settings</span></a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a
+                                                className={state === "myConnections" ? "active nav-link" : "nav-link"}
+                                                onClick={() => handleLogout()}
+                                            ><i className="icon icon-log-out"></i><span>Logout</span></a>
                                         </li>
                                         {/* <li className="nav-item">
                                             <a href="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
@@ -143,6 +171,7 @@ const page = () => {
                             {state === "whoBooked" && <WhoBookedMe clientData={clientData} />}
                             {state === "myBooking" && <MyBookingStatus clientData={clientData} />}
                             {state === "myConnections" && <MyConnections clientData={clientData} />}
+                            {state === "settings" && <Settings clientData={clientData} />}
                         </div>
                     </div>
                 </div>

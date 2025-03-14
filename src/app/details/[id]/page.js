@@ -14,6 +14,7 @@ const page = ({ params }) => {
     const { id } = params; // Get dynamic ID from URL
     const router = useRouter()
     const dispatch = useDispatch()
+    const [isLogin, setIsLogin] = useState(false)
     const [clientData, setClientData] = useState(null)
     const [isUnlocked, setUnlocked] = useState(false)
     const isProfileDetailsLoading = useSelector((state) => state.homeInfo.isProfileDetailsLoading);
@@ -59,6 +60,7 @@ const page = ({ params }) => {
         });
     };
     useEffect(() => {
+        setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))
         dispatch(GetProfileDetails(id))
     }, [id])
@@ -72,7 +74,7 @@ const page = ({ params }) => {
     // console.log('isUnlocked', isUnlocked)
     return (
         <>
-            <PrimaHeader />
+            <PrimaHeader isLogin={isLogin} clientData={clientData} />
             {!isProfileDetailsLoading ?
                 profileDetails &&
                 <main className="tu-main tu-bgmain">
