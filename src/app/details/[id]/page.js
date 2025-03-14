@@ -21,7 +21,7 @@ const page = ({ params }) => {
     const profileDetails = useSelector((state) => state.homeInfo.profileDetails);
     const isBookLoading = useSelector((state) => state.homeInfo.isBookLoading);
     const isUnlockLoading = useSelector((state) => state.homeInfo.isUnlockLoading);
-    const { avatar, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo } = profileDetails || {}
+    const { avatar, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
     const handleBook = () => {
         dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
     }
@@ -29,15 +29,15 @@ const page = ({ params }) => {
         let arr = unlockInfo || []
         arr.push(clientData?._id)
         confirmAlert({
-            title: "Confirm To Unlock",
-            message: `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            title: isBooked ? "Un Able to Unlock" : "Confirm To Unlock",
+            message: isBooked ? "This profile is busy with her schedule" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
             buttons: [
                 {
-                    label: "Yes",
-                    onClick: () => dispatch(GetUnlock(arr, id, clientData?._id)),
+                    label: isBooked ? "Ok" : "Yes",
+                    onClick: () => !isBooked && dispatch(GetUnlock(arr, id, clientData?._id)),
                 },
                 {
-                    label: "No",
+                    label: isBooked ? "I will wait" : "No",
                 },
             ],
         });
@@ -71,7 +71,7 @@ const page = ({ params }) => {
         profileDetails !== null && setUnlocked(unlockInfo.includes(clientData?._id))
     }, [profileDetails, unlockInfo])
 
-    // console.log('isUnlocked', isUnlocked)
+    console.log('isBooked', isBooked)
     return (
         <>
             <PrimaHeader isLogin={isLogin} clientData={clientData} />

@@ -1,4 +1,4 @@
-import { GetConnectionByClient, StatusSubmit } from '@/redux/_redux/CommonAction';
+import { GetClientById, GetConnectionByClient, StatusSubmit } from '@/redux/_redux/CommonAction';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../public/function/globalFunction';
@@ -41,6 +41,12 @@ const Settings = ({ clientData }) => {
             ],
         });
     }
+    useEffect(() => {
+        console.log('hello', 123)
+        if (clientData !== null) {
+            dispatch(GetClientById(clientData?._id))
+        }
+    }, [clientData])
 
     // console.log('subCategoryList', subCategoryList)
     return (
@@ -53,7 +59,7 @@ const Settings = ({ clientData }) => {
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
                                     <h4>Some of My Operational Status</h4>
-
+                                    <h4>{clientData?.isApproved ? "APPROVED" : "UN APPROVE"}</h4>
                                 </div>
                             </div>
                             <div class="tu-box">

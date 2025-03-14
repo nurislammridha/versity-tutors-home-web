@@ -48,7 +48,7 @@ const ProfilesBody = ({ clientData }) => {
         if (clientData !== null) {
             dispatch(GetCategoryList())
             dispatch(GetDivisionList());
-            dispatch(GetProfiles({ filters: { isTutorAccount: !clientData?.isTutorAccount }, limit: 5 }))
+            dispatch(GetProfiles({ filters: { isTutorAccount: !clientData?.isTutorAccount, isApproved: true }, limit: 5 }))
         }
     }, [clientData])
     useEffect(() => {
@@ -59,7 +59,7 @@ const ProfilesBody = ({ clientData }) => {
     }, [categoryId, divisionId, districtId, subDistrictId])
     useEffect(() => {
         if (clientData !== null) {
-            const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isTutorAccount: !clientData?.isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
+            const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isApproved: true, isTutorAccount: !clientData?.isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
             if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
             if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
             if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
