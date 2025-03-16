@@ -18,7 +18,7 @@ import { ToastContainer } from 'react-toastify'
 const page = () => {
     const dispatch = useDispatch()
     const router = useRouter()
-    const [state, setState] = useState("settings")//personal
+    const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [isLogin, setIsLogin] = useState(false)

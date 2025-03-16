@@ -3594,6 +3594,9 @@ input.tu-showplaceholder::placeholder {
 .tu-banner-search .tu-appendinput .tu-select, .tu-banner-search .tu-appendinput .tu-calendar {
   width: 227px;
 }
+.tu-select-home{
+  width: 160px !important;
+}
 .tu-banner-search .tu-searcbar > a {
   width: 142px;
 }
