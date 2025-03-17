@@ -64,3 +64,30 @@ textarea:focus, input:focus{
 .mb5{margin-bottom: 5px;}
 
 
+.text-purple {
+  color: #0a0f26; /* Indigo tone like your image */
+}
+
+.btn-gradient {
+  background: linear-gradient(to right, #0a0f26, #f97316);
+  color: white;
+  border: none;
+}
+
+.btn-gradient:hover {
+  opacity: 0.9;
+  color: white;
+}
+
+.search-box {
+  margin-top: 30px;
+  background: white;
+  border-radius: 1rem; /* rounded-4 in Bootstrap 5 */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.btn-clear {
+  cursor: pointer;
+}
+
+

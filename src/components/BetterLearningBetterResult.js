@@ -66,7 +66,7 @@ const BetterLearningBetterResult = () => {
                             <div class="tu-eduplatform">
                                 <a href="blog-detail-right.html">
                                     <img src="images/index/education/img-06.png" alt="img" />
-                                    <h5>All verified students for tutors</h5>
+                                    <h5>All students for tutors</h5>
                                     <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
                                 </a>
                             </div>

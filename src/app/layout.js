@@ -44,6 +44,7 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="icon" href="images/favicon.png" type="image/x-icon" />
+        {/* <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" /> */}
         {/* <link rel="stylesheet" href="css/bootstrap.min.css" /> */}
         {/* <link rel="stylesheet" href="css/feather.css" /> */}
         {/* <link rel="stylesheet" href="css/fontawesome/fontawesome.css" /> */}

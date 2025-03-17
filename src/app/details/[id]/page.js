@@ -485,7 +485,7 @@ const page = ({ params }) => {
                                     </div> */}
                                 </div>
                                 <div className="col-xl-4 col-xxl-3">
-                                    <aside className="tu-asidedetail">
+                                    <aside className="tu-asidedetail" style={{ height: "100%" }}>
                                         <div className="tu-asideinfo text-center">
                                             <h6>Hello! You can have my teaching services direct at</h6>
                                         </div>
@@ -503,50 +503,52 @@ const page = ({ params }) => {
                                                 {isTeachingLocationOnline && <em className="fa fa-check-circle tu-colorgreen"></em>}
                                             </li>
                                         </ul>
-                                        <div className="tu-contactbox">
-                                            <h6>Contact details</h6>
-                                            <ul className="tu-listinfo">
-                                                <li>
-                                                    <span className="tu-bg-maroon"><i className="icon icon-phone-call "></i></span>
-                                                    <h6>{isUnlocked ? phone : "01XXXXXXXXX"}
-                                                        {/* <em>*** - ***</em> */}
-                                                    </h6>
-                                                </li>
-                                                <li>
-                                                    <span className="tu-bg-voilet"><i className="icon icon-mail"></i></span>
-                                                    <h6>{isUnlocked ? email : "xyz@gmail.com"}</h6>
-                                                </li>
-                                                <li>
-                                                    <span className="tu-bg-blue"><i className="fab fa-skype"></i></span>
-                                                    <h6>{isUnlocked ? skype : "xyz"}</h6>
-                                                </li>
-                                                <li>
-                                                    <span className="tu-bg-green"><i className="fab fa-whatsapp"></i></span>
-                                                    <h6>{isUnlocked ? whatsapp : "01XXXXXXXX"} </h6>
-                                                </li>
-                                                <li>
-                                                    <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
-                                                    <a href>{isUnlocked ? website : "www.xyz.com"}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                        {isUnlocked ?
-                                            <div className="tu-unlockfeature text-center">
-                                                <h3 className='text-center'>Full Address</h3>
-                                                <div>{`${areaInfo?.areaName}>${subDistrictInfo?.subDistrictName}.${districtInfo?.districtName}>${divisionInfo?.divisionName}`}</div>
-                                                <div>{address}</div>
-                                            </div> :
-                                            <div className="tu-unlockfeature text-center">
-                                                <h6>
-                                                    Click the button below to unlock the contact details
-                                                </h6>
-                                                <a
-                                                    href
-                                                    className="tu-primbtn tu-btngreen"
-                                                    onClick={() => !isUnlockLoading && handleUnlock()}
-                                                ><span>{isUnlockLoading ? "Unlocking.." : "Unlock feature"}</span><i className="icon icon-lock"></i></a>
+                                        <div style={{ position: "sticky", top: 0, zIndex: 999 }}>
+                                            <div className="tu-contactbox">
+                                                <h6>Contact details</h6>
+                                                <ul className="tu-listinfo">
+                                                    <li>
+                                                        <span className="tu-bg-maroon"><i className="icon icon-phone-call "></i></span>
+                                                        <h6>{isUnlocked ? phone : "01XXXXXXXXX"}
+                                                            {/* <em>*** - ***</em> */}
+                                                        </h6>
+                                                    </li>
+                                                    <li>
+                                                        <span className="tu-bg-voilet"><i className="icon icon-mail"></i></span>
+                                                        <h6>{isUnlocked ? email : "xyz@gmail.com"}</h6>
+                                                    </li>
+                                                    <li>
+                                                        <span className="tu-bg-blue"><i className="fab fa-skype"></i></span>
+                                                        <h6>{isUnlocked ? skype : "xyz"}</h6>
+                                                    </li>
+                                                    <li>
+                                                        <span className="tu-bg-green"><i className="fab fa-whatsapp"></i></span>
+                                                        <h6>{isUnlocked ? whatsapp : "01XXXXXXXX"} </h6>
+                                                    </li>
+                                                    <li>
+                                                        <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
+                                                        <a href>{isUnlocked ? website : "www.xyz.com"}</a>
+                                                    </li>
+                                                </ul>
                                             </div>
-                                        }
+                                            {isUnlocked ?
+                                                <div className="tu-unlockfeature text-center">
+                                                    <h3 className='text-center'>Full Address</h3>
+                                                    <div>{`${areaInfo?.areaName}>${subDistrictInfo?.subDistrictName}.${districtInfo?.districtName}>${divisionInfo?.divisionName}`}</div>
+                                                    <div>{address}</div>
+                                                </div> :
+                                                <div className="tu-unlockfeature text-center">
+                                                    <h6>
+                                                        Click the button below to unlock the contact details
+                                                    </h6>
+                                                    <a
+                                                        href
+                                                        className="tu-primbtn tu-btngreen"
+                                                        onClick={() => !isUnlockLoading && handleUnlock()}
+                                                    ><span>{isUnlockLoading ? "Unlocking.." : "Unlock feature"}</span><i className="icon icon-lock"></i></a>
+                                                </div>
+                                            }
+                                        </div>
                                     </aside>
                                 </div>
                             </div>

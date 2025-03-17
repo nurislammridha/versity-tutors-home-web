@@ -3595,7 +3595,7 @@ input.tu-showplaceholder::placeholder {
   width: 227px;
 }
 .tu-select-home{
-  width: 160px !important;
+  /* width: 100% !important; */
 }
 .tu-banner-search .tu-searcbar > a {
   width: 142px;
