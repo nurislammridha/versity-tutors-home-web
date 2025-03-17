@@ -4,8 +4,12 @@ import React, { useEffect, useState } from 'react'
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from 'react-redux';
 import { timeAgo } from '../../public/function/globalFunction';
-const Reviews = ({ clientId, commenterId }) => {
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
+import { useRouter } from 'next/navigation';
+const Reviews = ({ clientId, commenterId, isLogin }) => {
     const dispatch = useDispatch()
+    const router = useRouter()
     const [rating, setRating] = useState(4); // Default rating
     const [review, setReview] = useState(""); // Default review
     const isReviewLoading = useSelector((state) => state.homeInfo.isReviewLoading);
@@ -17,6 +21,21 @@ const Reviews = ({ clientId, commenterId }) => {
     const handleSubmit = () => {
         dispatch(SubmitReview({ clientId, commenterId, comment: review, starRating: rating }))
     }
+    const handleLogin = () => {
+        confirmAlert({
+            title: "You are advised to log in",
+            message: "Are you sure, you want to login?",
+            buttons: [
+                {
+                    label: "Login",
+                    onClick: () => router.push('/login'),
+                },
+                {
+                    label: "Not Login",
+                },
+            ],
+        });
+    };
     const handleMore = () => {
         dispatch(GetReviewByClientId(clientId, page + 1))
     }
@@ -118,7 +137,7 @@ const Reviews = ({ clientId, commenterId }) => {
                                                 placeholder="Enter description"
                                                 maxlength="500"
                                                 value={review}
-                                                onChange={(e) => setReview(e.target.value)}
+                                                onChange={(e) => isLogin ? setReview(e.target.value) : handleLogin()}
                                             >
 
                                             </textarea>

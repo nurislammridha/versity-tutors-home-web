@@ -6,7 +6,7 @@ const PrimaFooter = ({ isHome = false }) => {
             <footer>
                 <div className="tu-footer">
                     {isHome && (
-                        <div className="container">
+                        <div className="container" id='subjects'>
                             <div className="tu-footer_maintitle">
                                 <h5>Explore from our huge collection</h5>
                                 <h3>Approach tutors near to your house</h3>

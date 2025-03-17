@@ -29,15 +29,15 @@ const page = ({ params }) => {
         let arr = unlockInfo || []
         arr.push(clientData?._id)
         confirmAlert({
-            title: isBooked ? "Un Able to Unlock" : "Confirm To Unlock",
-            message: isBooked ? "This profile is busy with her schedule" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            title: !isLogin ? "You are advised to log in" : isBooked ? "Un Able to Unlock" : "Confirm To Unlock",
+            message: !isLogin ? "Are you sure you want to login?" : isBooked ? "This profile is busy with her schedule" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
             buttons: [
                 {
-                    label: isBooked ? "Ok" : "Yes",
-                    onClick: () => !isBooked && dispatch(GetUnlock(arr, id, clientData?._id)),
+                    label: !isLogin ? "Login" : isBooked ? "Ok" : "Yes",
+                    onClick: () => !isLogin ? router.push('/login') : !isBooked && dispatch(GetUnlock(arr, id, clientData?._id)),
                 },
                 {
-                    label: isBooked ? "I will wait" : "No",
+                    label: !isLogin ? "Not Login" : isBooked ? "I will wait" : "No",
                 },
             ],
         });
@@ -46,15 +46,15 @@ const page = ({ params }) => {
         let arr = unlockInfo || []
         arr.push(clientData?._id)
         confirmAlert({
-            title: isUnlocked ? "Confirm To Book" : "Confirm To Unlock",
-            message: isUnlocked ? "Are you sure to book?" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            title: !isLogin ? "You are advised to log in" : isBooked ? "Un Able to Unlock" : isUnlocked ? "Confirm To Book" : "Confirm To Unlock",
+            message: !isLogin ? "Are you sure you want to login?" : isBooked ? "This profile is busy with her schedule" : isUnlocked ? "Are you sure to book?" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
             buttons: [
                 {
-                    label: "Yes",
-                    onClick: () => isUnlocked ? handleBook() : dispatch(GetUnlock(arr, id, clientData?._id)),
+                    label: !isLogin ? "Login" : "Yes",
+                    onClick: () => !isLogin ? router.push('/login') : isUnlocked ? handleBook() : dispatch(GetUnlock(arr, id, clientData?._id)),
                 },
                 {
-                    label: "No",
+                    label: !isLogin ? "Not Login" : "No",
                 },
             ],
         });
@@ -66,8 +66,8 @@ const page = ({ params }) => {
     }, [id])
 
     useEffect(() => {
-        console.log('unlockInfo', unlockInfo)
-        console.log('clientData?._id', clientData)
+        // console.log('unlockInfo', unlockInfo)
+        // console.log('clientData?._id', clientData)
         profileDetails !== null && setUnlocked(unlockInfo.includes(clientData?._id))
     }, [profileDetails, unlockInfo])
 
@@ -334,7 +334,7 @@ const page = ({ params }) => {
                                                     </div>
                                                 </div> */}
                                             </div>
-                                            <Reviews clientId={id} commenterId={clientData?._id} />
+                                            <Reviews clientId={id} commenterId={clientData?._id} isLogin={isLogin} />
                                         </div>
                                     </div>
                                     {/* <div className="tu-Joincommunity">
@@ -487,7 +487,7 @@ const page = ({ params }) => {
                                 <div className="col-xl-4 col-xxl-3">
                                     <aside className="tu-asidedetail" style={{ height: "100%" }}>
                                         <div className="tu-asideinfo text-center">
-                                            <h6>Hello! You can have my teaching services direct at</h6>
+                                            <h6>{isBooked ? "I'm Booked now, Please wait and check after few days." : "Hello! You can have my teaching services direct at"}</h6>
                                         </div>
                                         <ul className="tu-featureinclude">
                                             <li>

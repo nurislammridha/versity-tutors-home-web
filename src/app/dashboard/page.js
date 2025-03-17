@@ -10,7 +10,7 @@ import Settings from '@/components/Settings'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import WhoBookedMe from '@/components/WhoBookedMe'
 import { FalseUpdatedProfile, UploadAvatarImg } from '@/redux/_redux/CommonAction'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
@@ -18,6 +18,8 @@ import { ToastContainer } from 'react-toastify'
 const page = () => {
     const dispatch = useDispatch()
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const name = searchParams.get('name');
     const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
@@ -55,7 +57,10 @@ const page = () => {
             setClientData(JSON.parse(localStorage.getItem("clientData")))
             dispatch(FalseUpdatedProfile())
         }
-    }, [isUpdatedProfile])
+        if (name) {
+            setState(name)
+        }
+    }, [isUpdatedProfile, name])
     useEffect(() => {
         setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))

@@ -2374,8 +2374,9 @@ input.tu-showplaceholder::placeholder {
 }
 
 .sub-menu {
+  margin-top: -30px;
   right: 0;
-  display: none;
+  /* display: none; */
   margin-left: 0;
   padding: 0;
   width: 265px;

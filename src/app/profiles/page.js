@@ -14,7 +14,7 @@ const page = () => {
     return (
         <>
             <PrimaHeader isLogin={isLogin} clientData={clientData} />
-            <ProfilesBody clientData={clientData} />
+            <ProfilesBody clientData={clientData} isLogin={isLogin} />
             <PrimaFooter />
         </>
     )

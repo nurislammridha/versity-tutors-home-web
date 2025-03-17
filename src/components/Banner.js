@@ -1,6 +1,38 @@
-import React from 'react'
+import { DistrictByDivisionId, GetCategoryList, GetDivisionList } from '@/redux/_redux/CommonAction'
+import { useRouter } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Banner = () => {
+    const router = useRouter()
+    const dispatch = useDispatch()
+    const categoryList = useSelector((state) => state.homeInfo.categoryList);
+    const divisionList = useSelector((state) => state.homeInfo.divisionList);
+    const districtList = useSelector((state) => state.homeInfo.districtList);
+    const [filtered, setFiltered] = useState({
+        lookingFor: "Tutor",
+        classes: "",
+        division: "",
+        district: ""
+    })
+    const handleChange = (name, val) => {
+        setFiltered({ ...filtered, [name]: val })
+    }
+    const handleClick = () => {
+        const queryString = new URLSearchParams(filtered).toString();
+        router.push(`/profiles?${queryString}`);
+    };
+    useEffect(() => {
+        dispatch(GetCategoryList())
+        dispatch(GetDivisionList());
+    }, [])
+    useEffect(() => {
+        if (filtered.division.length > 0) {
+            dispatch(DistrictByDivisionId(filtered.division))
+        }
+    }, [filtered.division])
+
+    // console.log('filtered', filtered)
     return (
         <div class="tu-bannervthree">
             <div class="tu-particles">
@@ -22,34 +54,65 @@ const Banner = () => {
 
                             <div class="d-flex flex-column flex-grow-1">
                                 <label class="form-label fw-semibold text-purple">I'm looking for</label>
-                                <select class="form-select">
-                                    <option>Tutor</option>
-                                    <option>Option 1</option>
-                                    <option>Option 2</option>
+                                <select
+                                    class="form-select"
+                                    onChange={(e) => handleChange("lookingFor", e.target.value)}
+                                >
+                                    {/* <option >Select Type</option> */}
+                                    <option value={"Tutor"}>Tutor</option>
+                                    <option value={"Student"}>Student</option>
                                 </select>
                             </div>
 
                             <div class="d-flex flex-column flex-grow-1">
-                                <label class="form-label fw-semibold text-purple">Select Subjects</label>
-                                <select class="form-select">
-                                    <option>Select Subject</option>
-                                    <option>Single</option>
-                                    <option>Married</option>
+                                <label class="form-label fw-semibold text-purple">Select Classes</label>
+                                <select
+                                    class="form-select"
+                                    onChange={(e) => handleChange("classes", e.target.value)}
+                                >
+                                    <option>Select Classes</option>
+                                    {categoryList?.length > 0 && categoryList.map((item, index) => (
+                                        <option key={index} value={item._id}>{item.categoryName}</option>
+                                    ))}
                                 </select>
                             </div>
                             <div class="d-flex flex-column flex-grow-1">
                                 <label class="form-label fw-semibold text-purple">Select Area</label>
-                                <select class="form-select">
-                                    <option>Select Division</option>
-                                    <option>Single</option>
-                                    <option>Married</option>
-                                </select>
+                                {filtered.division.length === 0 &&
+                                    (<select
+                                        class="form-select"
+                                        onChange={(e) => handleChange("division", e.target.value)}
+                                    >
+                                        <option>Select Division</option>
+                                        {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                            <option key={index} value={item._id}>{item.divisionName}</option>
+                                        ))}
+                                    </select>)
+
+                                }
+                                {filtered.division.length > 0 &&
+                                    (<select
+                                        class="form-select"
+                                        onChange={(e) => handleChange("district", e.target.value)}
+                                    >
+                                        <option>Select District</option>
+                                        {districtList?.length > 0 && districtList.map((item, index) => (
+                                            <option key={index} value={item._id}>{item.districtName}</option>
+                                        ))}
+                                    </select>)
+
+                                }
+
+
                             </div>
 
 
 
                             <div class="d-flex align-items-end">
-                                <button class="btn btn-gradient px-4 py-2 d-flex align-items-center gap-2 rounded-pill">
+                                <button
+                                    class="btn btn-gradient px-4 py-2 d-flex align-items-center gap-2 rounded-pill"
+                                    onClick={() => handleClick()}
+                                >
                                     <i class="fa fa-search"></i> Search Profile
                                 </button>
                             </div>

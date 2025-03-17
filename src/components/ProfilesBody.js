@@ -1,10 +1,15 @@
 import { AreaBySubDistrictId, DistrictByDivisionId, GetCategoryList, GetDivisionList, GetProfiles, GetSubCategoryByCategoryId, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-const ProfilesBody = ({ clientData }) => {
+const ProfilesBody = ({ clientData, isLogin }) => {
     const router = useRouter()
+    const searchParams = useSearchParams();
+    const lookingFor = searchParams.get('lookingFor');
+    const classes = searchParams.get('classes');
+    const division = searchParams.get('division');
+    const district = searchParams.get('district');
     const dispatch = useDispatch()
     const [categoryId, setCategoryId] = useState("")
     const [subCategoryId, setSubCategoryId] = useState([])
@@ -17,6 +22,7 @@ const ProfilesBody = ({ clientData }) => {
     const [gender, setGender] = useState("")
     const [search, setSearch] = useState("")
     const [sortBy, setSortBy] = useState("Best Match")
+    const [isTutorAccount, setTutorAccount] = useState(true)
     const [currentPage, setCurrentPage] = useState(1)
     const [isTeachingLocationOnline, setTeachingLocationOnline] = useState(false)
     const [isTeachingLocationTutorHome, setTeachingLocationTutorHome] = useState(false)
@@ -45,12 +51,18 @@ const ProfilesBody = ({ clientData }) => {
     };
 
     useEffect(() => {
-        if (clientData !== null) {
-            dispatch(GetCategoryList())
-            dispatch(GetDivisionList());
-            dispatch(GetProfiles({ filters: { isTutorAccount: !clientData?.isTutorAccount, isApproved: true }, limit: 5 }))
+        dispatch(GetCategoryList())
+        dispatch(GetDivisionList());
+        if (clientData !== null && isLogin) {
+            setTutorAccount(!clientData?.isTutorAccount)
+            dispatch(GetProfiles({ filters: { isTutorAccount, isApproved: isTutorAccount ? true : false }, limit: 5 }))
+        } else {
+            lookingFor.length > 0 && lookingFor === "Tutor" ? setTutorAccount(true) : setTutorAccount(false)
+            division.length > 0 && setDivisionId(division)
+            district.length > 0 && setDistrictId(district)
+            classes.length > 0 && setCategoryId(classes)
         }
-    }, [clientData])
+    }, [clientData, lookingFor, division, district, classes])
     useEffect(() => {
         categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(categoryId))
         districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
@@ -58,17 +70,17 @@ const ProfilesBody = ({ clientData }) => {
         subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
     }, [categoryId, divisionId, districtId, subDistrictId])
     useEffect(() => {
-        if (clientData !== null) {
-            const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isApproved: true, isTutorAccount: !clientData?.isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
-            if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
-            if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
-            if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
-            if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
-            dispatch(GetProfiles(obj))
-        }
+        // if (clientData !== null) {
+        const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isApproved: isTutorAccount ? true : false, isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
+        if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
+        if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
+        if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
+        if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
+        dispatch(GetProfiles(obj))
+        // }
     }, [currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
 
-    // console.log('maxPrice', maxPrice)
+    // console.log('queryString', lookingFor, division, district, classes)
     return (
         <>
             <main class="tu-bgmain tu-main">
@@ -78,7 +90,7 @@ const ProfilesBody = ({ clientData }) => {
                             <div class="col-lg-12">
                                 <div class="tu-listing-wrapper">
                                     <div class="tu-sort">
-                                        <h3>{total} Search result in<span>{search}</span></h3>
+                                        <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3>
                                         <div class="tu-sort-right-area">
                                             <div class="tu-sortby">
                                                 <span>Sort by: </span>
@@ -173,6 +185,7 @@ const ProfilesBody = ({ clientData }) => {
                                                                 data-placeholder="Select education level"
                                                                 data-placeholderinput="Select education level"
                                                                 class="form-control tu-input-field"
+                                                                value={categoryId}
                                                                 onChange={(e) => {
                                                                     setCategoryId(e.target.value)
                                                                     setSubCategoryId([])
@@ -528,10 +541,10 @@ const ProfilesBody = ({ clientData }) => {
                                                 <div class="tu-listinginfo_title">
                                                     <div class="tu-listinginfo-img">
                                                         <figure>
-                                                            <img src="images/listing/img-01.png" alt="imge" />
+                                                            <img src={item?.avatar.url} alt="imge" style={{ width: "50px", height: "50px" }} />
                                                         </figure>
                                                         <div class="tu-listing-heading">
-                                                            <h5><a href="tutor-detail.html">{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            <h5><a href onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <div class="tu-listing-location">
                                                                 <span>5.0 <i class="fa-solid fa-star"></i><em>(4,448)</em></span><address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
                                                             </div>
