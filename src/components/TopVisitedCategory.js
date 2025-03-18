@@ -2,7 +2,17 @@ import React, { useEffect } from 'react'
 import $ from 'jquery';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
+import { useRouter } from 'next/navigation';
 const TopVisitedCategory = ({ data }) => {
+    const router = useRouter()
+    const handleClick = (id) => {
+        const filtered = {
+            lookingFor: "Tutor",
+            classes: id,
+        }
+        const queryString = new URLSearchParams(filtered).toString();
+        router.push(`/profiles?${queryString}`);
+    };
     useEffect(() => {
         const sliderElement = document.getElementById('tu-categoriesslider');
         if (sliderElement && data) {
@@ -55,7 +65,7 @@ const TopVisitedCategory = ({ data }) => {
                                         <a
                                             class="tu-categories_content"
                                             href
-
+                                            onClick={() => handleClick(item?._id)}
                                         >
                                             <img src={item?.img?.url} alt="img" style={{ width: 249, height: 249 }} />
                                             <div class="tu-categories_title">

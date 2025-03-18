@@ -87,12 +87,12 @@ const FeaturedTutor = () => {
                                                 <div className="tu-instructors_footer">
                                                     <div className="tu-rating">
                                                         <i className="fas fa-star"></i>
-                                                        <h6>5.0</h6>
-                                                        <span>(66,951)</span>
+                                                        <h6>{item?.averageRating}</h6>
+                                                        <span>({item?.totalComments})</span>
                                                     </div>
-                                                    <div className="tu-instructors_footer-right">
+                                                    {/* <div className="tu-instructors_footer-right">
                                                         <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
-                                                    </div>
+                                                    </div> */}
                                                 </div>
                                             </div>
                                         </div>

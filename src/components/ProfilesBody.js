@@ -10,6 +10,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
     const classes = searchParams.get('classes');
     const division = searchParams.get('division');
     const district = searchParams.get('district');
+    const subjects = searchParams.get('subjects');
     const dispatch = useDispatch()
     const [categoryId, setCategoryId] = useState("")
     const [subCategoryId, setSubCategoryId] = useState([])
@@ -57,12 +58,13 @@ const ProfilesBody = ({ clientData, isLogin }) => {
             setTutorAccount(!clientData?.isTutorAccount)
             dispatch(GetProfiles({ filters: { isTutorAccount, isApproved: isTutorAccount ? true : false }, limit: 5 }))
         } else {
-            lookingFor.length > 0 && lookingFor === "Tutor" ? setTutorAccount(true) : setTutorAccount(false)
-            division.length > 0 && setDivisionId(division)
-            district.length > 0 && setDistrictId(district)
-            classes.length > 0 && setCategoryId(classes)
+            lookingFor?.length > 0 && lookingFor === "Tutor" ? setTutorAccount(true) : setTutorAccount(false)
+            division?.length > 0 && setDivisionId(division)
+            district?.length > 0 && setDistrictId(district)
+            classes?.length > 0 && setCategoryId(classes)
+            subjects?.length > 0 && setSubCategoryId(subjects)
         }
-    }, [clientData, lookingFor, division, district, classes])
+    }, [clientData, lookingFor, division, district, classes, subjects])
     useEffect(() => {
         categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(categoryId))
         districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
@@ -546,7 +548,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         <div class="tu-listing-heading">
                                                             <h5><a href onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <div class="tu-listing-location">
-                                                                <span>5.0 <i class="fa-solid fa-star"></i><em>(4,448)</em></span><address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
+                                                                <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span><address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
                                                             </div>
                                                         </div>
                                                     </div>

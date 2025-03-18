@@ -26,7 +26,7 @@ export default function Home({ navigation }) {
   const [clientData, setClientData] = useState(null)
   const homeData = useSelector((state) => state.homeInfo.homeData);
   const isHomeDataLoading = useSelector((state) => state.homeInfo.isHomeDataLoading);
-  const { topCat, count } = homeData || {}
+  const { topCat, count, subCatGroup } = homeData || {}
   // const homeData = useSelector((state) => state.homeInfo.homeData);
   useEffect(() => {
     // Check if the DOM element is mounted
@@ -162,7 +162,7 @@ export default function Home({ navigation }) {
       {/* <!-- PROFESSIONOLL  END -->  */}
     </main>
     {/* <!-- MAIN END --> */}
-    <PrimaFooter isHome />
+    <PrimaFooter isHome data={subCatGroup} />
 
   </>);
 }

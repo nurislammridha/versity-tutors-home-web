@@ -24,7 +24,7 @@ const page = ({ params }) => {
     const isUnlockLoading = useSelector((state) => state.homeInfo.isUnlockLoading);
     const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
     const isStatusLoading = useSelector((state) => state.homeInfo.isStatusLoading);
-    const { avatar, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
+    const { avatar, averageRating, totalComments, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
     const handleBook = () => {
         dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
     }
@@ -120,10 +120,10 @@ const page = ({ params }) => {
                                                     </div>
                                                     <ul className="tu-tutorreview">
                                                         <li>
-                                                            <span><i className="fa fa-star tu-coloryellow"> <em>4.5<span>/5.0</span></em> </i>  <em>(4,448)</em></span>
+                                                            <span><i className="fa fa-star tu-coloryellow"> <em>{averageRating}<span>/5.0</span></em> </i>  <em>({totalComments})</em></span>
                                                         </li>
                                                         <li>
-                                                            <span><i className="fa fa-check-circle tu-colorgreen"><em>95%</em></i><em>Job compeletion</em></span>
+                                                            <span><i className="fa fa-check-circle tu-colorgreen"><em>{unlockInfo.length}</em></i><em>profile unlocked him</em></span>
                                                         </li>
                                                         <li>
                                                             <span><i className="icon icon-map-pin"><span>{districtInfo.districtName}, {divisionInfo?.divisionName}</span></i></span>

@@ -1,6 +1,25 @@
+import { useRouter } from 'next/navigation';
 import React from 'react'
 
-const PrimaFooter = ({ isHome = false }) => {
+const PrimaFooter = ({ isHome = false, data = null }) => {
+    const router = useRouter()
+    const handleClick = (id) => {
+        const filtered = {
+            lookingFor: "Tutor",
+            classes: id,
+        }
+        const queryString = new URLSearchParams(filtered).toString();
+        router.push(`/profiles?${queryString}`);
+    };
+    const handleSub = (id, subCat) => {
+        const filtered = {
+            lookingFor: "Tutor",
+            classes: id,
+            subjects: subCat
+        }
+        const queryString = new URLSearchParams(filtered).toString();
+        router.push(`/profiles?${queryString}`);
+    };
     return (
         <>
             <footer>
@@ -8,98 +27,31 @@ const PrimaFooter = ({ isHome = false }) => {
                     {isHome && (
                         <div className="container" id='subjects'>
                             <div className="tu-footer_maintitle">
-                                <h5>Explore from our huge collection</h5>
-                                <h3>Approach tutors near to your house</h3>
+                                <h5>Explore tutor from our huge collection</h5>
+                                <h3>Approach tutors by your favourite subjects</h3>
                             </div>
                             <div className="row tu-footer_row">
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Atlanta</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech IT</a></li>
-                                        <li><a href="search-listing.html">B.Tech Chemical</a></li>
-                                        <li><a href="search-listing.html">B.Tech Petroleum</a></li>
-                                        <li><a href="search-listing.html">B.Tech Ceramic</a></li>
-                                        <li><a href="search-listing.html">B.Tech Production</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Atlanta</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Robotics</a></li>
-                                        <li><a href="search-listing.html">B.Tech Industrial</a></li>
-                                        <li><a href="search-listing.html">B.Tech Biotech</a></li>
-                                        <li><a href="search-listing.html">B.Tech Communications</a></li>
-                                        <li><a href="search-listing.html">B.Tech Civil</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Tulsa</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Ceramic</a></li>
-                                        <li><a href="search-listing.html">B.Tech Mechatronics</a></li>
-                                        <li><a href="search-listing.html">B.Tech Aerospace</a></li>
-                                        <li><a href="search-listing.html">B.Tech Mechatronics</a></li>
-                                        <li><a href="search-listing.html">B.Tech Power</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Oklahoma City</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Ceramic</a></li>
-                                        <li><a href="search-listing.html">B.Tech Aeronautical</a></li>
-                                        <li><a href="search-listing.html">B.Tech Communications</a></li>
-                                        <li><a href="search-listing.html">B.Tech Electrical</a></li>
-                                        <li><a href="search-listing.html">Content writing</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Virginia Beach</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Environmental</a></li>
-                                        <li><a href="search-listing.html">B.Tech Mech</a></li>
-                                        <li><a href="search-listing.html">B.Tech Robotics</a></li>
-                                        <li><a href="search-listing.html">B.Tech Transportation</a></li>
-                                        <li><a href="search-listing.html">B.Tech Marine</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in San Francisco</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Marine</a></li>
-                                        <li><a href="search-listing.html">B.Tech Environmental</a></li>
-                                        <li><a href="search-listing.html">B.Tech Textile</a></li>
-                                        <li><a href="search-listing.html">B.Tech ECE</a></li>
-                                        <li><a href="search-listing.html">B.Tech CSE</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Mesa</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech ECE</a></li>
-                                        <li><a href="search-listing.html">B.Tech IT</a></li>
-                                        <li><a href="search-listing.html">B.Tech Industrial</a></li>
-                                        <li><a href="search-listing.html">B.Tech Aeronautical</a></li>
-                                        <li><a href="search-listing.html">B.Tech CSE</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
-                                <div className="col-sm-6 col-md-4 col-lg-3">
-                                    <h5 className="tu-footertitle">Tutors in Boston</h5>
-                                    <ul className="tu-footerlist">
-                                        <li><a href="search-listing.html">B.Tech Petroleum</a></li>
-                                        <li><a href="search-listing.html">B.Tech Metallurgical</a></li>
-                                        <li><a href="search-listing.html">B.Tech Mining</a></li>
-                                        <li><a href="search-listing.html">B.Tech Power</a></li>
-                                        <li><a href="search-listing.html">B.Tech Aerospace</a></li>
-                                        <li className="tu-footerlist-explore"><a href="search-listing.html">Explore all</a></li>
-                                    </ul>
-                                </div>
+                                {data !== null && data.map((item, index) => (
+                                    <div className="col-sm-6 col-md-4 col-lg-3" key={index}>
+                                        <h5 className="tu-footertitle">{item?.categoryName}</h5>
+                                        <ul className="tu-footerlist">
+                                            {item?.subCategory.slice(0, 5).map((item2, index2) => (
+                                                <li key={index2}>
+                                                    <a
+                                                        href
+                                                        onClick={() => handleSub(item?._id, item2._id)}
+                                                    >
+                                                        {item2?.subCategoryName}</a></li>
+                                            ))}
+                                            <li className="tu-footerlist-explore">
+                                                <a
+                                                    href
+                                                    onClick={() => handleClick(item?._id)}
+                                                >Explore all</a></li>
+                                        </ul>
+                                    </div>
+                                ))}
+
                             </div>
                         </div>
                     )}
