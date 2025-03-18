@@ -15,12 +15,18 @@ import Banner from "@/components/Banner";
 import TopVisitedCategory from "@/components/TopVisitedCategory";
 import BetterLearningBetterResult from "@/components/BetterLearningBetterResult";
 import SuccessStory from "@/components/SuccessStory";
+import { useDispatch, useSelector } from "react-redux";
+import { GetHomeData } from "@/redux/_redux/CommonAction";
 export default function Home({ navigation }) {
   const router = useRouter()
+  const dispatch = useDispatch()
   const el = useRef(null); // Reference for the target element
   const typedInstance = useRef(null);
   const [isLogin, setIsLogin] = useState(false)
   const [clientData, setClientData] = useState(null)
+  const homeData = useSelector((state) => state.homeInfo.homeData);
+  const isHomeDataLoading = useSelector((state) => state.homeInfo.isHomeDataLoading);
+  const { topCat, count } = homeData || {}
   // const homeData = useSelector((state) => state.homeInfo.homeData);
   useEffect(() => {
     // Check if the DOM element is mounted
@@ -131,9 +137,10 @@ export default function Home({ navigation }) {
   useEffect(() => {
     setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
     setClientData(JSON.parse(localStorage.getItem("clientData")))
+    dispatch(GetHomeData())
   }, [])
 
-
+  console.log('homeData', homeData)
   return (<>
     <SecondaryHeader isLogin={isLogin} clientData={clientData} />
 
@@ -142,9 +149,9 @@ export default function Home({ navigation }) {
     {/* <!-- BANNER END --> */}
     {/* <!-- MAIN START --> */}
     <main class="tu-main">
-      <div id="services"><BetterLearningBetterResult /></div>
+      <div id="services"><BetterLearningBetterResult data={count} /></div>
       {/* <!-- QUICK START --> */}
-      <div id="classes"><TopVisitedCategory /></div>
+      <div id="classes"><TopVisitedCategory data={topCat} /></div>
       {/* <!-- QUICK END --> */}
 
       {/* <!-- SUCCESS START --> */}

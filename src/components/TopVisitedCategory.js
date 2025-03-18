@@ -2,10 +2,10 @@ import React, { useEffect } from 'react'
 import $ from 'jquery';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
-const TopVisitedCategory = () => {
+const TopVisitedCategory = ({ data }) => {
     useEffect(() => {
         const sliderElement = document.getElementById('tu-categoriesslider');
-        if (sliderElement) {
+        if (sliderElement && data) {
             const splideInstance = new Splide('#tu-categoriesslider', {
                 type: 'loop',
                 perPage: 4,
@@ -30,7 +30,7 @@ const TopVisitedCategory = () => {
                 splideInstance.destroy();
             };
         }
-    }, []);
+    }, [data]);
     return (
         <>
             <section class="tu-main-section">
@@ -48,96 +48,24 @@ const TopVisitedCategory = () => {
                     <div id="tu-categoriesslider" class="splide tu-categoriesslider tu-splidedots">
                         <div class="splide__track">
                             <ul class="splide__list">
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-09.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Music learning</h6>
-                                            <span>6,301 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-10.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Computer &amp; hardware</h6>
-                                            <span>4,329 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-11.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Beauty learning</h6>
-                                            <span>6,406 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-12.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>IT &amp; development</h6>
-                                            <span>5,925 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-13.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Islamic education</h6>
-                                            <span>4,157 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-09.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Music learning</h6>
-                                            <span>6,301 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-10.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Computer &amp; hardware</h6>
-                                            <span>4,329 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-11.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Beauty learning</h6>
-                                            <span>6,406 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-12.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>IT &amp; development</h6>
-                                            <span>5,925 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li class="splide__slide">
-                                    <a class="tu-categories_content" href="search-listing-two.html">
-                                        <img src="images/index/categories/img-13.jpg" alt="img" />
-                                        <div class="tu-categories_title">
-                                            <h6>Islamic education</h6>
-                                            <span>4,157 Listings</span>
-                                        </div>
-                                    </a>
-                                </li>
+
+                                {data && data.map((item, index) => (
+                                    <li class="splide__slide" key={index}>
+                                        {/* "images/index/categories/img-10.jpg" */}
+                                        <a
+                                            class="tu-categories_content"
+                                            href
+
+                                        >
+                                            <img src={item?.img?.url} alt="img" style={{ width: 249, height: 249 }} />
+                                            <div class="tu-categories_title">
+                                                <h6>{item?.categoryName}</h6>
+                                                <span>{item?.subCategoryCount} Listings</span>
+                                            </div>
+                                        </a>
+                                    </li>
+                                ))}
+
                             </ul>
                         </div>
                     </div>

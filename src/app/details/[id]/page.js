@@ -2,7 +2,7 @@
 import PrimaFooter from '@/components/PrimaFooter';
 import PrimaHeader from '@/components/PrimaHeader';
 import Reviews from '@/components/Reviews';
-import { GetProfileDetails, GetUnlock, SubmitBook } from '@/redux/_redux/CommonAction';
+import { FalseUpdatedProfile, GetProfileDetails, GetUnlock, StatusSubmit, SubmitBook } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,10 +17,13 @@ const page = ({ params }) => {
     const [isLogin, setIsLogin] = useState(false)
     const [clientData, setClientData] = useState(null)
     const [isUnlocked, setUnlocked] = useState(false)
+    const [isWished, setWished] = useState(false)
     const isProfileDetailsLoading = useSelector((state) => state.homeInfo.isProfileDetailsLoading);
     const profileDetails = useSelector((state) => state.homeInfo.profileDetails);
     const isBookLoading = useSelector((state) => state.homeInfo.isBookLoading);
     const isUnlockLoading = useSelector((state) => state.homeInfo.isUnlockLoading);
+    const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
+    const isStatusLoading = useSelector((state) => state.homeInfo.isStatusLoading);
     const { avatar, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
     const handleBook = () => {
         dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
@@ -59,11 +62,23 @@ const page = ({ params }) => {
             ],
         });
     };
+    const handleWish = () => {
+        let arr = clientData?.wishList || []
+        isWished ? arr = arr.filter(item => item._id.toString() !== id) : arr.push(id)
+        dispatch(StatusSubmit({ wishList: arr }, clientData._id,))
+    }
     useEffect(() => {
         setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))
         dispatch(GetProfileDetails(id))
     }, [id])
+    useEffect(() => {
+        if (isUpdatedProfile) {
+            setClientData(JSON.parse(localStorage.getItem("clientData")))
+            dispatch(FalseUpdatedProfile())
+        }
+        clientData !== null && setWished(clientData?.wishList.some(wish => wish._id.toString() === id))
+    }, [isUpdatedProfile, clientData])
 
     useEffect(() => {
         // console.log('unlockInfo', unlockInfo)
@@ -71,7 +86,7 @@ const page = ({ params }) => {
         profileDetails !== null && setUnlocked(unlockInfo.includes(clientData?._id))
     }, [profileDetails, unlockInfo])
 
-    console.log('isBooked', isBooked)
+    console.log('clientData', clientData)
     return (
         <>
             <PrimaHeader isLogin={isLogin} clientData={clientData} />
@@ -132,10 +147,17 @@ const page = ({ params }) => {
                                                 <a href>{website}<i className="icon icon-copy"></i></a>
                                             </div>
                                             <ul className="tu-profilelinksbtn">
-                                                {/* <li>
-                                                    <a className="tu-linkheart" href><i className="icon icon-heart"></i><span>Save</span></a>
-                                                </li>
-                                                <li><a href="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
+                                                {isLogin &&
+                                                    <li>
+                                                        <a
+                                                            className="tu-linkheart"
+                                                            href
+                                                            onClick={() => !isStatusLoading && handleWish()}
+                                                        >
+                                                            <i className="icon icon-heart"></i><span>{isStatusLoading ? isWished ? "Removing" : "Saving" : isWished ? "Saved" : "Save"}</span></a>
+                                                    </li>
+                                                }
+                                                {/* <li><a href="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
                                                 <li>
                                                     <a
                                                         href

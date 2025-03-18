@@ -73,6 +73,9 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                         <a onClick={() => router.push('/dashboard?name=myConnections')}><i class="icon icon-user-plus"></i>My connections</a>
                                     </li>
                                     <li>
+                                        <a onClick={() => router.push('/dashboard?name=wishList')}><i class="icon icon-heart"></i>My savings list</a>
+                                    </li>
+                                    <li>
                                         <a onClick={() => router.push('/dashboard?name=settings')}><i class="icon icon-settings"></i>Settings</a>
                                     </li>
                                     <li>

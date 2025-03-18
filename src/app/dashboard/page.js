@@ -9,6 +9,7 @@ import PrimaHeader from '@/components/PrimaHeader'
 import Settings from '@/components/Settings'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import WhoBookedMe from '@/components/WhoBookedMe'
+import WishList from '@/components/WishList'
 import { FalseUpdatedProfile, UploadAvatarImg } from '@/redux/_redux/CommonAction'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -153,6 +154,12 @@ const page = () => {
                                         </li>
                                         <li className="nav-item">
                                             <a
+                                                className={state === "wishList" ? "active nav-link" : "nav-link"}
+                                                onClick={() => setState("wishList")}
+                                            ><i className="icon icon-heart"></i><span>Saving List</span></a>
+                                        </li>
+                                        <li className="nav-item">
+                                            <a
                                                 className={state === "settings" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("settings")}
                                             ><i className="icon icon-settings"></i><span>Settings</span></a>
@@ -176,6 +183,7 @@ const page = () => {
                             {state === "whoBooked" && <WhoBookedMe clientData={clientData} />}
                             {state === "myBooking" && <MyBookingStatus clientData={clientData} />}
                             {state === "myConnections" && <MyConnections clientData={clientData} />}
+                            {state === "wishList" && <WishList clientData={clientData} />}
                             {state === "settings" && <Settings clientData={clientData} />}
                         </div>
                     </div>

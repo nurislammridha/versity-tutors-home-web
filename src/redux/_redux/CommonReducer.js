@@ -95,6 +95,8 @@ const initialState = {
   isUnlockLoading: false,
   isStatusLoading: false,
   isUpdatedProfile: false,
+  isHomeDataLoading: false,
+  homeData: null,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -382,6 +384,16 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isUpdatedProfile: action.payload,
+      };
+    case Types.IS_HOME_DATA_LOADING:
+      return {
+        ...state,
+        isHomeDataLoading: action.payload,
+      };
+    case Types.HOME_DATA_INFO:
+      return {
+        ...state,
+        homeData: action.payload,
       };
 
     default:

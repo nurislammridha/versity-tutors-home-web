@@ -1,6 +1,7 @@
 import React from 'react'
 
-const BetterLearningBetterResult = () => {
+const BetterLearningBetterResult = ({ data }) => {
+    const { totalActiveTutor, totalStudent, totalSubject, totalArea } = data || {}
     return (
         <>
             {/* <!-- PLATFORM START --> */}
@@ -86,21 +87,21 @@ const BetterLearningBetterResult = () => {
                             <li>
                                 <img src="images/stats/img-01.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to="560616" data-speed="8000" data-refresh-interval="50">560,616</span></h4>
+                                    <h4><span data-from="0" data-to={totalActiveTutor} data-speed="8000" data-refresh-interval="50">{totalActiveTutor}</span></h4>
                                     <p>Total active verified instructor available on the platform</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="images/stats/img-02.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to="648482" data-speed="8000" data-refresh-interval="50">648,482</span></h4>
+                                    <h4><span data-from="0" data-to={totalStudent} data-speed="8000" data-refresh-interval="50">{totalStudent}</span></h4>
                                     <p>Total active student available on the platform</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="images/stats/img-03.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to="560616" data-speed="8000" data-refresh-interval="50">560,616</span></h4>
+                                    <h4><span data-from="0" data-to={totalSubject} data-speed="8000" data-refresh-interval="50">{totalSubject}</span></h4>
                                     {/* <h4><span data-from="0" data-to="20" data-speed="8000" data-refresh-interval="50">20</span>+ Hours</h4> */}
                                     <p>Total subjects available on the platform</p>
                                 </div>
@@ -108,7 +109,7 @@ const BetterLearningBetterResult = () => {
                             <li>
                                 <img src="images/stats/img-04.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to="560616" data-speed="8000" data-refresh-interval="50">560,616</span></h4>
+                                    <h4><span data-from="0" data-to={totalArea} data-speed="8000" data-refresh-interval="50">{totalArea}</span></h4>
                                     {/* <h4><span data-from="0" data-to="7" data-speed="8000" data-refresh-interval="50">7</span>+ Million</h4> */}
                                     <p>Total area  available on the platform</p>
                                 </div>

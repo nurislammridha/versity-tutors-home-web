@@ -873,6 +873,7 @@ export const GetUnlock = (arr, id, myId) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+//any thing update without checking/ validation
 export const StatusSubmit = (data, id) => (dispatch) => {
 
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
@@ -890,6 +891,25 @@ export const StatusSubmit = (data, id) => (dispatch) => {
         });
     } catch (error) {
         dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetHomeData = () => (dispatch) => {
+
+    const url = `${process.env.NEXT_PUBLIC_API_URL}web-home`;
+    dispatch({ type: Types.IS_HOME_DATA_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_HOME_DATA_LOADING, payload: false });
+                dispatch({ type: Types.HOME_DATA_INFO, payload: res?.data?.result });
+
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_HOME_DATA_LOADING, payload: false });
         showToast("error", "Something went wrong");
     }
 };

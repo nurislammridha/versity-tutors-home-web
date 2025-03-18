@@ -4,7 +4,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import $ from 'jquery';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
+import { useRouter } from 'next/navigation';
 const FeaturedTutor = () => {
+    const router = useRouter()
     const dispatch = useDispatch()
     const filteredProfile = useSelector((state) => state.homeInfo.filteredProfiles);
     const { pagination, result: filteredProfiles } = filteredProfile || { pagination: {}, result: null }
@@ -55,7 +57,7 @@ const FeaturedTutor = () => {
                                     <li className="splide__slide" key={item}>
                                         <div className="tu-featureitem">
                                             <figure>
-                                                <a href="tutor-detail.html"><img src={`/images/index/qualified/img-01.jpg`} alt="image-description" /></a>
+                                                <a href="tutor-detail.html"><img src={item?.subject[0].categoryInfo?.img?.url || `/images/index/qualified/img-01.jpg`} alt="image-description" style={{ width: 612, height: 300 }} /></a>
                                                 <span className="tu-featuretag">FEATURED</span>
                                             </figure>
                                             <div className="tu-authorinfo">
@@ -64,7 +66,7 @@ const FeaturedTutor = () => {
                                                         <img src={item.avatar.url} alt="image-description" />
                                                     </figure>
                                                     <div className="tu-authorname">
-                                                        <h5><a href="tutor-detail.html"> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                        <h5><a href onClick={() => router.push(`/details/${item._id}`)}> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                         <span>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</span>
                                                     </div>
                                                     <ul className="tu-authorlist">
