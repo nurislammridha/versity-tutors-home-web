@@ -70,7 +70,7 @@ const page = () => {
                                                         </ul>
                                                         <div class="tu-btnarea">
                                                             <a
-                                                                href
+                                                                // href
                                                                 class="tu-primbtn tu-btnplain"
                                                                 onClick={() => {
                                                                     !isPackageBuying && handleSubmit(item)

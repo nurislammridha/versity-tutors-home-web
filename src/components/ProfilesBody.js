@@ -1,6 +1,6 @@
 import { AreaBySubDistrictId, DistrictByDivisionId, GetCategoryList, GetDivisionList, GetProfiles, GetSubCategoryByCategoryId, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction';
 import { useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ProfilesBody = ({ clientData, isLogin }) => {
@@ -84,7 +84,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
 
     // console.log('queryString', lookingFor, division, district, classes)
     return (
-        <>
+        <Suspense fallback={<div>Loading...</div>}>
             <main class="tu-bgmain tu-main">
                 <section class="tu-main-section">
                     <div class="container">
@@ -628,7 +628,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                     </div>
                 </section>
             </main>
-        </>
+        </Suspense>
     )
 }
 
