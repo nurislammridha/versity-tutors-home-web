@@ -57,7 +57,7 @@ const FeaturedTutor = () => {
                                     <li className="splide__slide" key={item}>
                                         <div className="tu-featureitem">
                                             <figure>
-                                                <a href="tutor-detail.html"><img src={item?.subject[0].categoryInfo?.img?.url || `/images/index/qualified/img-01.jpg`} alt="image-description" style={{ width: 612, height: 300 }} /></a>
+                                                <a ><img src={item?.subject[0].categoryInfo?.img?.url || `/images/index/qualified/img-01.jpg`} alt="image-description" style={{ width: 612, height: 300 }} /></a>
                                                 <span className="tu-featuretag">FEATURED</span>
                                             </figure>
                                             <div className="tu-authorinfo">
@@ -66,7 +66,7 @@ const FeaturedTutor = () => {
                                                         <img src={item.avatar.url} alt="image-description" />
                                                     </figure>
                                                     <div className="tu-authorname">
-                                                        <h5><a href onClick={() => router.push(`/details/${item._id}`)}> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                        <h5><a onClick={() => router.push(`/details/${item._id}`)}> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                         <span>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</span>
                                                     </div>
                                                     <ul className="tu-authorlist">
@@ -91,7 +91,7 @@ const FeaturedTutor = () => {
                                                         <span>({item?.totalComments})</span>
                                                     </div>
                                                     {/* <div className="tu-instructors_footer-right">
-                                                        <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
+                                                        <a ="javascript:void(0);"><i className="icon icon-heart"></i></a>
                                                     </div> */}
                                                 </div>
                                             </div>
@@ -103,7 +103,7 @@ const FeaturedTutor = () => {
                         </div>
                     </div>
                     <div className="tu-mainbtn">
-                        <a href="search-listing.html" className="tu-primbtn-lg"><span>Explore all instructors</span><i className="icon icon-chevron-right"></i></a>
+                        <a className="tu-primbtn-lg"><span>Explore all instructors</span><i className="icon icon-chevron-right"></i></a>
                     </div>
                 </div>
             </section>

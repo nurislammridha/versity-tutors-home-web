@@ -52,7 +52,7 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                     <a class="nav-link" onClick={() => router.push('/dashboard?name=personal')}><img src={clientData?.avatar?.url} alt="image-description" /></a></strong>
                                 {isMenu && <ul class="sub-menu">
                                     <li>
-                                        <a href onClick={() => router.push('/dashboard?name=personal')}><i class="icon icon-user"></i>Personal details</a>
+                                        <a onClick={() => router.push('/dashboard?name=personal')}><i class="icon icon-user"></i>Personal details</a>
                                     </li>
                                     <li>
                                         <a onClick={() => router.push('/dashboard?name=contact')}><i class="icon icon-phone"></i>Contact details</a>

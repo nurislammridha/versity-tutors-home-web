@@ -29,7 +29,9 @@ const page = () => {
                 <div className="tu-main-login">
                     <div className="tu-login-left">
                         <strong>
-                            <a href="index.html"><img src="images/login/logo_white.png" alt="images" /></a>
+                            <a
+                            // href="index.html"
+                            ><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
                             <img src="images/login/img-01.png" alt="images" />
@@ -170,7 +172,10 @@ const page = () => {
                                                     checked={signUpInput.isReadTC}
                                                     onChange={(e) => handleChange("isReadTC", !signUpInput.isReadTC)}
                                                 />
-                                                <label for="expcheck2"><span>I have read and agree to all <a href="javascript:void(0);">Terms &amp; conditions</a></span></label>
+                                                <label for="expcheck2"><span>I have read and agree to all
+                                                    <a
+                                                    // href="javascript:void(0);"
+                                                    >Terms &amp; conditions</a></span></label>
                                             </div>
                                         </div>
                                         <div className="form-group">
@@ -179,19 +184,23 @@ const page = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" target="_blank" className="tu-btn-signup">
+                                            <a
+                                                // href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" 
+                                                target="_blank" className="tu-btn-signup">
                                                 <img src="images/google.png" alt="images" />
                                                 Sign in with Google
                                             </a>
                                         </div>
                                         <div className="tu-lost-password form-group">
                                             <a
-                                                href
+                                                // href
                                                 onClick={() => router.push("/login")}
                                             >
                                                 Login now
                                             </a>
-                                            <a href="lost-password.html" className="tu-password-clr_light">Lost password?</a>
+                                            <a
+                                                // href="lost-password.html"
+                                                className="tu-password-clr_light">Lost password?</a>
                                         </div>
                                     </div>
                                 </div>

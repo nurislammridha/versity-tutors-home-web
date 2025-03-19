@@ -144,7 +144,9 @@ const page = ({ params }) => {
                                         <div className="tu-actionbts">
                                             <div className="tu-userurl">
                                                 <i className="icon icon-globe"></i>
-                                                <a href>{website}<i className="icon icon-copy"></i></a>
+                                                <a
+                                                // href
+                                                >{website}<i className="icon icon-copy"></i></a>
                                             </div>
                                             <ul className="tu-profilelinksbtn">
                                                 {isLogin &&
@@ -157,7 +159,7 @@ const page = ({ params }) => {
                                                             <i className="icon icon-heart"></i><span>{isStatusLoading ? isWished ? "Removing" : "Saving" : isWished ? "Saved" : "Save"}</span></a>
                                                     </li>
                                                 }
-                                                {/* <li><a href="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
+                                                {/* <li><a ="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
                                                 <li>
                                                     <a
                                                         href
@@ -240,7 +242,9 @@ const page = ({ params }) => {
                                                                 <ul className="tu-serviceslist">
                                                                     {item?.subCategories?.length > 0 && item.subCategories.map((item2, index2) => (
                                                                         <li key={index2}>
-                                                                            <a href>{item2?.subCategoryInfo.subCategoryName}</a>
+                                                                            <a
+                                                                            //  href
+                                                                            >{item2?.subCategoryInfo.subCategoryName}</a>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
@@ -368,7 +372,7 @@ const page = ({ params }) => {
                                             <p>Its Free, Join today and start spreading knowledge with students out there</p>
                                         </div>
                                         <div className="tu-Joincommunity_btn">
-                                            <a href="login.html" className="tu-yellowbtn">Join our community</a>
+                                            <a ="login.html" className="tu-yellowbtn">Join our community</a>
                                         </div>
                                     </div>
                                     <div className="tu-explore-title">
@@ -378,7 +382,7 @@ const page = ({ params }) => {
                                         <div className="col-12 col-md-6 col-lg-4 col-xl-6 col-xxl-4">
                                             <div className="tu-featureitem">
                                                 <figure>
-                                                    <a href="tutor-detail.html"><img src="images/index/qualified/img-04.jpg" alt="image-description" /></a>
+                                                    <a ="tutor-detail.html"><img src="images/index/qualified/img-04.jpg" alt="image-description" /></a>
                                                     <span className="tu-featuretag">FEATURED</span>
                                                 </figure>
                                                 <div className="tu-authorinfo">
@@ -387,7 +391,7 @@ const page = ({ params }) => {
                                                             <img src="images/index/professionol/img-04.jpg" alt="image-description" />
                                                         </figure>
                                                         <div className="tu-authorname">
-                                                            <h5><a href="tutor-detail.html"> William Williams</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            <h5><a ="tutor-detail.html"> William Williams</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <span>Nashville, IL</span>
                                                         </div>
                                                         <ul className="tu-authorlist">
@@ -412,7 +416,7 @@ const page = ({ params }) => {
                                                             <span>(57,282)</span>
                                                         </div>
                                                         <div className="tu-instructors_footer-right">
-                                                            <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
+                                                            <a ="javascript:void(0);"><i className="icon icon-heart"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -421,7 +425,7 @@ const page = ({ params }) => {
                                         <div className="col-12 col-md-6 col-lg-4 col-xl-6 col-xxl-4">
                                             <div className="tu-featureitem">
                                                 <figure>
-                                                    <a href="tutor-detail.html"><img src="images/index/qualified/img-02.jpg" alt="image-description" /></a>
+                                                    <a ="tutor-detail.html"><img src="images/index/qualified/img-02.jpg" alt="image-description" /></a>
                                                     <span className="tu-featuretag">FEATURED</span>
                                                 </figure>
                                                 <div className="tu-authorinfo">
@@ -430,7 +434,7 @@ const page = ({ params }) => {
                                                             <img src="images/index/professionol/img-02.jpg" alt="image-description" />
                                                         </figure>
                                                         <div className="tu-authorname">
-                                                            <h5><a href="tutor-detail.html">Gwendolyn Parker</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            <h5><a ="tutor-detail.html">Gwendolyn Parker</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <span>Las Vegas, TN</span>
                                                         </div>
                                                         <ul className="tu-authorlist">
@@ -455,7 +459,7 @@ const page = ({ params }) => {
                                                             <span>(38,494)</span>
                                                         </div>
                                                         <div className="tu-instructors_footer-right">
-                                                            <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
+                                                            <a "><i className="icon icon-heart"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -464,7 +468,7 @@ const page = ({ params }) => {
                                         <div className="col-12 col-md-6 col-lg-4 col-xl-6 col-xxl-4">
                                             <div className="tu-featureitem">
                                                 <figure>
-                                                    <a href="tutor-detail.html"><img src="images/index/qualified/img-01.jpg" alt="image-description" /></a>
+                                                    <a><img src="images/index/qualified/img-01.jpg" alt="image-description" /></a>
                                                     <span className="tu-featuretag">FEATURED</span>
                                                 </figure>
                                                 <div className="tu-authorinfo">
@@ -473,7 +477,7 @@ const page = ({ params }) => {
                                                             <img src="images/index/professionol/img-01.jpg" alt="image-description" />
                                                         </figure>
                                                         <div className="tu-authorname">
-                                                            <h5><a href="tutor-detail.html"> Dwayne Garrett</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            <h5><a ="tutor-detail.html"> Dwayne Garrett</a> <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <span>Arlington, TN</span>
                                                         </div>
                                                         <ul className="tu-authorlist">
@@ -498,7 +502,7 @@ const page = ({ params }) => {
                                                             <span>(4,448)</span>
                                                         </div>
                                                         <div className="tu-instructors_footer-right">
-                                                            <a href="javascript:void(0);"><i className="icon icon-heart"></i></a>
+                                                            <a ="javascript:void(0);"><i className="icon icon-heart"></i></a>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -549,7 +553,9 @@ const page = ({ params }) => {
                                                     </li>
                                                     <li>
                                                         <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
-                                                        <a href>{isUnlocked ? website : "www.xyz.com"}</a>
+                                                        <a
+                                                        // href
+                                                        >{isUnlocked ? website : "www.xyz.com"}</a>
                                                     </li>
                                                 </ul>
                                             </div>

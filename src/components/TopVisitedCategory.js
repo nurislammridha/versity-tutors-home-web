@@ -80,7 +80,7 @@ const TopVisitedCategory = ({ data }) => {
                         </div>
                     </div>
                     <div class="tu-mainbtn">
-                        <a href="search-listing-two.html" class="tu-primbtn-lg"><span>Explore All categories</span><i class="icon icon-chevron-right"></i></a>
+                        <a class="tu-primbtn-lg"><span>Explore All categories</span><i class="icon icon-chevron-right"></i></a>
                     </div>
                 </div>
             </section>

@@ -20,7 +20,9 @@ const BetterLearningBetterResult = ({ data }) => {
                     <div class="row g-4">
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a
+                                // href="blog-detail-right.html"
+                                >
                                     <img src="images/index/education/img-02.png" alt="img" />
                                     <h5>Online consultation for all</h5>
                                     <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
@@ -29,7 +31,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a >
                                     <img src="images/index/education/img-03.png" alt="img" />
                                     <h5>A great investment for future</h5>
                                     <p>Blanditiis praesntium voluptatum deleniti lorak atque corrupti quos dolores etquase.</p>
@@ -38,7 +40,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a >
                                     <img src="images/index/education/img-04.png" alt="img" />
                                     <h5>Best results guranteed</h5>
                                     <p>Aeccusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
@@ -47,7 +49,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a >
                                     <img src="images/index/education/img-05.png" alt="img" />
                                     <h5>Easy to connect with anyone</h5>
                                     <p>Blanditiis praesntium voluptatum deleniti lorak atque corrupti quos dolores etquase.</p>
@@ -56,7 +58,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a >
                                     <img src="images/index/education/img-06.png" alt="img" />
                                     <h5>All verified tutors for students</h5>
                                     <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
@@ -65,7 +67,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
-                                <a href="blog-detail-right.html">
+                                <a >
                                     <img src="images/index/education/img-06.png" alt="img" />
                                     <h5>All students for tutors</h5>
                                     <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
@@ -74,7 +76,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         </div>
                     </div>
                     <div class="tu-mainbtn">
-                        <a href="signup.html" class="tu-primbtn-lg"><span>Join our Community</span><i class="icon icon-lock"></i></a>
+                        <a ><span>Join our Community</span><i class="icon icon-lock"></i></a>
                     </div>
                 </div>
             </section>

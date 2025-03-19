@@ -178,7 +178,7 @@ const page = () => {
                                             ><i className="icon icon-log-out"></i><span>Logout</span></a>
                                         </li>
                                         {/* <li className="nav-item">
-                                            <a href="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
+                                            <a ="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
                                         </li> */}
                                     </ul>
                                 </aside>

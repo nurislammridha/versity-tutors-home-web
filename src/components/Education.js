@@ -129,7 +129,7 @@ const Education = ({ clientData }) => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5>{action === "edit" ? "Edit" : "Add"} education</h5>
-                            <a href className="tu-close" onClick={() => setShowModal(false)}><i className="icon icon-x"></i></a>
+                            <a className="tu-close" onClick={() => setShowModal(false)}><i className="icon icon-x"></i></a>
                         </div>
                         <div className="modal-body">
                             <form className="tu-themeform">

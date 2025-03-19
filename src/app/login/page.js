@@ -56,7 +56,9 @@ const page = () => {
                 <div className="tu-main-login">
                     <div className="tu-login-left">
                         <strong>
-                            <a href onClick={() => router.push('/')}><img src="images/login/logo_white.png" alt="images" /></a>
+                            <a
+                                // href
+                                onClick={() => router.push('/')}><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
                             <img src="images/login/img-01.png" alt="images" />
@@ -124,7 +126,9 @@ const page = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <a href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" target="_blank" className="tu-btn-signup">
+                                            <a
+                                                // href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" 
+                                                target="_blank" className="tu-btn-signup">
                                                 <img src="images/google.png" alt="images" />
                                                 Sign in with Google
                                             </a>

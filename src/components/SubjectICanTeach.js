@@ -106,7 +106,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 <ul class="tu-serviceslist">
                                                     {item.subCategories.map((item2, index) => (
                                                         <li>
-                                                            <a href key={index}>{item2.subCategoryInfo?.subCategoryName}</a>
+                                                            <a key={index}>{item2.subCategoryInfo?.subCategoryName}</a>
                                                         </li>
                                                     ))}
 
@@ -127,7 +127,7 @@ const SubjectICanTeach = ({ clientData }) => {
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5>{action === "edit" ? "Edit" : "Add"} subjects</h5>
-                            <a href className="tu-close" onClick={() => setShowModal(false)}><i class="icon icon-x"></i></a>
+                            <a className="tu-close" onClick={() => setShowModal(false)}><i class="icon icon-x"></i></a>
                         </div>
                         <div class="modal-body">
                             <form class="tu-themeform">
@@ -180,7 +180,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 {subject.subCategories.length > 0 && subject.subCategories.map((item, index) => (
                                                     <li key={index}>
                                                         <span>{subCatIdToSubCatName(item.subCategoryId, subCategoryList)}
-                                                            <a href
+                                                            <a
                                                                 onClick={() => handleChange("remove", item.subCategoryId)}
                                                             ><i class="icon icon-x"></i></a></span></li>
                                                 ))}

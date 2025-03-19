@@ -73,7 +73,9 @@ const page = () => {
                 <div className="tu-main-login">
                     <div className="tu-login-left">
                         <strong>
-                            <a href="index.html"><img src="images/login/logo_white.png" alt="images" /></a>
+                            <a
+                            //  href="index.html"
+                            ><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
                             <img src="images/login/img-01.png" alt="images" />

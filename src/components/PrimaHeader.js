@@ -21,13 +21,13 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                         <div className="collapse navbar-collapse tu-themenav" id="navbarSupportedContent">
                             <ul className="navbar-nav">
                                 {/* <li className="nav-item">
-                                    <a className="nav-link" href="search-listing.html">
+                                    <a className="nav-link" >
                                         Online classNamees
                                         <span className="tu-tag">NEW</span>
                                     </a>
                                 </li> */}
                                 {/* <li className="nav-item">
-                                    <a className="nav-link" href="search-listing.html">Learning material<span className="tu-tag tu-bggreen">FREE</span></a>
+                                    <a className="nav-link" >Learning material<span className="tu-tag tu-bggreen">FREE</span></a>
                                 </li> */}
                                 {isLogin && <li className="nav-item">
                                     <a
@@ -42,70 +42,73 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                                     <a className="active" href="#">Pages</a>
                                     <ul className="sub-menu">
                                         <li className="menu-item-has-children">
-                                            <a href="javascript:void(0)">Home Pages</a>
+                                            <a 
+                                            >Home Pages</a>
                                             <ul className="sub-menu">
                                                 <li>
-                                                    <a href="index.html">Home</a>
+                                                    <a 
+                                                    >Home</a>
                                                 </li>
                                                 <li>
-                                                    <a href="index-without-login.html">Home v2 <em className="tu-menutag">without login</em></a>
+                                                    <a >Home v2 <em className="tu-menutag">without login</em></a>
                                                 </li>
                                                 <li>
-                                                    <a href="indexv2.html">Home v3</a>
+                                                    <a >Home v3</a>
                                                 </li>
                                                 <li>
-                                                    <a href="indexv3.html">Home v4</a>
+                                                    <a >Home v4</a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li className="menu-item-has-children">
-                                            <a href="javascript:void(0)">Provider listings</a>
+                                            <a 
+                                            >Provider listings</a>
                                             <ul className="sub-menu">
                                                 <li>
-                                                    <a href="search-listing.html">Provider listings v1</a>
+                                                    <a >Provider listings v1</a>
                                                 </li>
                                                 <li>
-                                                    <a href="search-listing-two.html">Provider listings v2</a>
+                                                    <a >Provider listings v2</a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li>
-                                            <a href="tutor-detail.html">Tutor Detail</a>
+                                            <a >Tutor Detail</a>
                                         </li>
                                         <li className="menu-item-has-children">
-                                            <a href="javascript:void(0);">Blogs</a>
+                                            <a >Blogs</a>
                                             <ul className="sub-menu">
                                                 <li>
-                                                    <a href="blog-grid-left.html">Blog list</a>
+                                                    <a >Blog list</a>
                                                 </li>
                                                 <li>
-                                                    <a href="blog-grid-right.html">Blog list <em className="tu-menutag">Right sidebar</em></a>
+                                                    <a >Blog list <em className="tu-menutag">Right sidebar</em></a>
                                                 </li>
                                                 <li>
-                                                    <a href="blog-detail-left.html">Blog detail</a>
+                                                    <a >Blog detail</a>
                                                 </li>
                                                 <li>
-                                                    <a href="blog-detail-right.html">Blog detail <em className="tu-menutag">Right sidebar</em></a>
+                                                    <a >Blog detail <em className="tu-menutag">Right sidebar</em></a>
                                                 </li>
                                             </ul>
                                         </li>
                                         <li className="menu-item-has-children">
-                                            <a href="javascript:void(0);">Other pages</a>
+                                            <a >Other pages</a>
                                             <ul className="sub-menu">
                                                 <li>
-                                                    <a href="how-it-work.html">How it work</a>
+                                                    <a >How it work</a>
                                                 </li>
                                                 <li>
-                                                    <a href="package.html">Packges</a>
+                                                    <a >Packges</a>
                                                 </li>
                                                 <li>
-                                                    <a href="login.html">Login</a>
+                                                    <a >Login</a>
                                                 </li>
                                                 <li>
-                                                    <a href="signup.html">Sign up</a>
+                                                    <a >Sign up</a>
                                                 </li>
                                                 <li>
-                                                    <a href="lost-password.html">Lost password</a>
+                                                    <a >Lost password</a>
                                                 </li>
                                             </ul>
                                         </li>
@@ -115,10 +118,12 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                         </div>
                         <ul className="nav-item tu-afterlogin">
                             {/* <li>
-                                <a className="nav-link" href="index.html"><span className="icon icon-message-square"><i className="tu-messagenoti">4</i></span></a>
+                                <a className="nav-link" 
+                                ><span className="icon icon-message-square"><i className="tu-messagenoti">4</i></span></a>
                             </li> */}
                             {/* <li>
-                                <a className="nav-link" href="index.html"><span className="icon icon-bell"><i className="tu-messagenoti">3</i></span></a>
+                                <a className="nav-link" 
+                                ><span className="icon icon-bell"><i className="tu-messagenoti">3</i></span></a>
                             </li> */}
                             {isLogin ?
                                 <li className="menu-item-has-children">
@@ -129,23 +134,7 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                                         >
                                             <img src={clientData?.avatar?.url} alt="image-description" />
                                         </a></strong>
-                                    {/* <ul className="sub-menu">
-                                        <li>
-                                            <a href="profile-setting-a.html"><i className="icon icon-user"></i>Personal details</a>
-                                        </li>
-                                        <li>
-                                            <a href="profile-setting-b.html"><i className="icon icon-phone"></i>Contact details</a>
-                                        </li>
-                                        <li>
-                                            <a href="profile-setting-c.html"><i className="icon icon-book"></i>Education</a>
-                                        </li>
-                                        <li>
-                                            <a href="profile-setting-d.html"><i className="icon icon-book-open"></i>Subjects I can teach</a>
-                                        </li>
-                                        <li>
-                                            <a href="profile-setting-e.html"><i className="icon icon-image"></i>Media gallery</a>
-                                        </li>
-                                    </ul> */}
+
                                 </li>
                                 :
                                 <li>

@@ -267,12 +267,12 @@ const PersonalDetails = ({ clientData }) => {
                                                         </select>
                                                     </div>
                                                     <ul className="tu-labels">
-                                                        <li><span>Arabic <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>English <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Chinese <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Hebrew <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Spanish <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>German <a href="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>Arabic <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>English <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>Chinese <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>Hebrew <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>Spanish <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
+                                                        <li><span>German <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
                                                     </ul>
                                                 </div> */}
                                                 <div className="form-group">

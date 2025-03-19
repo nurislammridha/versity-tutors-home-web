@@ -93,7 +93,7 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
 
 
                         <div className="show-more">
-                            <a hrefclassName
+                            <a
                                 onClick={() => handleMore()}
                             >Show more</a>
                         </div>
@@ -156,7 +156,8 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
                                         <div className="tu-check invisible">
                                             <input type="hidden" name="termsconditions" value="" />
                                             <input type="checkbox" id="termsconditions" name="termsconditions" />
-                                            <label for="termsconditions"><span>I have read and agree to all <a href="javascript:void(0);">Terms &amp; conditions</a></span></label>
+                                            <label for="termsconditions"><span>I have read and agree to all <a
+                                            >Terms &amp; conditions</a></span></label>
                                         </div>
                                         <a
                                             href

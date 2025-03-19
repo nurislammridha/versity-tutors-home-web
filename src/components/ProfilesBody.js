@@ -118,7 +118,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                         <div class="tu-appendinput">
                                             <div class="tu-searcbar">
                                                 <div class="tu-inputicon">
-                                                    <a href></a>
+                                                    <a ></a>
                                                     <input
                                                         type="text"
                                                         class="form-control"
@@ -138,7 +138,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         <option >House Cleaning</option>
                                                     </select>
                                                 </div> */}
-                                                <a href="search-listing.html" class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
+                                                <a class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
                                             </div>
                                         </div>
                                         <div class="tu-listing-search">
@@ -150,29 +150,29 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                     </div>
                                     {/* <ul class="tu-searchtags">
                                         <li>
-                                            <span>Pre-School <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span>Pre-School <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                         <li>
-                                            <span> Middle (Class 6-8) <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span> Middle (Class 6-8) <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                         <li>
-                                            <span>Intermediate <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span>Intermediate <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                         <li>
-                                            <span>5.0 Stars <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span>5.0 Stars <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                         <li>
-                                            <span>Online bookings <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span>Online bookings <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                         <li>
-                                            <span>Male only <a href="javascript:void(0)"><i class="icon icon-x"></i></a></span>
+                                            <span>Male only <a ><i class="icon icon-x"></i></a></span>
                                         </li>
                                     </ul> */}
                                 </div>
                             </div>
                             <div class="col-xl-4 col-xxl-3">
                                 <aside class="tu-asidewrapper">
-                                    <a href="javascript:void(0)" class="tu-dbmenu"><i class="icon icon-chevron-left"></i></a>
+                                    <a class="tu-dbmenu"><i class="icon icon-chevron-left"></i></a>
                                     <div class="tu-aside-menu">
                                         <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
@@ -222,7 +222,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
 
                                                             </ul>
                                                             {/* <div class="show-more">
-                                                                <a href="javascript:void(0);" class="tu-readmorebtn tu-show_more">Show all</a>
+                                                                <a  class="tu-readmorebtn tu-show_more">Show all</a>
                                                             </div> */}
                                                         </div>
                                                     }
@@ -528,8 +528,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                             </div>
                                         </div>
                                         <div class="tu-filterbtns">
-                                            {/* <a href="search-listing.html" class="tu-primbtn">Apply filters</a> */}
-                                            {/* <a href class="tu-sb-sliver">Clear all filters</a> */}
+
                                         </div>
                                     </div>
                                 </aside>
@@ -546,7 +545,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                             <img src={item?.avatar.url} alt="imge" style={{ width: "50px", height: "50px" }} />
                                                         </figure>
                                                         <div class="tu-listing-heading">
-                                                            <h5><a href onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                             <div class="tu-listing-location">
                                                                 <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span><address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
                                                             </div>
@@ -596,8 +595,8 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     {/* <i class="icon icon-heart"></i><span>Add to save</span> */}
                                                 </div>
                                                 <div class="tu-btnarea">
-                                                    {/* <a href="login.html" class="tu-secbtn">Let’s chat</a> */}
-                                                    <a href class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
+                                                    {/* <a ="login.html" class="tu-secbtn">Let’s chat</a> */}
+                                                    <a class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
                                                 </div>
                                             </div>
                                         </div>
