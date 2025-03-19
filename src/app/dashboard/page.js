@@ -1,5 +1,6 @@
 "use client"
 import ContactDetails from '@/components/ContactDetails'
+import UploadDocument from '@/components/Document'
 import Education from '@/components/Education'
 import MyBookingStatus from '@/components/MyBookingStatus'
 import MyConnections from '@/components/MyConnections'
@@ -21,7 +22,7 @@ const page = () => {
     const router = useRouter()
     const searchParams = useSearchParams();
     const name = searchParams.get('name');
-    const [state, setState] = useState("personal")//personal
+    const [state, setState] = useState("document")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [isLogin, setIsLogin] = useState(false)
@@ -134,6 +135,12 @@ const page = () => {
                                                 onClick={() => setState("subject")}
                                             ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? "Subjects I can teach" : "Subjects I need learn"}</span></a>
                                         </li>
+                                        {clientData?.isTutorAccount && <li className="nav-item">
+                                            <a
+                                                className={state === "document" ? "active nav-link" : "nav-link"}
+                                                onClick={() => setState("document")}
+                                            ><i className="icon icon-file"></i><span>Upload Document</span></a>
+                                        </li>}
                                         <li className="nav-item">
                                             <a
                                                 className={state === "whoBooked" ? "active nav-link" : "nav-link"}
@@ -180,6 +187,7 @@ const page = () => {
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}
                             {state === "subject" && <SubjectICanTeach clientData={clientData} />}
+                            {state === "document" && <UploadDocument clientData={clientData} />}
                             {state === "whoBooked" && <WhoBookedMe clientData={clientData} />}
                             {state === "myBooking" && <MyBookingStatus clientData={clientData} />}
                             {state === "myConnections" && <MyConnections clientData={clientData} />}

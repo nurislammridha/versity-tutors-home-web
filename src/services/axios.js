@@ -10,7 +10,7 @@ axios.interceptors.request.use(
   (config) => {
     const token = localStorageService.getAccessToken();
     // console.log('token', token)
-    if (token && config.url !== "https://api.cloudinary.com/v1_1/nurislammridha/image/upload") {
+    if (token && config.url !== "https://api.cloudinary.com/v1_1/nurislammridha/image/upload" && config.url !== "https://api.cloudinary.com/v1_1/nurislammridha/raw/upload") {
       // config.headers["Authorization"] = "Bearer " + token; // as return full code with token type
       config.headers["Authorization"] = token; // as return full code with token type
       config.headers["Accept"] = "application/json";

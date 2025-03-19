@@ -97,6 +97,10 @@ const initialState = {
   isUpdatedProfile: false,
   isHomeDataLoading: false,
   homeData: null,
+  documentData: null,
+  isDocumentLoading: false,
+  isUploadDocumentLoading: false,
+  isDeleteDocumentLoading: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -394,6 +398,26 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         homeData: action.payload,
+      };
+    case Types.IS_DOCUMENT_LOADING:
+      return {
+        ...state,
+        isDocumentLoading: action.payload,
+      };
+    case Types.DOCUMENT_INFO:
+      return {
+        ...state,
+        documentData: action.payload,
+      };
+    case Types.IS_UPLOAD_DOCUMENT_LOADING:
+      return {
+        ...state,
+        isUploadDocumentLoading: action.payload,
+      };
+    case Types.IS_DELETE_DOCUMENT_LOADING:
+      return {
+        ...state,
+        isDeleteDocumentLoading: action.payload,
       };
 
     default:

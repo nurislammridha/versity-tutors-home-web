@@ -913,3 +913,98 @@ export const GetHomeData = () => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const GetDocumentByClientId = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}document/client/${id}`;
+    dispatch({ type: Types.IS_DOCUMENT_LOADING, payload: true })
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_DOCUMENT_LOADING, payload: false });
+                dispatch({ type: Types.DOCUMENT_INFO, payload: res?.data?.result });
+                dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: false });
+                dispatch({ type: Types.IS_DELETE_DOCUMENT_LOADING, payload: false });
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_DOCUMENT_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const SubmitDocument = (title, doc, id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}document`;
+    const payLoad = { title, doc, clientId: id }
+    try {
+        Axios.post(url, payLoad).then((res) => {
+            if (res.data.status) {
+                // dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: false });
+                dispatch(GetDocumentByClientId(id))
+                showToast("success", "Document Uploaded")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const UploadDocInCloudinary = (title, file, id) => (dispatch) => {
+    if (title.length == 0) {
+        showToast("success", "Title should not be empty")
+        return 0
+    } else if (file === null) {
+        showToast("success", "Choose a file ")
+        return 0
+    }
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "nurislam");
+    data.append("cloud_name ", "nurislammridha");
+    let url = "https://api.cloudinary.com/v1_1/nurislammridha/image/upload"
+    // Detect if PDF
+    // if (file.type === "application/pdf") {
+    //     url = "https://api.cloudinary.com/v1_1/nurislammridha/raw/upload";
+    // }
+    dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: true })
+    Axios.post(url, data).then((res) => {
+        if (res.data) {
+            let doc = { publicId: res?.data?.public_id, url: res?.data?.url }
+            dispatch(SubmitDocument(title, doc, id))
+        }
+    }
+    )
+}
+
+export const DeleteDocument = (item) => (dispatch) => {
+    const { _id, clientId } = item || {}
+    const url = `${process.env.NEXT_PUBLIC_API_URL}document/${_id}`;
+    try {
+        Axios.delete(url).then((res) => {
+            if (res.data.status) {
+                dispatch(GetDocumentByClientId(clientId))
+                showToast("success", "Document Deleted")
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_DELETE_DOCUMENT_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const DeleteDocumentCloudinary = (item) => (dispatch) => {
+    const urlRemove = `${process.env.NEXT_PUBLIC_API_URL}helper/delete-cloudinary`;
+    let publicId = item?.doc?.publicId
+    dispatch({ type: Types.IS_DELETE_DOCUMENT_LOADING, payload: true });
+    if (publicId !== null) {
+        Axios.post(urlRemove, { publicId }).then((res) => {
+            if (res) {
+                dispatch(DeleteDocument(item))
+            }
+        })
+    } else {
+        dispatch(DeleteDocument(item))
+    }
+};
