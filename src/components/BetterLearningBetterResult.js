@@ -21,7 +21,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         <div class="col-md-6 col-lg-6 col-xl-4">
                             <div class="tu-eduplatform">
                                 <a
-                                // href="blog-detail-right.html"
+                                // ="blog-detail-right.html"
                                 >
                                     <img src="images/index/education/img-02.png" alt="img" />
                                     <h5>Online consultation for all</h5>

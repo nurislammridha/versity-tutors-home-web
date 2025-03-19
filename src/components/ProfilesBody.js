@@ -109,8 +109,8 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                 </div>
                                             </div>
                                             <div class="tu-filter-btn">
-                                                <a class="tu-listbtn active" href="search-listing.html"><i class="icon icon-list"></i></a>
-                                                <a class="tu-listbtn" href="search-listing-two.html"><i class="icon icon-grid"></i></a>
+                                                <a class="tu-listbtn active" ><i class="icon icon-list"></i></a>
+                                                <a class="tu-listbtn" ><i class="icon icon-grid"></i></a>
                                             </div>
                                         </div>
                                     </div>

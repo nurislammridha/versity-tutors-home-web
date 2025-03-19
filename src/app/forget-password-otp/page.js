@@ -74,7 +74,7 @@ const page = () => {
                     <div className="tu-login-left">
                         <strong>
                             <a
-                            //  href="index.html"
+                            //  ="index.html"
                             ><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
@@ -133,7 +133,7 @@ const page = () => {
 
                                         <div className="form-group">
                                             <a
-                                                // href="profile-setting-a.html" 
+                                                // ="profile-setting-a.html" 
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isSetPasswordLoading && handleSubmit()}
                                             >

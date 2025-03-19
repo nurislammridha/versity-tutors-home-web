@@ -31,7 +31,7 @@ const page = () => {
                     <div className="tu-login-left">
                         <strong>
                             <a
-                            // href="index.html"
+                            // ="index.html"
                             ><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>

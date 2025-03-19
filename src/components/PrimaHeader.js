@@ -11,7 +11,7 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                         <strong>
                             <a
                                 className="navbar-brand"
-                                href
+
                                 onClick={() => router.push("/")}
                             ><img src="/images/logo.png" alt="Logo" /></a>
                         </strong>
@@ -32,14 +32,14 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                                 {isLogin && <li className="nav-item">
                                     <a
                                         className="nav-link"
-                                        href
+
                                         onClick={() => router.push('/profiles')}
                                     >
                                         {clientData?.isTutorAccount ? "Student Profile" : "Tutor Profile"}
                                     </a>
                                 </li>}
                                 {/* <li className="menu-item-has-children nav-item">
-                                    <a className="active" href="#">Pages</a>
+                                    <a className="active" ="#">Pages</a>
                                     <ul className="sub-menu">
                                         <li className="menu-item-has-children">
                                             <a 

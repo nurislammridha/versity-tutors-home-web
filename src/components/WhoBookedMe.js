@@ -42,7 +42,7 @@ const WhoBookedMe = ({ clientData }) => {
                                         <a
                                             class={`nav-link ${status === "initiate" && "active"}`}
                                             aria-current="page"
-                                            href="#"
+
                                             onClick={() => setStatus("initiate")}
                                         >
                                             Initiate
@@ -52,7 +52,7 @@ const WhoBookedMe = ({ clientData }) => {
                                         <a
                                             class={`nav-link ${status === "accepted" && "active"}`}
                                             aria-current="page"
-                                            href="#"
+
                                             onClick={() => setStatus("accepted")}
                                         >
                                             Accepted
@@ -62,7 +62,7 @@ const WhoBookedMe = ({ clientData }) => {
                                         <a
                                             class={`nav-link ${status === "rejected" && "active"}`}
                                             aria-current="page"
-                                            href="#"
+
                                             onClick={() => setStatus("rejected")}
                                         >
                                             Rejected

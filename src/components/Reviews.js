@@ -160,7 +160,7 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
                                             >Terms &amp; conditions</a></span></label>
                                         </div>
                                         <a
-                                            href
+
                                             className="tu-primbtn-lg tu-submit-reviews"
                                             data-profile_id=""
                                             onClick={() => !isReviewLoading && handleSubmit()}

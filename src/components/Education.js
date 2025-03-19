@@ -64,7 +64,7 @@ const Education = ({ clientData }) => {
                                 <div className="tu-boxsmtitle">
                                     <h4>Add education</h4>
                                     <a
-                                        href
+
                                         onClick={() => {
                                             setShowModal(true)
                                             setAction("add")
@@ -91,13 +91,13 @@ const Education = ({ clientData }) => {
                                                                 </div>
                                                                 <div className="tu-icon-holder">
                                                                     <a
-                                                                        href
+
                                                                         onClick={() => {
                                                                             handleDelete(item._id)
                                                                         }}
                                                                     ><i className="icon icon-trash-2 tu-deleteclr"></i></a>
                                                                     <a
-                                                                        href
+
                                                                         onClick={() => handleSetItem(item)}><i className="icon icon-edit-3 tu-editclr"></i></a>
                                                                 </div>
                                                                 <i className="icon icon-plus" role="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOneba" aria-expanded="true" aria-controls="flush-collapseOneba"></i>
@@ -262,7 +262,7 @@ const Education = ({ clientData }) => {
                                         </div>
                                         <div className="form-group tu-formbtn">
                                             <a
-                                                href
+
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isPersonalLoading && handleSubmit()}
                                             >

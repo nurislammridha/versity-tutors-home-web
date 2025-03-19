@@ -1,4 +1,5 @@
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
@@ -15,7 +16,7 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
             <nav class="navbar navbar-expand-xl tu-navbar tu-navbarvtwo">
                 <div class="container-fluid">
                     <strong>
-                        <a class="navbar-brand" href onClick={() => router.push("/")}><img src="images/logo_white.png" alt="Logo" /></a>
+                        <a class="navbar-brand" onClick={() => router.push("/")}><img src="images/logo_white.png" alt="Logo" /></a>
                     </strong>
                     <button class="tu-menu" aria-label="Main Menu" data-bs-target="#navbarSupportedContent" data-bs-toggle="collapse">
                         <i class="icon icon-menu"></i>
@@ -23,28 +24,32 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                     <div class="collapse navbar-collapse tu-themenav" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link" href="#services">
-                                    Our Services
-                                </a>
+                                <Link href="#services">
+                                    <a class="nav-link" >
+                                        Our Services
+                                    </a>
+                                </Link>
+
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#classes">Our Classes</a>
+                                <Link href="#classes"><a class="nav-link" >Our Classes</a></Link>
+
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#stories">Success Stories</a>
+                                <Link href="#stories"><a class="nav-link" >Success Stories</a></Link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#featured">Featured Tutor</a>
+                                <Link href="#featured"><a class="nav-link" >Featured Tutor</a></Link>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#subjects">All Subjects</a>
+                                <Link href="#subjects"><a class="nav-link" >All Subjects</a></Link>
                             </li>
 
                         </ul>
                     </div>
                     <ul class="nav-item tu-afterlogin">
                         {/* <li>
-                            <a class="nav-link" href="index.html"><span class="icon icon-bell"><i class="tu-messagenoti">3</i></span></a>
+                            <a class="nav-link" ="index.html"><span class="icon icon-bell"><i class="tu-messagenoti">3</i></span></a>
                         </li> */}
                         {isLogin ? (
                             <li class="menu-item-has-children" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>

@@ -71,7 +71,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                 <div class="tu-boxsmtitle">
                                     <h4>I can teach</h4>
                                     <a
-                                        href
+
                                         onClick={() => {
                                             setShowModal(true)
                                             setAction("add")
@@ -89,13 +89,13 @@ const SubjectICanTeach = ({ clientData }) => {
                                                     <h6>{item?.categoryInfo?.categoryName}</h6>
                                                     <div class="tu-icon-holder">
                                                         <a
-                                                            href
+
                                                             onClick={() => handleSetItem(item)}
                                                         >
                                                             <i class="icon icon-edit-3 tu-editclr"></i>
                                                         </a>
                                                         <a
-                                                            href
+
                                                             onClick={() => handleDelete(item._id)}
 
                                                         >
@@ -189,7 +189,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                         </div>
                                         <div class="form-group tu-formbtn">
                                             <a
-                                                href
+
                                                 class="tu-primbtn-lg"
                                                 onClick={() => !isPersonalLoading && handleSubmit()}
                                             >

@@ -38,14 +38,14 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                             {item?.subCategory.slice(0, 5).map((item2, index2) => (
                                                 <li key={index2}>
                                                     <a
-                                                        href
+
                                                         onClick={() => handleSub(item?._id, item2._id)}
                                                     >
                                                         {item2?.subCategoryName}</a></li>
                                             ))}
                                             <li className="tu-footerlist-explore">
                                                 <a
-                                                    href
+
                                                     onClick={() => handleClick(item?._id)}
                                                 >Explore all</a></li>
                                         </ul>

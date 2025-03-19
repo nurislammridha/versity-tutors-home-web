@@ -352,7 +352,7 @@ const PersonalDetails = ({ clientData }) => {
                     <div className="tu-btnarea-two">
                         <span>Save & update the latest changes to the live</span>
                         <a
-                            href
+
                             className="tu-primbtn-lg tu-primbtn-orange"
                             onClick={() => !isPersonalLoading && handleSubmit()}
                         >

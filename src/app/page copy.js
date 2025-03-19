@@ -237,7 +237,7 @@ export default function Home({ navigation }) {
                 <h4>Better Learning. Better Results</h4>
                 <h2>Online education platform that fits for everyone</h2>
                 <p>Accusamus et iusidio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos dolores etmquasa molestias epturi sint occaecati cupiditate non providente mikume molareshe.</p>
-                <a href="how-it-work.html" className="tu-primbtn-lg"><span>Explore more about us</span><i className="icon icon-chevron-right"></i></a>
+                <a className="tu-primbtn-lg"><span>Explore more about us</span><i className="icon icon-chevron-right"></i></a>
               </div>
             </div>
             <div className="col-md-12 col-lg-6">
@@ -452,7 +452,7 @@ export default function Home({ navigation }) {
             </div>
           </div>
           <div className="tu-mainbtn">
-            <a href="search-listing-two.html" className="tu-primbtn-lg"><span>Explore All categories</span><i className="icon icon-chevron-right"></i></a>
+            <a ="search-listing-two.html" className="tu-primbtn-lg"><span>Explore All categories</span><i className="icon icon-chevron-right"></i></a>
           </div>
         </div>
       </section> */}

@@ -145,7 +145,7 @@ const page = ({ params }) => {
                                             <div className="tu-userurl">
                                                 <i className="icon icon-globe"></i>
                                                 <a
-                                                // href
+                                                // 
                                                 >{website}<i className="icon icon-copy"></i></a>
                                             </div>
                                             <ul className="tu-profilelinksbtn">
@@ -153,7 +153,7 @@ const page = ({ params }) => {
                                                     <li>
                                                         <a
                                                             className="tu-linkheart"
-                                                            href
+
                                                             onClick={() => !isStatusLoading && handleWish()}
                                                         >
                                                             <i className="icon icon-heart"></i><span>{isStatusLoading ? isWished ? "Removing" : "Saving" : isWished ? "Saved" : "Save"}</span></a>
@@ -162,7 +162,7 @@ const page = ({ params }) => {
                                                 {/* <li><a ="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
                                                 <li>
                                                     <a
-                                                        href
+
                                                         className="tu-primbtn"
                                                         onClick={() => !isBookLoading && handlePreBook()}
                                                     >
@@ -243,7 +243,7 @@ const page = ({ params }) => {
                                                                     {item?.subCategories?.length > 0 && item.subCategories.map((item2, index2) => (
                                                                         <li key={index2}>
                                                                             <a
-                                                                            //  href
+                                                                            //  
                                                                             >{item2?.subCategoryInfo.subCategoryName}</a>
                                                                         </li>
                                                                     ))}
@@ -264,14 +264,14 @@ const page = ({ params }) => {
                                                                 <ul className="splide__list">
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-01.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-01.jpg">
                                                                                 <img src="images/tutordetail/slider/img-01.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-vbtype="video" data-gall="gall" href="https://www.youtube.com/watch?v=XxxIEGzhIG8" data-autoplay="true">
+                                                                            <a className="tu-themegallery" data-vbtype="video" data-gall="gall" ="https://www.youtube.com/watch?v=XxxIEGzhIG8" data-autoplay="true">
                                                                                 <img src="images/tutordetail/slider/img-02.jpg" alt="Image Description" />
                                                                                 <span className="tu-servicesvideo"></span>
                                                                             </a>
@@ -279,35 +279,35 @@ const page = ({ params }) => {
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-03.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-03.jpg">
                                                                                 <img src="images/tutordetail/slider/img-03.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-04.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-04.jpg">
                                                                                 <img src="images/tutordetail/slider/img-04.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-05.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-05.jpg">
                                                                                 <img src="images/tutordetail/slider/img-05.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-06.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-06.jpg">
                                                                                 <img src="images/tutordetail/slider/img-06.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
                                                                     </li>
                                                                     <li className="splide__slide">
                                                                         <figure className="tu-sync__content">
-                                                                            <a className="tu-themegallery" data-gall="gall" href="images/tutordetail/slider/img-07.jpg">
+                                                                            <a className="tu-themegallery" data-gall="gall" ="images/tutordetail/slider/img-07.jpg">
                                                                                 <img src="images/tutordetail/slider/img-07.jpg" alt="Image Description" />
                                                                             </a>
                                                                         </figure>
@@ -554,7 +554,7 @@ const page = ({ params }) => {
                                                     <li>
                                                         <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
                                                         <a
-                                                        // href
+                                                        // 
                                                         >{isUnlocked ? website : "www.xyz.com"}</a>
                                                     </li>
                                                 </ul>
@@ -570,7 +570,7 @@ const page = ({ params }) => {
                                                         Click the button below to unlock the contact details
                                                     </h6>
                                                     <a
-                                                        href
+
                                                         className="tu-primbtn tu-btngreen"
                                                         onClick={() => !isUnlockLoading && handleUnlock()}
                                                     ><span>{isUnlockLoading ? "Unlocking.." : "Unlock feature"}</span><i className="icon icon-lock"></i></a>

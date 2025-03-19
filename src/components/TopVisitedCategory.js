@@ -64,7 +64,7 @@ const TopVisitedCategory = ({ data }) => {
                                         {/* "images/index/categories/img-10.jpg" */}
                                         <a
                                             class="tu-categories_content"
-                                            href
+
                                             onClick={() => handleClick(item?._id)}
                                         >
                                             <img src={item?.img?.url} alt="img" style={{ width: 249, height: 249 }} />

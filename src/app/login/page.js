@@ -57,7 +57,7 @@ const page = () => {
                     <div className="tu-login-left">
                         <strong>
                             <a
-                                // href
+                                // 
                                 onClick={() => router.push('/')}><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
@@ -127,7 +127,7 @@ const page = () => {
                                         </div>
                                         <div className="form-group">
                                             <a
-                                                // href="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" 
+                                                // ="https://accounts.google.com/signin/v2/identifier?flowName=GlifWebSignIn&amp;flowEntry=ServiceLogin" 
                                                 target="_blank" className="tu-btn-signup">
                                                 <img src="images/google.png" alt="images" />
                                                 Sign in with Google
@@ -135,13 +135,13 @@ const page = () => {
                                         </div>
                                         <div className="tu-lost-password form-group">
                                             <a
-                                                href
+
                                                 onClick={() => router.push("/sign-up")}
                                             >
                                                 Joi us today
                                             </a>
                                             <a
-                                                // href="lost-password.html"
+                                                // ="lost-password.html"
                                                 className="tu-password-clr_light"
                                                 onClick={() => router.push('/email')}
                                             >
