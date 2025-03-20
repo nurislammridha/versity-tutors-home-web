@@ -1,9 +1,12 @@
-import ConnectionPage from '@/pages/ConnectionPage'
+// import ConnectionPage from '@/pages/ConnectionPage'
+import ConnectionPage from '@/page-components/ConnectionPage'
 import React from 'react'
 
 const page = () => {
-    return (
+    return (<>
         <ConnectionPage />
+    </>
+
     )
 }
 

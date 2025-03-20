@@ -1,9 +1,11 @@
-import EmailPage from '@/pages/EmailPage'
+import EmailPage from '@/page-components/EmailPage';
 import React from 'react'
-
+// export const dynamic = 'force-dynamic';
 const page = () => {
-    return (
+    return (<>
         <EmailPage />
+    </>
+
     )
 }
 

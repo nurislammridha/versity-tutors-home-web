@@ -84,7 +84,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
 
     // console.log('queryString', lookingFor, division, district, classes)
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <>
             <main class="tu-bgmain tu-main">
                 <section class="tu-main-section">
                     <div class="container">
@@ -627,7 +627,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                     </div>
                 </section>
             </main>
-        </Suspense>
+        </>
     )
 }
 

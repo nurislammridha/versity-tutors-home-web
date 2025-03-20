@@ -1,9 +1,12 @@
-import DashboardPage from '@/pages/DashboardPage'
-import React from 'react'
+// import DashboardPage from '@/pages/DashboardPage'
+import DashboardPage from '@/page-components/DashboardPage'
+import React, { Suspense } from 'react'
 
 const page = () => {
-    return (
+    return (<Suspense fallback={<div>Loading...</div>}>
         <DashboardPage />
+    </Suspense>
+
     )
 }
 

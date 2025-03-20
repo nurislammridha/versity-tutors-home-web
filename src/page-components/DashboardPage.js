@@ -13,7 +13,7 @@ import WhoBookedMe from '@/components/WhoBookedMe'
 import WishList from '@/components/WishList'
 import { FalseUpdatedProfile, UploadAvatarImg } from '@/redux/_redux/CommonAction'
 import { useRouter, useSearchParams } from 'next/navigation'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
@@ -68,7 +68,7 @@ const DashboardPage = () => {
         setClientData(JSON.parse(localStorage.getItem("clientData")))
     }, [])
     return (
-        <Suspense fallback={<div>Loading...</div>}>
+        <>
             <PrimaHeader isLogin={isLogin} clientData={clientData} />
             <main className="tu-main tu-bgmain">
                 <div className="tu-main-section">
@@ -200,7 +200,7 @@ const DashboardPage = () => {
             <PrimaFooter />
 
             <ToastContainer />
-        </Suspense>
+        </>
     )
 }
 

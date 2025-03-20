@@ -11,7 +11,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import { ToastContainer } from 'react-toastify';
 
 const DetailsPage = ({ params }) => {
-    const { id } = params; // Get dynamic ID from URL
+    const { id } = params || {}; // Get dynamic ID from URL
     const router = useRouter()
     const dispatch = useDispatch()
     const [isLogin, setIsLogin] = useState(false)
