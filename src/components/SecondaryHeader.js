@@ -24,25 +24,23 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                     <div class="collapse navbar-collapse tu-themenav" id="navbarSupportedContent">
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <Link href="#services">
-                                    <a class="nav-link" >
-                                        Our Services
-                                    </a>
-                                </Link>
+                                <a href="#services" class="nav-link" >
+                                    Our Services
+                                </a>
 
                             </li>
                             <li class="nav-item">
-                                <Link href="#classes"><a class="nav-link" >Our Classes</a></Link>
+                                <a href="#classes" class="nav-link" >Our Classes</a>
 
                             </li>
                             <li class="nav-item">
-                                <Link href="#stories"><a class="nav-link" >Success Stories</a></Link>
+                                <a href="#stories" class="nav-link" >Success Stories</a>
                             </li>
                             <li class="nav-item">
-                                <Link href="#featured"><a class="nav-link" >Featured Tutor</a></Link>
+                                <a href="#featured" class="nav-link" >Featured Tutor</a>
                             </li>
                             <li class="nav-item">
-                                <Link href="#subjects"><a class="nav-link" >All Subjects</a></Link>
+                                <a href="#subjects" class="nav-link" >All Subjects</a>
                             </li>
 
                         </ul>

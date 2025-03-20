@@ -105,8 +105,8 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 </div>
                                                 <ul class="tu-serviceslist">
                                                     {item.subCategories.map((item2, index) => (
-                                                        <li>
-                                                            <a key={index}>{item2.subCategoryInfo?.subCategoryName}</a>
+                                                        <li key={index}>
+                                                            <a >{item2.subCategoryInfo?.subCategoryName}</a>
                                                         </li>
                                                     ))}
 

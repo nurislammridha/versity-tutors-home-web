@@ -574,7 +574,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                             <li>
                                                                 <span>
                                                                     <i class="icon icon-map-pin tu-blueclr"></i>
-                                                                    Student's home
+                                                                    Student home
                                                                 </span>
                                                             </li>
                                                         }

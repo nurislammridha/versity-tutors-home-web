@@ -302,7 +302,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                         checked={isTeachingLocationStudentHome}
                                                                         onChange={() => handleInput("isTeachingLocationStudentHome", !isTeachingLocationStudentHome)}
                                                                     />
-                                                                    <label for="home1">Student's home</label>
+                                                                    <label for="home1">Student home</label>
                                                                 </div>
                                                             </div>
                                                         </li>

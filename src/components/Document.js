@@ -90,7 +90,7 @@ const UploadDocument = ({ clientData }) => {
                                             </thead>
                                             <tbody>
                                                 {documentData.map((item, index) => (
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{item?.title}</td>
                                                         <td>{formatDate(item?.createdAt)}</td>

@@ -83,7 +83,7 @@ const WhoBookedMe = ({ clientData }) => {
                                         </thead>
                                         <tbody>
                                             {bookByBooker.map((item, index) => (
-                                                <tr>
+                                                <tr key={index}>
                                                     <th scope="row">{index + 1}</th>
                                                     <td>{item?.bookerId?.firstName + " " + item?.bookerId?.lastName}</td>
                                                     <td>{item?.bookerId?.phone}</td>

@@ -53,7 +53,7 @@ const Banner = () => {
                         <div class="search-box p-4 rounded-4 shadow d-flex justify-content-between align-items-end flex-wrap gap-3">
 
                             <div class="d-flex flex-column flex-grow-1">
-                                <label class="form-label fw-semibold text-purple">I'm looking for</label>
+                                <label class="form-label fw-semibold text-purple">I am looking for</label>
                                 <select
                                     class="form-select"
                                     onChange={(e) => handleChange("lookingFor", e.target.value)}

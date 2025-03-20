@@ -10,7 +10,7 @@ import PrimaHeader from "@/components/PrimaHeader";
 import PrimaFooter from "@/components/PrimaFooter";
 import { useRouter } from "next/navigation";
 import FeaturedTutor from "@/components/FeaturedTutor";
-export default function Home({ navigation }) {
+export default function HomePageCopy({ navigation }) {
   const router = useRouter()
   const el = useRef(null); // Reference for the target element
   const typedInstance = useRef(null);
