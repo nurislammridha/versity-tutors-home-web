@@ -12,6 +12,7 @@ const PersonalDetails = ({ clientData }) => {
     const isPersonalLoading = useSelector((state) => state.homeInfo.isPersonalLoading);
     const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
         isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender } = personal
+    const { isTutorAccount } = clientData || {}
     const handleInput = (name, value) => {
         console.log('name,value', name, value)
         dispatch(GetPersonalInput(name, value))
@@ -88,18 +89,18 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Your tagline</label>
+                                                    <label className="tu-label">Your Title</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="text"
                                                             className="form-control"
                                                             required=""
-                                                            placeholder="Add your tagline"
+                                                            placeholder={isTutorAccount ? "Ex: BSC in MATH" : "Ex: HSC in Science"}
                                                             value={tagline}
                                                             onChange={(e) => handleInput("tagline", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Add your tagline</span>
+                                                            <span>{isTutorAccount ? "Ex: BSC in MATH" : "Ex: HSC in Science"}</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,7 +330,8 @@ const PersonalDetails = ({ clientData }) => {
                                                             className="form-control"
                                                             placeholder="Enter description"
                                                             value={tutorBriefIntroduction}
-                                                            onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
+                                                            onChange={(e) => handleInput("tutorBriefIntroduction", e.target.value)}
+                                                        // onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                         ></textarea>
                                                         <div className="tu-placeholder">
                                                             <span>Enter description</span>

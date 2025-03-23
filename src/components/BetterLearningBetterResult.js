@@ -75,8 +75,11 @@ const BetterLearningBetterResult = ({ data }) => {
                             </div>
                         </div>
                     </div>
-                    <div class="tu-mainbtn">
+                    {/* <div class="tu-mainbtn">
                         <a ><span>Join our Community</span><i class="icon icon-lock"></i></a>
+                    </div> */}
+                    <div class="tu-mainbtn">
+                        <a class="tu-primbtn-lg"><span>Join our Community</span><i class="icon icon-lock"></i></a>
                     </div>
                 </div>
             </section>

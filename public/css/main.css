@@ -1680,7 +1680,7 @@ form p span i {
   font-style: normal;
   color: #DD0430;
   font-weight: 400;
-  display: none;
+  /* display: none; */
 }
 
 /** --- mCustomScrollbar --- **/

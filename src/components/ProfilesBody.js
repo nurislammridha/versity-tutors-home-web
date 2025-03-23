@@ -95,23 +95,24 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                         <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3>
                                         <div class="tu-sort-right-area">
                                             <div class="tu-sortby">
-                                                <span>Sort by: </span>
+                                                <span>Sort by price: </span>
                                                 <div class="tu-select">
                                                     <select
                                                         class="form-control tu-selectv"
                                                         value={sortBy}
                                                         onChange={(e) => setSortBy(e.target.value)}
                                                     >
-                                                        <option value={"Best Match"}>Best Match </option>
+                                                        <option>Select sort by </option>
+                                                        {/* <option value={"Best Match"}>Best Match </option> */}
                                                         <option value={"Price low to high"}>Price low to high </option>
                                                         <option value={'Price high to low'}>Price high to low</option>
                                                     </select>
                                                 </div>
                                             </div>
-                                            <div class="tu-filter-btn">
+                                            {/* <div class="tu-filter-btn">
                                                 <a class="tu-listbtn active" ><i class="icon icon-list"></i></a>
                                                 <a class="tu-listbtn" ><i class="icon icon-grid"></i></a>
-                                            </div>
+                                            </div> */}
                                         </div>
                                     </div>
                                     <div class="tu-searchbar-wrapper">
@@ -122,7 +123,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     <input
                                                         type="text"
                                                         class="form-control"
-                                                        placeholder="What do you want to explore?"
+                                                        placeholder="enter name, location, class, subject or title"
                                                         value={search}
                                                         onChange={(e) => setSearch(e.target.value)}
                                                     />
@@ -535,7 +536,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                             </div>
                             <div class="col-xl-8 col-xxl-9">
                                 <div class="tu-listinginfo-holder">
-                                    {filteredProfiles !== null && filteredProfiles.length > 0 && filteredProfiles.map((item, index) => (
+                                    {filteredProfiles !== null && filteredProfiles.length > 0 ? filteredProfiles.map((item, index) => (
                                         <div class="tu-listinginfo" key={index}>
                                             <span class="tu-cardtag"></span>
                                             <div class="tu-listinginfo_wrapper">
@@ -546,8 +547,12 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         </figure>
                                                         <div class="tu-listing-heading">
                                                             <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                            {/* <h6>BBBB bbbb </h6> */}
                                                             <div class="tu-listing-location">
-                                                                <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span><address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
+                                                                <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span>
+                                                                <span><i className="icon icon-book"></i>{item?.tagline}</span>
+                                                                <address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -600,28 +605,34 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                 </div>
                                             </div>
                                         </div>
-                                    ))}
+                                    )) :
+                                        (
+                                            <h2 className='w-100 d-block alert alert-success'>No data found</h2>
+                                        )}
 
 
                                 </div>
-                                <nav className="tu-pagination">
-                                    <ul>
-                                        <li className={`tu-pagination-prev ${page === 1 ? "disabled" : ""}`}>
-                                            <a onClick={() => handlePageChange(page - 1)}><i className="icon icon-chevron-left"></i></a>
-                                        </li>
-                                        {[...Array(totalPages)].map((_, index) => {
-                                            const pageNum = index + 1;
-                                            return (
-                                                <li key={pageNum} className={page === pageNum ? "active" : ""}>
-                                                    <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
-                                                </li>
-                                            );
-                                        })}
-                                        <li className={`tu-pagination-next ${page === totalPages ? "disabled" : ""}`}>
-                                            <a onClick={() => handlePageChange(page + 1)}><i className="icon icon-chevron-right"></i></a>
-                                        </li>
-                                    </ul>
-                                </nav>
+                                {filteredProfiles !== null && filteredProfiles.length > 0 &&
+                                    <nav className="tu-pagination">
+                                        <ul>
+                                            <li className={`tu-pagination-prev ${page === 1 ? "disabled" : ""}`}>
+                                                <a onClick={() => handlePageChange(page - 1)}><i className="icon icon-chevron-left"></i></a>
+                                            </li>
+                                            {[...Array(totalPages)].map((_, index) => {
+                                                const pageNum = index + 1;
+                                                return (
+                                                    <li key={pageNum} className={page === pageNum ? "active" : ""}>
+                                                        <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
+                                                    </li>
+                                                );
+                                            })}
+                                            <li className={`tu-pagination-next ${page === totalPages ? "disabled" : ""}`}>
+                                                <a onClick={() => handlePageChange(page + 1)}><i className="icon icon-chevron-right"></i></a>
+                                            </li>
+                                        </ul>
+                                    </nav>
+                                }
+
                             </div>
                         </div>
                     </div>

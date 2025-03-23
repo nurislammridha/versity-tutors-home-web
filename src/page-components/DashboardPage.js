@@ -22,7 +22,7 @@ const DashboardPage = () => {
     const router = useRouter()
     const searchParams = useSearchParams();
     const name = searchParams.get('name');
-    const [state, setState] = useState("document")//personal
+    const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
     const [isLogin, setIsLogin] = useState(false)

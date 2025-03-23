@@ -246,7 +246,8 @@ const Education = ({ clientData }) => {
                                                     placeholder="Enter description"
                                                     required
                                                     value={description}
-                                                    onChange={(e) => description.length < 500 && handleChange("description", e.target.value)}
+                                                    // onChange={(e) => description.length < 500 && handleChange("description", e.target.value)}
+                                                    onChange={(e) => handleChange("description", e.target.value)}
                                                 ></textarea>
                                                 <div className="tu-placeholder">
                                                     <span>Enter description</span>

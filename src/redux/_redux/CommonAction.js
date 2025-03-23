@@ -1,3 +1,4 @@
+import { validateNoBDPhoneNumber } from "../../../public/function/globalFunction";
 import { showToast } from "../../utils/ToastHelper";
 import * as Types from "./Types";
 import Axios from "axios";
@@ -360,6 +361,12 @@ export const PersonalSubmit = (data, id) => (dispatch) => {
     } else if (!isTeachingLocationTutorHome && !isTeachingLocationStudentHome && !isTeachingLocationOnline) {
         showToast("error", "Please select a which can you teach on")
         return 0
+    } else if (tutorBriefIntroduction.length > 500) {
+        showToast("error", "Brief introduction is so long")
+        return 0
+    } else if (!validateNoBDPhoneNumber(tutorBriefIntroduction)) {
+        showToast("error", "You have not access to share phone number")
+        return 0
     }
 
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
@@ -440,6 +447,9 @@ export const AddEducationSubmit = (education, educations, id, action, actionId =
             return 0
         } else if (startDate.length === 0) {
             showToast("error", "Start date shouldn't be empty")
+            return 0
+        } else if (description.length > 500) {
+            showToast("error", "Description too long")
             return 0
         }
     }

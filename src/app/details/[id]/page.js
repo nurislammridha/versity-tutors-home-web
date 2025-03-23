@@ -2,9 +2,10 @@
 import DetailsPage from '@/page-components/DetailsPage'
 import React from 'react'
 
-const page = () => {
+const page = ({ params }) => {
+    const { id } = params || {}; // Get dynamic ID from URL
     return (<>
-        <DetailsPage />
+        <DetailsPage id={id} />
     </>
 
     )

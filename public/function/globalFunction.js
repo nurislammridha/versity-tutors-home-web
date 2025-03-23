@@ -54,3 +54,13 @@ export const formatDate = (dateString) => {
 
     return `${day} ${month} ${time}`;
 };
+export const validateNoBDPhoneNumber = (text) => {
+    // Regular expression to match BD phone numbers like 01753109207
+    const bdPhoneRegex = /\b01[3-9]\d{8}\b/g;
+
+    // Check if any BD phone number exists
+    if (bdPhoneRegex.test(text)) {
+        return false; // Invalid - phone number found
+    }
+    return true; // Valid - no phone number found
+}

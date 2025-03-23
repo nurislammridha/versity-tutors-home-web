@@ -45,7 +45,7 @@ const ContactDetails = ({ clientData }) => {
                                                         </div>
                                                         <div className="tu-placeholderholder">
                                                             <input
-                                                                type="number"
+                                                                type="text"
                                                                 className="form-control"
                                                                 required=""
                                                                 placeholder="Enter phone number"
@@ -54,7 +54,7 @@ const ContactDetails = ({ clientData }) => {
                                                             />
                                                             <div className="tu-placeholder">
                                                                 <span>01XXXXXXXXX</span>
-                                                                <em>*</em>
+                                                                {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -76,7 +76,7 @@ const ContactDetails = ({ clientData }) => {
                                                             />
                                                             <div className="tu-placeholder">
                                                                 <span>Enter email address</span>
-                                                                <em>*</em>
+                                                                {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -97,7 +97,7 @@ const ContactDetails = ({ clientData }) => {
                                                             />
                                                             <div className="tu-placeholder">
                                                                 <span>Enter skype id</span>
-                                                                <em>*</em>
+                                                                {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -118,7 +118,7 @@ const ContactDetails = ({ clientData }) => {
                                                             />
                                                             <div className="tu-placeholder">
                                                                 <span>Enter whatsapp number</span>
-                                                                <em>*</em>
+                                                                {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -139,7 +139,7 @@ const ContactDetails = ({ clientData }) => {
                                                             />
                                                             <div className="tu-placeholder">
                                                                 <span>Enter website URL</span>
-                                                                <em>*</em>
+                                                                {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
