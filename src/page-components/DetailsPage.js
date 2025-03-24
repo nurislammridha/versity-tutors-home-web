@@ -25,7 +25,7 @@ const DetailsPage = ({ id }) => {
     const isStatusLoading = useSelector((state) => state.homeInfo.isStatusLoading);
     const { avatar, averageRating, totalComments, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
     const handleBook = () => {
-        dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }))
+        dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }, clientData))
     }
     const handleUnlock = () => {
         let arr = unlockInfo || []

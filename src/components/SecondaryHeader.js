@@ -1,16 +1,35 @@
 
+import { NotificationAsClicked, NotificationByClient, SeenNotification } from '@/redux/_redux/CommonAction'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SecondaryHeader = ({ isLogin, clientData }) => {
     const router = useRouter()
+    const dispatch = useDispatch()
     const [isMenu, setMenu] = useState(false)
+    const [isNotification, setNotification] = useState(false)
+    const notificationList = useSelector((state) => state.homeInfo.notificationList);
+    const { unreadCount, result: list } = notificationList || {}
     const handleLogout = () => {
         localStorage.setItem("isLogin", false)
         localStorage.setItem("clientData", null)
         router.push("/login")
     }
+    const handleOpenNotification = () => {
+        setNotification(!isNotification)
+        unreadCount > 0 && dispatch(NotificationAsClicked(clientData?._id))
+    }
+    const handleSeen = (item) => {
+        setNotification(false)
+        router.push(item.redirectUrl)
+        dispatch(SeenNotification(item?._id))
+    }
+    useEffect(() => {
+        clientData && dispatch(NotificationByClient(clientData?._id))
+    }, [clientData])
+    console.log('notificationList', notificationList)
     return (
         <header class="tu-header tu-headerv2" style={{ marginTop: -5, backgroundColor: "#0a0f26" }}>
             <nav class="navbar navbar-expand-xl tu-navbar tu-navbarvtwo">
@@ -46,9 +65,34 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                         </ul>
                     </div>
                     <ul class="nav-item tu-afterlogin">
-                        {/* <li>
-                            <a class="nav-link" ="index.html"><span class="icon icon-bell"><i class="tu-messagenoti">3</i></span></a>
-                        </li> */}
+                        <li>
+                            <a class="nav-link"
+                                onClick={() => handleOpenNotification()}
+                            ><span class="icon icon-bell">{unreadCount > 0 && <i class="tu-messagenoti">{unreadCount}</i>}</span></a>
+                            {isNotification &&
+                                <ul class="sub-notification list-group">
+                                    {list && list.length > 0 ? list.map((item, index) => (
+                                        item?.isSeen ? <li class="list-group-item notification-item seen"
+                                            onClick={() => router.push(item.redirectUrl)}
+                                        >
+                                            <span>{item?.title}</span>
+                                        </li> :
+                                            <li class="list-group-item notification-item unseen"
+                                                onClick={() => handleSeen(item)}
+                                            >
+                                                <strong>{item?.title}</strong> - Click to view
+                                            </li>
+                                    ))
+                                        : (
+                                            <li class="list-group-item notification-item seen"
+
+                                            >
+                                                <span>No notification found</span> - Thank you for joining us!
+                                            </li>
+                                        )}
+                                </ul>
+                            }
+                        </li>
                         {isLogin ? (
                             <li class="menu-item-has-children" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
                                 <strong>

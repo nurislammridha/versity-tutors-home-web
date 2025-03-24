@@ -33,7 +33,7 @@ const Settings = ({ clientData }) => {
             buttons: [
                 {
                     label: "Yes",
-                    onClick: () => dispatch(StatusSubmit({ isRequestToApprove: true }, clientData?._id)),
+                    onClick: () => dispatch(StatusSubmit({ isRequestToApprove: true, isApproved: false }, clientData?._id, clientData)),
                 },
                 {
                     label: "No",

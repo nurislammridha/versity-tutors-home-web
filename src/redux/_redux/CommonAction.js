@@ -252,6 +252,55 @@ export const GetPersonalInput = (name, value) => (dispatch) => {
     const formValue = { name, value }
     dispatch({ type: Types.GET_PERSONAL_INPUT, payload: formValue });
 };
+//notification management
+export const CreateNotification = (data) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}notification`;
+    try {
+        Axios.post(url, data).then((res) => {
+            if (res.data.status) {
+                //
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const NotificationByClient = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}notification/client/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.NOTIFICATION_LIST, payload: res.data });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const SeenNotification = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}notification/${id}`;
+    try {
+        Axios.put(url).then((res) => {
+            if (res.data.status) {
+                //
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const NotificationAsClicked = (id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}notification/client/${id}`;
+    try {
+        Axios.put(url).then((res) => {
+            if (res.data.status) {
+                dispatch(NotificationByClient(id))
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
 export const GetDivisionList = () => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}division`;
     try {
@@ -704,7 +753,7 @@ export const SubmitReview = (data) => (dispatch) => {
 export const FalseSubmitReview = (data) => (dispatch) => {
     dispatch({ type: Types.IS_REVIEW_SUBMITTED, payload: false });
 }
-export const SubmitBook = (data) => (dispatch) => {
+export const SubmitBook = (data, client) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}book`;
     dispatch({ type: Types.IS_BOOK_LOADING, payload: true })
 
@@ -713,6 +762,9 @@ export const SubmitBook = (data) => (dispatch) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_BOOK_LOADING, payload: false });
                 showToast("success", "Book request has send")
+                //notification create
+                const post = { clientInfo: data.clientId, title: `${client?.firstName} ${client?.lastName} request you for booking`, redirectUrl: "/dashboard?name=whoBooked" }
+                dispatch(CreateNotification(post))
             }
         }).catch((err) => {
             showToast("success", err);
@@ -746,7 +798,7 @@ export const GetBookingByBooker = (id, clientId = false, status = null) => (disp
         showToast("error", "Something went wrong");
     }
 };
-export const UpdateBooking = (id, data, cId, status) => (dispatch) => {
+export const UpdateBooking = (id, data, cId, status, item, client) => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}book/${id}`;
     dispatch({ type: Types.IS_UPDATE_BOOK_LOADING, payload: true })
     try {
@@ -754,7 +806,8 @@ export const UpdateBooking = (id, data, cId, status) => (dispatch) => {
             if (res.data.status) {
                 dispatch({ type: Types.IS_UPDATE_BOOK_LOADING, payload: false });
                 dispatch(GetBookingByBooker(cId, true, status))
-                // showToast("success", "Book request has send")
+                const post = { clientInfo: item?.bookerId?._id, title: `${client?.firstName} ${client?.lastName} ${data.status} your booking request`, redirectUrl: "/dashboard?name=myBooking" }
+                dispatch(CreateNotification(post))
             }
         }).catch((err) => {
             showToast("success", err);
@@ -884,7 +937,7 @@ export const GetUnlock = (arr, id, myId) => (dispatch) => {
     }
 };
 //any thing update without checking/ validation
-export const StatusSubmit = (data, id) => (dispatch) => {
+export const StatusSubmit = (data, id, client) => (dispatch) => {
 
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_STATUS_LOADING, payload: true })
@@ -894,7 +947,8 @@ export const StatusSubmit = (data, id) => (dispatch) => {
                 dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
                 showToast("success", res.data.message);
                 dispatch(GetClientById(id))
-
+                const post = { clientInfo: client?._id, title: `${client?.firstName} ${client?.lastName} request you to accept him/her account`, redirectUrl: "/approve-tutor", isAdmin: true }
+                dispatch(CreateNotification(post))
             }
         }).catch((err) => {
             showToast("success", err);

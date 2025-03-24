@@ -101,6 +101,7 @@ const initialState = {
   isDocumentLoading: false,
   isUploadDocumentLoading: false,
   isDeleteDocumentLoading: false,
+  notificationList: null,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -418,6 +419,11 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         isDeleteDocumentLoading: action.payload,
+      };
+    case Types.NOTIFICATION_LIST:
+      return {
+        ...state,
+        notificationList: action.payload,
       };
 
     default:

@@ -2389,6 +2389,43 @@ input.tu-showplaceholder::placeholder {
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);
   border: 1px solid #F7F8FC;
 }
+.sub-notification li{
+  cursor: pointer;
+
+}
+.sub-notification {
+  margin-top: 12px;
+  right: 85px;
+  /* display: none; */
+  margin-left: 0;
+  /* padding: 6px; */
+  width: 380px;
+  z-index: 1051;
+  background: #ffffff;
+  position: absolute;
+  border-radius: 4px;
+  font-family: "Outfit", sans-serif;
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #F7F8FC;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.notification-item {
+  /* padding: 10px 15px; */
+  border-bottom: 1px solid #ddd;
+}
+.notification-item:last-child {
+  border-bottom: none;
+}
+.unseen {
+  background-color: #f8d7da; /* Light red for unseen */
+  font-weight: bold;
+}
+.seen {
+  background-color: #e2e3e5; /* Light gray for seen */
+}
 .sub-menu li {
   width: 100%;
   position: relative;

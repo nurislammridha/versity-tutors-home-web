@@ -12,10 +12,10 @@ const WhoBookedMe = ({ clientData }) => {
     const bookByBooker = useSelector((state) => state.homeInfo.bookByBooker);
     const isUpdateBookLoading = useSelector((state) => state.homeInfo.isUpdateBookLoading);
     const handleAccept = (item) => {
-        dispatch(UpdateBooking(item?._id, { status: "accepted" }, clientData?._id, status))
+        dispatch(UpdateBooking(item?._id, { status: "accepted" }, clientData?._id, status, item, clientData))
     }
     const handleReject = (item) => {
-        dispatch(UpdateBooking(item?._id, { status: "rejected" }, clientData?._id, status))
+        dispatch(UpdateBooking(item?._id, { status: "rejected" }, clientData?._id, status, item, clientData))
     }
     useEffect(() => {
         if (clientData?._id) {
