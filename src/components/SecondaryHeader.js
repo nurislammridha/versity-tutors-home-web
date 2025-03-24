@@ -65,7 +65,7 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                         </ul>
                     </div>
                     <ul class="nav-item tu-afterlogin">
-                        <li>
+                        {/* <li>
                             <a class="nav-link"
                                 onClick={() => handleOpenNotification()}
                             ><span class="icon icon-bell">{unreadCount > 0 && <i class="tu-messagenoti">{unreadCount}</i>}</span></a>
@@ -92,7 +92,7 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                         )}
                                 </ul>
                             }
-                        </li>
+                        </li> */}
                         {isLogin ? (
                             <li class="menu-item-has-children" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
                                 <strong>
