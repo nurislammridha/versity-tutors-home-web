@@ -48,7 +48,7 @@ const Settings = ({ clientData }) => {
         }
     }, [clientData])
 
-    // console.log('subCategoryList', subCategoryList)
+    // console.log('clientData', clientData)
     return (
         <>
             <div class="col-lg-8 col-xl-9">
@@ -82,16 +82,19 @@ const Settings = ({ clientData }) => {
                                                 >{index === 1 && isStatusLoading ? "Loading..." : clientData?.isBooked ? "Free Me" : "Booked Me"}</a>
                                             </td>
                                         </tr>
-                                        <tr >
-                                            <th scope="row">02</th>
-                                            <td>{clientData?.isRequestToApprove ? "Request was sent to admin for approving me" : "Send Request to admin for approving me"}</td>
-                                            <td>
-                                                <a
-                                                    className='btn btn-success btn-sm'
-                                                    onClick={() => !clientData?.isRequestToApprove && !isStatusLoading && handleRequest()}
-                                                >{index === 2 && isStatusLoading ? "Loading" : clientData?.isRequestToApprove ? "Request sent" : "Send Request"}</a>
-                                            </td>
-                                        </tr>
+                                        {clientData?.isTutorAccount &&
+                                            <tr >
+                                                <th scope="row">02</th>
+                                                <td>{clientData?.isRequestToApprove ? "Request was sent to admin for approving me" : "Send Request to admin for approving me"}</td>
+                                                <td>
+                                                    <a
+                                                        className='btn btn-success btn-sm'
+                                                        onClick={() => !clientData?.isRequestToApprove && !isStatusLoading && handleRequest()}
+                                                    >{index === 2 && isStatusLoading ? "Loading" : clientData?.isRequestToApprove ? "Request sent" : "Send Request"}</a>
+                                                </td>
+                                            </tr>
+                                        }
+
                                     </tbody>
                                 </table>
                             </div>
