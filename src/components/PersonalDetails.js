@@ -277,7 +277,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </ul>
                                                 </div> */}
                                                 <div className="form-group">
-                                                    <label className="tu-label">I can teach on</label>
+                                                    <label className="tu-label">{isTutorAccount ? "I can teach on" : "I need tutor on"}</label>
                                                     <ul className="tu-status-filter">
                                                         <li>
                                                             <div className="tu-status-contnent">
@@ -303,7 +303,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                         checked={isTeachingLocationStudentHome}
                                                                         onChange={() => handleInput("isTeachingLocationStudentHome", !isTeachingLocationStudentHome)}
                                                                     />
-                                                                    <label for="home1">Student home</label>
+                                                                    <label for="home1">{isTutorAccount ? "Student" : "Tutor"} home</label>
                                                                 </div>
                                                             </div>
                                                         </li>
