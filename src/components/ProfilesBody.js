@@ -92,7 +92,8 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                             <div class="col-lg-12">
                                 <div class="tu-listing-wrapper">
                                     <div class="tu-sort">
-                                        <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3>
+                                        {/* <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3> */}
+                                        <h3>{total} Search result  in<span>{search}</span></h3>
                                         <div class="tu-sort-right-area">
                                             <div class="tu-sortby">
                                                 <span>Sort by price: </span>
