@@ -85,51 +85,60 @@ const ProfilesBody = ({ clientData, isLogin }) => {
     // console.log('queryString', lookingFor, division, district, classes)
     return (
         <>
-            <main class="tu-bgmain tu-main">
-                <section class="tu-main-section">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="tu-listing-wrapper">
-                                    <div class="tu-sort">
-                                        {/* <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3> */}
-                                        <h3>{total} Search result  in<span>{search}</span></h3>
-                                        <div class="tu-sort-right-area">
-                                            <div class="tu-sortby">
-                                                <span>Sort by price: </span>
-                                                <div class="tu-select">
-                                                    <select
-                                                        class="form-control tu-selectv"
-                                                        value={sortBy}
-                                                        onChange={(e) => setSortBy(e.target.value)}
-                                                    >
-                                                        <option>Select sort by </option>
-                                                        {/* <option value={"Best Match"}>Best Match </option> */}
-                                                        <option value={"Price low to high"}>Price low to high </option>
-                                                        <option value={'Price high to low'}>Price high to low</option>
-                                                    </select>
+            {isProfilesLoading ?
+                <div class="tu-preloader">
+                    <div class="tu-preloader_holder">
+                        <img src="images/favicon.png" alt="laoder img" />
+                        <div class="tu-loader"></div>
+                    </div>
+                </div>
+                :
+
+                <main class="tu-bgmain tu-main">
+                    <section class="tu-main-section">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="tu-listing-wrapper">
+                                        <div class="tu-sort">
+                                            {/* <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3> */}
+                                            <h3>{total} Search result  in<span>{search}</span></h3>
+                                            <div class="tu-sort-right-area">
+                                                <div class="tu-sortby">
+                                                    <span>Sort by price: </span>
+                                                    <div class="tu-select">
+                                                        <select
+                                                            class="form-control tu-selectv"
+                                                            value={sortBy}
+                                                            onChange={(e) => setSortBy(e.target.value)}
+                                                        >
+                                                            <option>Select sort by </option>
+                                                            {/* <option value={"Best Match"}>Best Match </option> */}
+                                                            <option value={"Price low to high"}>Price low to high </option>
+                                                            <option value={'Price high to low'}>Price high to low</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            {/* <div class="tu-filter-btn">
+                                                {/* <div class="tu-filter-btn">
                                                 <a class="tu-listbtn active" ><i class="icon icon-list"></i></a>
                                                 <a class="tu-listbtn" ><i class="icon icon-grid"></i></a>
                                             </div> */}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tu-searchbar-wrapper">
-                                        <div class="tu-appendinput">
-                                            <div class="tu-searcbar">
-                                                <div class="tu-inputicon">
-                                                    <a ></a>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        placeholder="enter name, location, class, subject or title"
-                                                        value={search}
-                                                        onChange={(e) => setSearch(e.target.value)}
-                                                    />
-                                                </div>
-                                                {/* <div class="tu-select">
+                                        <div class="tu-searchbar-wrapper">
+                                            <div class="tu-appendinput">
+                                                <div class="tu-searcbar">
+                                                    <div class="tu-inputicon">
+                                                        <a ></a>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            placeholder="enter name, location, class, subject or title"
+                                                            value={search}
+                                                            onChange={(e) => setSearch(e.target.value)}
+                                                        />
+                                                    </div>
+                                                    {/* <div class="tu-select">
                                                     <i class="icon icon-layers"></i>
                                                     <select id="selectv8" data-placeholderinput="Select list" data-placeholder="Select category" class="form-control">
                                                         <option label="Select category"></option>
@@ -140,224 +149,205 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         <option >House Cleaning</option>
                                                     </select>
                                                 </div> */}
-                                                <a class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
+                                                    <a class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
+                                                </div>
+                                            </div>
+                                            <div class="tu-listing-search">
+                                                <figure>
+                                                    <img src="images/listing/shape.png" alt="image" />
+                                                </figure>
+                                                <span>Start from here</span>
                                             </div>
                                         </div>
-                                        <div class="tu-listing-search">
-                                            <figure>
-                                                <img src="images/listing/shape.png" alt="image" />
-                                            </figure>
-                                            <span>Start from here</span>
-                                        </div>
+
                                     </div>
-                                    {/* <ul class="tu-searchtags">
-                                        <li>
-                                            <span>Pre-School <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                        <li>
-                                            <span> Middle (Class 6-8) <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                        <li>
-                                            <span>Intermediate <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                        <li>
-                                            <span>5.0 Stars <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                        <li>
-                                            <span>Online bookings <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                        <li>
-                                            <span>Male only <a ><i class="icon icon-x"></i></a></span>
-                                        </li>
-                                    </ul> */}
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-xxl-3">
-                                <aside class="tu-asidewrapper">
-                                    <a class="tu-dbmenu"><i class="icon icon-chevron-left"></i></a>
-                                    <div class="tu-aside-menu">
-                                        <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
-                                                <h5>Education level & subjects</h5>
-                                            </div>
-                                            <div id="side2" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <div class="tu-filterselect">
-                                                        <div class="tu-select">
-                                                            <select
-                                                                id="selectv7"
-                                                                data-placeholder="Select education level"
-                                                                data-placeholderinput="Select education level"
-                                                                class="form-control tu-input-field"
-                                                                value={categoryId}
-                                                                onChange={(e) => {
-                                                                    setCategoryId(e.target.value)
-                                                                    setSubCategoryId([])
-                                                                }}
-                                                            >
-                                                                <option label="Select education level"></option>
-                                                                {categoryList?.length > 0 && categoryList.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.categoryName}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    {subCategoryList !== null && subCategoryList.length > 0 &&
+                                <div class="col-xl-4 col-xxl-3">
+                                    <aside class="tu-asidewrapper">
+                                        <a class="tu-dbmenu"><i class="icon icon-chevron-left"></i></a>
+                                        <div class="tu-aside-menu">
+                                            <div class="tu-aside-holder">
+                                                <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
+                                                    <h5>Education level & subjects</h5>
+                                                </div>
+                                                <div id="side2" class="collapse show">
+                                                    <div class="tu-aside-content">
                                                         <div class="tu-filterselect">
-                                                            <h6>Choose subjects</h6>
-                                                            <ul class="tu-categoriesfilter">
-                                                                {subCategoryList.map((item, index) => (
-                                                                    <li key={index}>
-                                                                        <div class="tu-check tu-checksm">
-                                                                            <input
-                                                                                type="checkbox"
-                                                                                id={`expcheck${index}`}
-                                                                                name="expcheck"
-                                                                                checked={subCategoryId.includes(item._id)}
-                                                                                onChange={() => handleCheckboxChange(item._id)}
-                                                                            />
-                                                                            <label htmlFor={`expcheck${index}`}>{item.subCategoryName}</label>
-                                                                        </div>
-                                                                    </li>
-                                                                ))}
+                                                            <div class="tu-select">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select education level"
+                                                                    data-placeholderinput="Select education level"
+                                                                    class="form-control tu-input-field"
+                                                                    value={categoryId}
+                                                                    onChange={(e) => {
+                                                                        setCategoryId(e.target.value)
+                                                                        setSubCategoryId([])
+                                                                    }}
+                                                                >
+                                                                    <option label="Select education level"></option>
+                                                                    {categoryList?.length > 0 && categoryList.map((item, index) => (
+                                                                        <option key={index} value={item._id}>{item.categoryName}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        {subCategoryList !== null && subCategoryList.length > 0 &&
+                                                            <div class="tu-filterselect">
+                                                                <h6>Choose subjects</h6>
+                                                                <ul class="tu-categoriesfilter">
+                                                                    {subCategoryList.map((item, index) => (
+                                                                        <li key={index}>
+                                                                            <div class="tu-check tu-checksm">
+                                                                                <input
+                                                                                    type="checkbox"
+                                                                                    id={`expcheck${index}`}
+                                                                                    name="expcheck"
+                                                                                    checked={subCategoryId.includes(item._id)}
+                                                                                    onChange={() => handleCheckboxChange(item._id)}
+                                                                                />
+                                                                                <label htmlFor={`expcheck${index}`}>{item.subCategoryName}</label>
+                                                                            </div>
+                                                                        </li>
+                                                                    ))}
 
 
-                                                            </ul>
-                                                            {/* <div class="show-more">
+                                                                </ul>
+                                                                {/* <div class="show-more">
                                                                 <a  class="tu-readmorebtn tu-show_more">Show all</a>
                                                             </div> */}
-                                                        </div>
-                                                    }
+                                                            </div>
+                                                        }
 
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side21" role="button" aria-expanded="true">
-                                                <h5>Locations</h5>
-                                            </div>
-                                            <div id="side21" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <div class="tu-filterselect">
-                                                        <div class="tu-select">
-                                                            <select
-                                                                id="selectv7"
-                                                                data-placeholder="Select division"
-                                                                data-placeholderinput="Select division"
-                                                                class="form-control tu-input-field"
-                                                                value={divisionId}
-                                                                onChange={(e) => {
-                                                                    setDivisionId(e.target.value)
-                                                                    setDistrictId("")
-                                                                    setSubDistrictId("")
-                                                                    setAreaId("")
-                                                                }}
-                                                            >
-                                                                <option label="Select division"></option>
-                                                                {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.divisionName}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                        <div class="tu-select mt-3">
-                                                            <select
-                                                                id="selectv7"
-                                                                data-placeholder="Select district"
-                                                                data-placeholderinput="Select district"
-                                                                class="form-control tu-input-field"
-                                                                value={districtId}
-                                                                onChange={(e) => {
-                                                                    setDistrictId(e.target.value)
-                                                                    setSubDistrictId("")
-                                                                    setAreaId("")
-                                                                }}
-                                                            >
-                                                                <option label="Select district"></option>
-                                                                {districtList?.length > 0 && districtList.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.districtName}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                        <div class="tu-select mt-3">
-                                                            <select
-                                                                id="selectv7"
-                                                                data-placeholder="Select subdistrict"
-                                                                data-placeholderinput="Select subdistrict"
-                                                                class="form-control tu-input-field"
-                                                                value={subDistrictId}
-                                                                onChange={(e) => {
-                                                                    setSubDistrictId(e.target.value)
-                                                                    setAreaId("")
-                                                                }}
-                                                            >
-                                                                <option label="Select sub District"></option>
-                                                                {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.subDistrictName}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                        <div class="tu-select mt-3">
-                                                            <select
-                                                                id="selectv7"
-                                                                data-placeholder="Select area"
-                                                                data-placeholderinput="Select area"
-                                                                class="form-control tu-input-field"
-                                                                value={areaId}
-                                                                onChange={(e) => {
-                                                                    setAreaId(e.target.value)
-                                                                }}
-                                                            >
-                                                                <option label="Select Area"></option>
-                                                                {areaList?.length > 0 && areaList.map((item, index) => (
-                                                                    <option key={index} value={item._id}>{item.areaName}</option>
-                                                                ))}
-                                                            </select>
-                                                        </div>
-                                                    </div>
-
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side3" role="button" aria-expanded="true">
-                                                <h5>Price range</h5>
-                                            </div>
-                                            <div id="side3" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <div class="tu-rangevalue" data-bs-target="#tu-rangecollapse" role="list" aria-expanded="false">
-                                                        <div class="tu-areasizebox">
-                                                            <input
-                                                                type="number"
-                                                                class="form-control tu-input-field"
-                                                                step="1"
-                                                                placeholder="Min price"
-                                                                id="tu-min-value"
-                                                                value={minPrice}
-                                                                onChange={(e) => setMinPrice(e.target.value)}
-                                                            />
-                                                            <input
-                                                                type="number"
-                                                                class="form-control tu-input-field"
-                                                                step="1"
-                                                                placeholder="Max price"
-                                                                id="tu-max-value"
-                                                                value={maxPrice}
-                                                                onChange={(e) => setMaxPrice(e.target.value)}
-                                                            />
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="tu-distanceholder">
-                                                    <div id="tu-rangecollapse" class="collapse">
-                                                        <div class="tu-distance">
-                                                            <div id="tu-rangeslider" class="tu-tooltiparrow tu-rangeslider"></div>
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {/* <div class="tu-aside-holder">
+                                            <div class="tu-aside-holder">
+                                                <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side21" role="button" aria-expanded="true">
+                                                    <h5>Locations</h5>
+                                                </div>
+                                                <div id="side21" class="collapse show">
+                                                    <div class="tu-aside-content">
+                                                        <div class="tu-filterselect">
+                                                            <div class="tu-select">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select division"
+                                                                    data-placeholderinput="Select division"
+                                                                    class="form-control tu-input-field"
+                                                                    value={divisionId}
+                                                                    onChange={(e) => {
+                                                                        setDivisionId(e.target.value)
+                                                                        setDistrictId("")
+                                                                        setSubDistrictId("")
+                                                                        setAreaId("")
+                                                                    }}
+                                                                >
+                                                                    <option label="Select division"></option>
+                                                                    {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                                                        <option key={index} value={item._id}>{item.divisionName}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                            <div class="tu-select mt-3">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select district"
+                                                                    data-placeholderinput="Select district"
+                                                                    class="form-control tu-input-field"
+                                                                    value={districtId}
+                                                                    onChange={(e) => {
+                                                                        setDistrictId(e.target.value)
+                                                                        setSubDistrictId("")
+                                                                        setAreaId("")
+                                                                    }}
+                                                                >
+                                                                    <option label="Select district"></option>
+                                                                    {districtList?.length > 0 && districtList.map((item, index) => (
+                                                                        <option key={index} value={item._id}>{item.districtName}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                            <div class="tu-select mt-3">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select subdistrict"
+                                                                    data-placeholderinput="Select subdistrict"
+                                                                    class="form-control tu-input-field"
+                                                                    value={subDistrictId}
+                                                                    onChange={(e) => {
+                                                                        setSubDistrictId(e.target.value)
+                                                                        setAreaId("")
+                                                                    }}
+                                                                >
+                                                                    <option label="Select sub District"></option>
+                                                                    {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
+                                                                        <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                            <div class="tu-select mt-3">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select area"
+                                                                    data-placeholderinput="Select area"
+                                                                    class="form-control tu-input-field"
+                                                                    value={areaId}
+                                                                    onChange={(e) => {
+                                                                        setAreaId(e.target.value)
+                                                                    }}
+                                                                >
+                                                                    <option label="Select Area"></option>
+                                                                    {areaList?.length > 0 && areaList.map((item, index) => (
+                                                                        <option key={index} value={item._id}>{item.areaName}</option>
+                                                                    ))}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="tu-aside-holder">
+                                                <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side3" role="button" aria-expanded="true">
+                                                    <h5>Price range</h5>
+                                                </div>
+                                                <div id="side3" class="collapse show">
+                                                    <div class="tu-aside-content">
+                                                        <div class="tu-rangevalue" data-bs-target="#tu-rangecollapse" role="list" aria-expanded="false">
+                                                            <div class="tu-areasizebox">
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control tu-input-field"
+                                                                    step="1"
+                                                                    placeholder="Min price"
+                                                                    id="tu-min-value"
+                                                                    value={minPrice}
+                                                                    onChange={(e) => setMinPrice(e.target.value)}
+                                                                />
+                                                                <input
+                                                                    type="number"
+                                                                    class="form-control tu-input-field"
+                                                                    step="1"
+                                                                    placeholder="Max price"
+                                                                    id="tu-max-value"
+                                                                    value={maxPrice}
+                                                                    onChange={(e) => setMaxPrice(e.target.value)}
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tu-distanceholder">
+                                                        <div id="tu-rangecollapse" class="collapse">
+                                                            <div class="tu-distance">
+                                                                <div id="tu-rangeslider" class="tu-tooltiparrow tu-rangeslider"></div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {/* <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1a" role="button" aria-expanded="true">
                                                 <h5>Rating</h5>
                                             </div>
@@ -433,7 +423,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                 </div>
                                             </div>
                                         </div> */}
-                                        {/* <div class="tu-aside-holder">
+                                            {/* <div class="tu-aside-holder">
                                             <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#Location" role="button" aria-expanded="true">
                                                 <h5>Location</h5>
                                             </div>
@@ -458,187 +448,188 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                 </div>
                                             </div>
                                         </div> */}
-                                        <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1ab" role="button" aria-expanded="true">
-                                                <h5>Miscellaneous</h5>
-                                            </div>
-                                            <div id="side1ab" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <ul class="tu-categoriesfilter">
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="nameaa"
-                                                                    name="expcheck"
-                                                                    checked={isTeachingLocationOnline}
-                                                                    onChange={() => setTeachingLocationOnline(!isTeachingLocationOnline)}
-                                                                />
-                                                                <label for="nameaa">Online bookings</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="nameaa1"
-                                                                    name="expcheck"
-                                                                    checked={isTeachingLocationTutorHome}
-                                                                    onChange={() => setTeachingLocationTutorHome(!isTeachingLocationTutorHome)}
-                                                                />
-                                                                <label for="nameaa1">Tutor Home/Batch</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="nameaa2"
-                                                                    name="expcheck"
-                                                                    checked={isTeachingLocationStudentHome}
-                                                                    onChange={() => setTeachingLocationStudentHome(!isTeachingLocationStudentHome)}
-                                                                />
-                                                                <label for="nameaa2">Student Home</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="namea111"
-                                                                    name="expcheck"
-                                                                    checked={gender === "Male"}
-                                                                    onChange={() => setGender("Male")}
-                                                                />
-                                                                <label for="namea111">Male only</label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input
-                                                                    type="checkbox"
-                                                                    id="namea21"
-                                                                    name="expcheck"
-                                                                    checked={gender === "Female"}
-                                                                    onChange={() => setGender("Female")}
-                                                                />
-                                                                <label for="namea21">Female only</label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
+                                            <div class="tu-aside-holder">
+                                                <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1ab" role="button" aria-expanded="true">
+                                                    <h5>Miscellaneous</h5>
+                                                </div>
+                                                <div id="side1ab" class="collapse show">
+                                                    <div class="tu-aside-content">
+                                                        <ul class="tu-categoriesfilter">
+                                                            <li>
+                                                                <div class="tu-check tu-checksm">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="nameaa"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationOnline}
+                                                                        onChange={() => setTeachingLocationOnline(!isTeachingLocationOnline)}
+                                                                    />
+                                                                    <label for="nameaa">Online bookings</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="tu-check tu-checksm">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="nameaa1"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationTutorHome}
+                                                                        onChange={() => setTeachingLocationTutorHome(!isTeachingLocationTutorHome)}
+                                                                    />
+                                                                    <label for="nameaa1">Tutor Home/Batch</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="tu-check tu-checksm">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="nameaa2"
+                                                                        name="expcheck"
+                                                                        checked={isTeachingLocationStudentHome}
+                                                                        onChange={() => setTeachingLocationStudentHome(!isTeachingLocationStudentHome)}
+                                                                    />
+                                                                    <label for="nameaa2">Student Home</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="tu-check tu-checksm">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="namea111"
+                                                                        name="expcheck"
+                                                                        checked={gender === "Male"}
+                                                                        onChange={() => setGender("Male")}
+                                                                    />
+                                                                    <label for="namea111">Male only</label>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="tu-check tu-checksm">
+                                                                    <input
+                                                                        type="checkbox"
+                                                                        id="namea21"
+                                                                        name="expcheck"
+                                                                        checked={gender === "Female"}
+                                                                        onChange={() => setGender("Female")}
+                                                                    />
+                                                                    <label for="namea21">Female only</label>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="tu-filterbtns">
+                                            <div class="tu-filterbtns">
 
+                                            </div>
                                         </div>
-                                    </div>
-                                </aside>
-                            </div>
-                            <div class="col-xl-8 col-xxl-9">
-                                <div class="tu-listinginfo-holder">
-                                    {filteredProfiles !== null && filteredProfiles.length > 0 ? filteredProfiles.map((item, index) => (
-                                        <div class="tu-listinginfo" key={index}>
-                                            <span class="tu-cardtag"></span>
-                                            <div class="tu-listinginfo_wrapper">
-                                                <div class="tu-listinginfo_title">
-                                                    <div class="tu-listinginfo-img">
-                                                        <figure>
-                                                            <img src={item?.avatar.url} alt="imge" style={{ width: "50px", height: "50px" }} />
-                                                        </figure>
-                                                        <div class="tu-listing-heading">
-                                                            <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
-                                                            {/* <h6>BBBB bbbb </h6> */}
-                                                            <div class="tu-listing-location">
-                                                                <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span>
-                                                                <span><i className="icon icon-book"></i>{item?.tagline}</span>
-                                                                <address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
+                                    </aside>
+                                </div>
+                                <div class="col-xl-8 col-xxl-9">
+                                    <div class="tu-listinginfo-holder">
+                                        {filteredProfiles !== null && filteredProfiles.length > 0 ? filteredProfiles.map((item, index) => (
+                                            <div class="tu-listinginfo" key={index}>
+                                                <span class="tu-cardtag"></span>
+                                                <div class="tu-listinginfo_wrapper">
+                                                    <div class="tu-listinginfo_title">
+                                                        <div class="tu-listinginfo-img">
+                                                            <figure>
+                                                                <img src={item?.avatar.url} alt="imge" style={{ width: "50px", height: "50px" }} />
+                                                            </figure>
+                                                            <div class="tu-listing-heading">
+                                                                <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
+                                                                {/* <h6>BBBB bbbb </h6> */}
+                                                                <div class="tu-listing-location">
+                                                                    <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span>
+                                                                    <span><i className="icon icon-book"></i>{item?.tagline}</span>
+                                                                    <address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
 
+                                                                </div>
                                                             </div>
                                                         </div>
+                                                        <div class="tu-listinginfo_price">
+                                                            <span>Starting from:</span>
+                                                            <h4>&#2547;{item.hourlyFee}/Month</h4>
+                                                        </div>
                                                     </div>
-                                                    <div class="tu-listinginfo_price">
-                                                        <span>Starting from:</span>
-                                                        <h4>&#2547;{item.hourlyFee}/Month</h4>
+                                                    <div class="tu-listinginfo_description">
+                                                        <p>{item.tutorBriefIntroduction}</p>
                                                     </div>
-                                                </div>
-                                                <div class="tu-listinginfo_description">
-                                                    <p>{item.tutorBriefIntroduction}</p>
-                                                </div>
-                                                <div class="tu-listinginfo_service">
-                                                    <h6>You can get teaching service direct at</h6>
-                                                    <ul class="tu-service-list">
-                                                        {item?.isTeachingLocationTutorHome &&
-                                                            <li>
-                                                                <span>
-                                                                    <i class="icon icon-home tu-greenclr"></i>
-                                                                    My home
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {item?.isTeachingLocationStudentHome &&
-                                                            <li>
-                                                                <span>
-                                                                    <i class="icon icon-map-pin tu-blueclr"></i>
-                                                                    Student home
-                                                                </span>
-                                                            </li>
-                                                        }
-                                                        {item?.isTeachingLocationOnline &&
-                                                            <li>
-                                                                <span>
-                                                                    <i class="icon icon-video tu-orangeclr"></i>
-                                                                    Online
-                                                                </span>
-                                                            </li>
-                                                        }
+                                                    <div class="tu-listinginfo_service">
+                                                        <h6>You can get teaching service direct at</h6>
+                                                        <ul class="tu-service-list">
+                                                            {item?.isTeachingLocationTutorHome &&
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="icon icon-home tu-greenclr"></i>
+                                                                        My home
+                                                                    </span>
+                                                                </li>
+                                                            }
+                                                            {item?.isTeachingLocationStudentHome &&
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="icon icon-map-pin tu-blueclr"></i>
+                                                                        Student home
+                                                                    </span>
+                                                                </li>
+                                                            }
+                                                            {item?.isTeachingLocationOnline &&
+                                                                <li>
+                                                                    <span>
+                                                                        <i class="icon icon-video tu-orangeclr"></i>
+                                                                        Online
+                                                                    </span>
+                                                                </li>
+                                                            }
 
-                                                    </ul>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="tu-listinginfo_btn">
+                                                    <div class="tu-iconheart">
+                                                        {/* <i class="icon icon-heart"></i><span>Add to save</span> */}
+                                                    </div>
+                                                    <div class="tu-btnarea">
+                                                        {/* <a ="login.html" class="tu-secbtn">Let’s chat</a> */}
+                                                        <a class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="tu-listinginfo_btn">
-                                                <div class="tu-iconheart">
-                                                    {/* <i class="icon icon-heart"></i><span>Add to save</span> */}
-                                                </div>
-                                                <div class="tu-btnarea">
-                                                    {/* <a ="login.html" class="tu-secbtn">Let’s chat</a> */}
-                                                    <a class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    )) :
-                                        (
-                                            <h2 className='w-100 d-block alert alert-success'>No data found</h2>
-                                        )}
+                                        )) :
+                                            (
+                                                <h2 className='w-100 d-block alert alert-success'>No data found</h2>
+                                            )}
 
+
+                                    </div>
+                                    {filteredProfiles !== null && filteredProfiles.length > 0 &&
+                                        <nav className="tu-pagination">
+                                            <ul>
+                                                <li className={`tu-pagination-prev ${page === 1 ? "disabled" : ""}`}>
+                                                    <a onClick={() => handlePageChange(page - 1)}><i className="icon icon-chevron-left"></i></a>
+                                                </li>
+                                                {[...Array(totalPages)].map((_, index) => {
+                                                    const pageNum = index + 1;
+                                                    return (
+                                                        <li key={pageNum} className={page === pageNum ? "active" : ""}>
+                                                            <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
+                                                        </li>
+                                                    );
+                                                })}
+                                                <li className={`tu-pagination-next ${page === totalPages ? "disabled" : ""}`}>
+                                                    <a onClick={() => handlePageChange(page + 1)}><i className="icon icon-chevron-right"></i></a>
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                    }
 
                                 </div>
-                                {filteredProfiles !== null && filteredProfiles.length > 0 &&
-                                    <nav className="tu-pagination">
-                                        <ul>
-                                            <li className={`tu-pagination-prev ${page === 1 ? "disabled" : ""}`}>
-                                                <a onClick={() => handlePageChange(page - 1)}><i className="icon icon-chevron-left"></i></a>
-                                            </li>
-                                            {[...Array(totalPages)].map((_, index) => {
-                                                const pageNum = index + 1;
-                                                return (
-                                                    <li key={pageNum} className={page === pageNum ? "active" : ""}>
-                                                        <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
-                                                    </li>
-                                                );
-                                            })}
-                                            <li className={`tu-pagination-next ${page === totalPages ? "disabled" : ""}`}>
-                                                <a onClick={() => handlePageChange(page + 1)}><i className="icon icon-chevron-right"></i></a>
-                                            </li>
-                                        </ul>
-                                    </nav>
-                                }
-
                             </div>
                         </div>
-                    </div>
-                </section>
-            </main>
+                    </section>
+                </main>
+            }
         </>
     )
 }

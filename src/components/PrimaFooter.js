@@ -82,7 +82,7 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                     <li><a ><i className="fab fa-whatsapp"></i><em>(+33)7 75 55 9375</em><span>( Mon to Sun 9am - 11pm GMT )</span></a></li>
                                 </ul>
                             </div>
-                            <div className="col-12">
+                            {/* <div className="col-12">
                                 <div className="tu-footerlistholder  tu-seperator">
                                     <div className="tu-footercontent">
                                         <h5 className="tu-footertitle">Tutor by subjects</h5>
@@ -122,8 +122,8 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                         </ul>
                                     </div>
                                 </div>
-                            </div>
-                            <div className="col-12">
+                            </div> */}
+                            <div className="col-12 mt-5">
                                 <div className="tu-footerlistholder  tu-seperator m-0">
                                     <div className="tu-footercontent-two">
                                         <h5 className="tu-footertitle">Useful links</h5>
@@ -140,7 +140,7 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                             <li><a >F.A.Q</a></li>
                                         </ul>
                                     </div>
-                                    <div className="tu-footercontent d-xl-flex">
+                                    {/* <div className="tu-footercontent d-xl-flex">
                                         <div className="tu-footercontent_title">
                                             <h5 className="tu-footertitle">Get mobile app</h5>
                                             <p>Take education on the go. Get our mobile app for FREE! on your Apple and android devices</p>
@@ -157,7 +157,7 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                                 <a className="tu-primbtn-icon tu-primbtn-orange"><i className="icon icon-send"></i></a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>

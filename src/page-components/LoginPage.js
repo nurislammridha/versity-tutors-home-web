@@ -52,6 +52,14 @@ const LoginPage = () => {
 
     return (
         <>
+            {/* {isLoginLoading ?
+                <div class="tu-preloader">
+                    <div class="tu-preloader_holder">
+                        <img src="images/favicon.png" alt="laoder img" />
+                        <div class="tu-loader"></div>
+                    </div>
+                </div>
+                : */}
             <main>
                 <div className="tu-main-login">
                     <div className="tu-login-left">
@@ -155,6 +163,7 @@ const LoginPage = () => {
                     </div>
                 </div>
             </main>
+            {/* } */}
             <ToastContainer />
         </>
     )

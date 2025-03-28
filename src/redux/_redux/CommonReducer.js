@@ -87,7 +87,7 @@ const initialState = {
   isBookByBookerLoading: false,
   isUpdateBookLoading: false,
   bookByBooker: null,
-  icConnectionLoading: false,
+  isConnectionLoading: false,
   connectionData: null,
   icConnectionByClientLoading: false,
   connectionByClientData: null,
@@ -353,7 +353,7 @@ const CommonReducer = (state = initialState, action) => {
     case Types.IS_CONNECTION_LOADING:
       return {
         ...state,
-        icConnectionLoading: action.payload,
+        isConnectionLoading: action.payload,
       };
     case Types.CONNECTION_DATA:
       return {

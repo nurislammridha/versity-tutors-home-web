@@ -582,7 +582,16 @@ const DetailsPage = ({ id }) => {
                         </div>
                     </section>
                 </main>
-                : <div>Loading</div>}
+                :
+
+                <div class="tu-preloader">
+                    <div class="tu-preloader_holder">
+                        <img src="../images/favicon.png" alt="laoder img" />
+                        <div class="tu-loader"></div>
+                    </div>
+                </div>
+
+            }
 
             <PrimaFooter />
             <ToastContainer />
