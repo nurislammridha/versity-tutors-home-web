@@ -69,7 +69,7 @@ const SubjectICanTeach = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>I can teach</h4>
+                                    <h4>{clientData.isTutorAccount ? "I can teach" : "I need learn"}</h4>
                                     <a
 
                                         onClick={() => {

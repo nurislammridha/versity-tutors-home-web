@@ -23,7 +23,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
     const [gender, setGender] = useState("")
     const [search, setSearch] = useState("")
     const [sortBy, setSortBy] = useState("Best Match")
-    const [isTutorAccount, setTutorAccount] = useState(true)
+    const [isTutorAccount, setTutorAccount] = useState(null)
     const [currentPage, setCurrentPage] = useState(1)
     const [isTeachingLocationOnline, setTeachingLocationOnline] = useState(false)
     const [isTeachingLocationTutorHome, setTeachingLocationTutorHome] = useState(false)
@@ -56,7 +56,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
         dispatch(GetDivisionList());
         if (clientData !== null && isLogin) {
             setTutorAccount(!clientData?.isTutorAccount)
-            dispatch(GetProfiles({ filters: { isTutorAccount, isApproved: isTutorAccount ? true : false }, limit: 5 }))
+            // dispatch(GetProfiles({ filters: { isTutorAccount, isApproved: isTutorAccount ? true : false }, limit: 5 }))
         } else {
             lookingFor?.length > 0 && lookingFor === "Tutor" ? setTutorAccount(true) : setTutorAccount(false)
             division?.length > 0 && setDivisionId(division)
@@ -78,10 +78,10 @@ const ProfilesBody = ({ clientData, isLogin }) => {
         if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
         if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
         if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
-        dispatch(GetProfiles(obj))
+        isTutorAccount !== null && dispatch(GetProfiles(obj))
         // }
-    }, [currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
-
+    }, [isTutorAccount, currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
+    // console.log('isTutorAccount', isTutorAccount)
     // console.log('queryString', lookingFor, division, district, classes)
     return (
         <>
@@ -101,8 +101,8 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                 <div class="col-lg-12">
                                     <div class="tu-listing-wrapper">
                                         <div class="tu-sort">
-                                            {/* <h3>{total} Search result of <mark>{isTutorAccount ? "Tutor" : "Student"}</mark> in<span>{search}</span></h3> */}
-                                            <h3>{total} Search result  in<span>{search}</span></h3>
+                                            <h3>{total} Search results in <mark>{isTutorAccount ? "Tutors" : "Students"}</mark> <span>{search}</span></h3>
+                                            {/* <h3>{total} Search result  in<span>{search}</span></h3> */}
                                             <div class="tu-sort-right-area">
                                                 <div class="tu-sortby">
                                                     <span>Sort by price: </span>
@@ -529,7 +529,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                     <div class="tu-listinginfo-holder">
                                         {filteredProfiles !== null && filteredProfiles.length > 0 ? filteredProfiles.map((item, index) => (
                                             <div class="tu-listinginfo" key={index}>
-                                                <span class="tu-cardtag"></span>
+                                                {item?.isApproved && <span class="tu-cardtag"></span>}
                                                 <div class="tu-listinginfo_wrapper">
                                                     <div class="tu-listinginfo_title">
                                                         <div class="tu-listinginfo-img">

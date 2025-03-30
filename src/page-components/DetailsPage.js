@@ -23,7 +23,7 @@ const DetailsPage = ({ id }) => {
     const isUnlockLoading = useSelector((state) => state.homeInfo.isUnlockLoading);
     const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
     const isStatusLoading = useSelector((state) => state.homeInfo.isStatusLoading);
-    const { avatar, averageRating, totalComments, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
+    const { isTutorAccount, isApproved, avatar, averageRating, totalComments, firstName, lastName, hourlyFee, tagline, areaInfo, address, subDistrictInfo, divisionInfo, districtInfo, website, tutorBriefIntroduction, education, subject, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, email, phone, skype, whatsapp, unlockInfo, isBooked } = profileDetails || {}
     const handleBook = () => {
         dispatch(SubmitBook({ clientId: id, bookerId: clientData._id, status: "initiate" }, clientData))
     }
@@ -97,7 +97,7 @@ const DetailsPage = ({ id }) => {
                             <div className="row gy-4">
                                 <div className="col-xl-8 col-xxl-9">
                                     <div className="tu-tutorprofilewrapp">
-                                        <span className="tu-cardtag"></span>
+                                        {isApproved && <span className="tu-cardtag"></span>}
                                         <div className="tu-profileview">
                                             <figure>
                                                 <img src={avatar?.url} alt="image-description" />
@@ -230,7 +230,7 @@ const DetailsPage = ({ id }) => {
                                                 </div>
                                                 <div className="tu-tabswrapper">
                                                     <div className="tu-tabstitle">
-                                                        <h4>I can teach</h4>
+                                                        {isTutorAccount ? <h4>I can teach</h4> : <h4>I need learn</h4>}
                                                     </div>
                                                     <ul className="tu-icanteach">
                                                         {subject?.length > 0 && subject.map((item, index) => (
@@ -512,7 +512,7 @@ const DetailsPage = ({ id }) => {
                                 <div className="col-xl-4 col-xxl-3">
                                     <aside className="tu-asidedetail" style={{ height: "100%" }}>
                                         <div className="tu-asideinfo text-center">
-                                            <h6>{isBooked ? "I'm Booked now, Please wait and check after few days." : "Hello! You can have my teaching services direct at"}</h6>
+                                            <h6>{isBooked ? "I'm Booked now, Please wait and check after few days." : isTutorAccount ? "Hello! You can have my teaching services direct at" : "Hello! You may contract me direct at"}</h6>
                                         </div>
                                         <ul className="tu-featureinclude">
                                             <li>

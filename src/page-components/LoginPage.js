@@ -128,7 +128,7 @@ const LoginPage = () => {
                                             </a>
                                         </div>
 
-                                        <div className="form-group">
+                                        {/* <div className="form-group">
                                             <div className="tu-optioanl-or">
                                                 <span>OR</span>
                                             </div>
@@ -140,7 +140,7 @@ const LoginPage = () => {
                                                 <img src="images/google.png" alt="images" />
                                                 Sign in with Google
                                             </a>
-                                        </div>
+                                        </div> */}
                                         <div className="tu-lost-password form-group">
                                             <a
 
