@@ -29,7 +29,7 @@ const SignUpPage = () => {
                 <div className="tu-main-login">
                     <div className="tu-login-left">
                         <strong>
-                            <a
+                            <a onClick={() => router.push('/')}
                             ><img src="images/login/logo_white.png" alt="images" /></a>
                         </strong>
                         <figure>
@@ -154,15 +154,6 @@ const SignUpPage = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <a
-                                                className="tu-primbtn-lg"
-                                                onClick={() => !isEmailOtpLoading ? handleSubmit() : {}}
-                                            >
-                                                <span>{isEmailOtpLoading ? "Signing Up" : "Sign Up"}</span>
-                                                <i className="icon icon-arrow-right"></i>
-                                            </a>
-                                        </div>
-                                        <div className="form-group">
                                             <div className="tu-check tu-signup-check">
                                                 <input
                                                     type="checkbox"
@@ -177,6 +168,16 @@ const SignUpPage = () => {
                                             </div>
                                         </div>
                                         <div className="form-group">
+                                            <a
+                                                className="tu-primbtn-lg"
+                                                onClick={() => !isEmailOtpLoading ? handleSubmit() : {}}
+                                            >
+                                                <span>{isEmailOtpLoading ? "Signing Up" : "Sign Up"}</span>
+                                                <i className="icon icon-arrow-right"></i>
+                                            </a>
+                                        </div>
+
+                                        {/* <div className="form-group">
                                             <div className="tu-optioanl-or">
                                                 <span>OR</span>
                                             </div>
@@ -187,7 +188,7 @@ const SignUpPage = () => {
                                                 <img src="images/google.png" alt="images" />
                                                 Sign in with Google
                                             </a>
-                                        </div>
+                                        </div> */}
                                         <div className="tu-lost-password form-group">
                                             <a
                                                 onClick={() => router.push("/login")}
