@@ -10,6 +10,7 @@ import '../../public/css/main.css'
 
 import { Providers } from "./Providers";
 import BootstrapClient from "../../public/BootstrapClient";
+import { LanguageProvider } from "@/context/LanguageContext";
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
@@ -38,10 +39,12 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="images/favicon.png" type="image/x-icon" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Providers>
-          <BootstrapClient /> {/* Load Bootstrap JS on the client */}
-          {children}
-        </Providers>
+        <LanguageProvider>
+          <Providers>
+            <BootstrapClient /> {/* Load Bootstrap JS on the client */}
+            {children}
+          </Providers>
+        </LanguageProvider>
       </body>
     </html>
 

@@ -1,7 +1,9 @@
+import { useLanguage } from '@/context/LanguageContext'
 import React from 'react'
 
 const BetterLearningBetterResult = ({ data }) => {
     const { totalActiveTutor, totalStudent, totalSubject, totalArea } = data || {}
+    const { t } = useLanguage()
     return (
         <>
             {/* <!-- PLATFORM START --> */}
@@ -11,9 +13,9 @@ const BetterLearningBetterResult = ({ data }) => {
                         <div class="col-lg-8">
                             <div class="tu-maintitle text-center">
                                 <img src="images/zigzag-line.svg" alt="img" />
-                                <h4>Better Learning. Better Results</h4>
-                                <h2>Online education platform for all</h2>
-                                <p>accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident</p>
+                                <h4>{t.betterLearningBetterResult}</h4>
+                                <h2>{t.onlineEducationPlatformForAll}</h2>
+                                <p>{t.empoweringStudents}</p>
                             </div>
                         </div>
                     </div>
@@ -24,8 +26,8 @@ const BetterLearningBetterResult = ({ data }) => {
                                 // ="blog-detail-right.html"
                                 >
                                     <img src="images/index/education/img-02.png" alt="img" />
-                                    <h5>Online consultation for all</h5>
-                                    <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
+                                    <h5>{t.onlineConsultation}</h5>
+                                    <p>{t.onlineConsultationSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -33,8 +35,8 @@ const BetterLearningBetterResult = ({ data }) => {
                             <div class="tu-eduplatform">
                                 <a >
                                     <img src="images/index/education/img-03.png" alt="img" />
-                                    <h5>A great investment for future</h5>
-                                    <p>Blanditiis praesntium voluptatum deleniti lorak atque corrupti quos dolores etquase.</p>
+                                    <h5>{t.greatInvestment}</h5>
+                                    <p>{t.greatInvestmentSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -42,8 +44,8 @@ const BetterLearningBetterResult = ({ data }) => {
                             <div class="tu-eduplatform">
                                 <a >
                                     <img src="images/index/education/img-04.png" alt="img" />
-                                    <h5>Best results guranteed</h5>
-                                    <p>Aeccusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum.</p>
+                                    <h5>{t.bestResultGuranteed}</h5>
+                                    <p>{t.bestResultGuranteedSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -51,8 +53,8 @@ const BetterLearningBetterResult = ({ data }) => {
                             <div class="tu-eduplatform">
                                 <a >
                                     <img src="images/index/education/img-05.png" alt="img" />
-                                    <h5>Easy to connect with anyone</h5>
-                                    <p>Blanditiis praesntium voluptatum deleniti lorak atque corrupti quos dolores etquase.</p>
+                                    <h5>{t.easyToConnectWith}</h5>
+                                    <p>{t.easyToConnectWithSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -60,8 +62,8 @@ const BetterLearningBetterResult = ({ data }) => {
                             <div class="tu-eduplatform">
                                 <a >
                                     <img src="images/index/education/img-06.png" alt="img" />
-                                    <h5>All verified tutors for students</h5>
-                                    <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
+                                    <h5>{t.allVarifiedTutor}</h5>
+                                    <p>{t.allVarifiedTutorSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -69,8 +71,8 @@ const BetterLearningBetterResult = ({ data }) => {
                             <div class="tu-eduplatform">
                                 <a >
                                     <img src="images/index/education/img-06.png" alt="img" />
-                                    <h5>All students for tutors</h5>
-                                    <p>Dignissimos ducimus qui blanditiis aeusentium voluptatum deleniti atque corruptiuos.</p>
+                                    <h5>{t.allStudentsForTutor}</h5>
+                                    <p>{t.allStudentsForTutorSub}</p>
                                 </a>
                             </div>
                         </div>
@@ -79,7 +81,7 @@ const BetterLearningBetterResult = ({ data }) => {
                         <a ><span>Join our Community</span><i class="icon icon-lock"></i></a>
                     </div> */}
                     <div class="tu-mainbtn">
-                        <a class="tu-primbtn-lg"><span>Join our Community</span><i class="icon icon-lock"></i></a>
+                        <a class="tu-primbtn-lg"><span>{t.joinOurCommunity}</span><i class="icon icon-lock"></i></a>
                     </div>
                 </div>
             </section>
@@ -93,14 +95,14 @@ const BetterLearningBetterResult = ({ data }) => {
                                 <img src="images/stats/img-01.png" alt="img" />
                                 <div class="tu-stats_info">
                                     <h4><span data-from="0" data-to={totalActiveTutor} data-speed="8000" data-refresh-interval="50">{totalActiveTutor}</span></h4>
-                                    <p>Total active verified instructor available on the platform</p>
+                                    <p>{t.totalInstructor}</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="images/stats/img-02.png" alt="img" />
                                 <div class="tu-stats_info">
                                     <h4><span data-from="0" data-to={totalStudent} data-speed="8000" data-refresh-interval="50">{totalStudent}</span></h4>
-                                    <p>Total active student available on the platform</p>
+                                    <p>{t.totalStudent}</p>
                                 </div>
                             </li>
                             <li>
@@ -108,7 +110,7 @@ const BetterLearningBetterResult = ({ data }) => {
                                 <div class="tu-stats_info">
                                     <h4><span data-from="0" data-to={totalSubject} data-speed="8000" data-refresh-interval="50">{totalSubject}</span></h4>
                                     {/* <h4><span data-from="0" data-to="20" data-speed="8000" data-refresh-interval="50">20</span>+ Hours</h4> */}
-                                    <p>Total subjects available on the platform</p>
+                                    <p>{t.totalSubjects}</p>
                                 </div>
                             </li>
                             <li>
@@ -116,7 +118,7 @@ const BetterLearningBetterResult = ({ data }) => {
                                 <div class="tu-stats_info">
                                     <h4><span data-from="0" data-to={totalArea} data-speed="8000" data-refresh-interval="50">{totalArea}</span></h4>
                                     {/* <h4><span data-from="0" data-to="7" data-speed="8000" data-refresh-interval="50">7</span>+ Million</h4> */}
-                                    <p>Total area  available on the platform</p>
+                                    <p>{t.totalArea}</p>
                                 </div>
                             </li>
                         </ul>

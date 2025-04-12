@@ -5,6 +5,7 @@ const nextConfig = {
     images: {
         domains: ['res.cloudinary.com', 'picsum.photos'], // Add external image domain here
     },
+
     webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
         config.plugins.push(
             new webpack.ProvidePlugin({

@@ -3,8 +3,11 @@ import $ from 'jquery';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
+import { convertToBanglaNumber } from '../../public/function/globalFunction';
 const TopVisitedCategory = ({ data }) => {
     const router = useRouter()
+    const { language, t } = useLanguage()
     const handleClick = (id) => {
         const filtered = {
             lookingFor: "Tutor",
@@ -49,9 +52,9 @@ const TopVisitedCategory = ({ data }) => {
                         <div class="col-lg-8">
                             <div class="tu-maintitle text-center">
                                 <img src="images/zigzag-line.svg" alt="img" />
-                                <h4>Let’s make a quick start today</h4>
-                                <h2>Choose from the top visited categories you may like</h2>
-                                <p>Accusamus et iusidio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos dolores etmquasa molestias epturi sint occaecati cupiditate non providente mikume molareshe.</p>
+                                <h4>{t.letsMakeQuickStart}</h4>
+                                <h2>{t.topVisitedCat}</h2>
+                                <p>{t.topVisitedCatSub}</p>
                             </div>
                         </div>
                     </div>
@@ -69,8 +72,8 @@ const TopVisitedCategory = ({ data }) => {
                                         >
                                             <img src={item?.img?.url} alt="img" style={{ width: 249, height: 249 }} />
                                             <div class="tu-categories_title">
-                                                <h6>{item?.categoryName}</h6>
-                                                <span>{item?.subCategoryCount} Listings</span>
+                                                <h6>{language === "en" ? item?.categoryName : item?.categoryNameBn}</h6>
+                                                <span>{language === "en" ? item?.subCategoryCount : convertToBanglaNumber(item?.subCategoryCount)} {t.listings}</span>
                                             </div>
                                         </a>
                                     </li>
@@ -80,7 +83,7 @@ const TopVisitedCategory = ({ data }) => {
                         </div>
                     </div>
                     <div class="tu-mainbtn">
-                        <a class="tu-primbtn-lg"><span>Explore All categories</span><i class="icon icon-chevron-right"></i></a>
+                        <a class="tu-primbtn-lg"><span>{t.exploreAllCat}</span><i class="icon icon-chevron-right"></i></a>
                     </div>
                 </div>
             </section>

@@ -1,6 +1,6 @@
 
+import { useLanguage } from '@/context/LanguageContext'
 import { NotificationAsClicked, NotificationByClient, SeenNotification } from '@/redux/_redux/CommonAction'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
@@ -9,6 +9,8 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const [isMenu, setMenu] = useState(false)
+    const [isLanMenu, setLanMenu] = useState(false)
+    const { language, changeLanguage, t } = useLanguage()
     const [isNotification, setNotification] = useState(false)
     const notificationList = useSelector((state) => state.homeInfo.notificationList);
     const { unreadCount, result: list } = notificationList || {}
@@ -26,9 +28,11 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
         router.push(item.redirectUrl)
         dispatch(SeenNotification(item?._id))
     }
+
     useEffect(() => {
         clientData && dispatch(NotificationByClient(clientData?._id))
     }, [clientData])
+
     console.log('notificationList', notificationList)
     return (
         <header class="tu-header tu-headerv2" style={{ marginTop: -5, backgroundColor: "#0a0f26" }}>
@@ -44,22 +48,22 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a href="#services" class="nav-link" >
-                                    Our Services
+                                    {t.ourServices}
                                 </a>
 
                             </li>
                             <li class="nav-item">
-                                <a href="#classes" class="nav-link" >Our Classes</a>
+                                <a href="#classes" class="nav-link" >{t.ourClasses}</a>
 
                             </li>
                             <li class="nav-item">
-                                <a href="#stories" class="nav-link" >Success Stories</a>
+                                <a href="#stories" class="nav-link" >{t.successStories}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#featured" class="nav-link" >Featured Tutor</a>
+                                <a href="#featured" class="nav-link" >{t.featuredTutor}</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#subjects" class="nav-link" >All Subjects</a>
+                                <a href="#subjects" class="nav-link" >{t.allSubjects}</a>
                             </li>
 
                         </ul>
@@ -93,40 +97,61 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                 </ul>
                             }
                         </li> */}
+                        <li class="menu-item-has-children nav-item" onMouseEnter={() => setLanMenu(true)} onMouseLeave={() => setLanMenu(false)}>
+                            <a>{language === 'en' ? 'English' : 'বাংলা'}</a>
+                            {isLanMenu &&
+                                <ul class="sub-menu">
+                                    <li>
+                                        <a onClick={() => {
+                                            changeLanguage('en')
+                                            setLanMenu(false)
+                                        }}>English</a>
+                                    </li>
+                                    <li>
+                                        <a onClick={() => {
+                                            changeLanguage('bn')
+                                            setLanMenu(false)
+                                        }}>বাংলা</a>
+                                    </li>
+
+                                </ul>
+                            }
+
+                        </li>
                         {isLogin ? (
                             <li class="menu-item-has-children" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
                                 <strong>
                                     <a class="nav-link" onClick={() => router.push('/dashboard?name=personal')}><img src={clientData?.avatar?.url} alt="image-description" /></a></strong>
                                 {isMenu && <ul class="sub-menu">
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=personal')}><i class="icon icon-user"></i>Personal details</a>
+                                        <a onClick={() => router.push('/dashboard?name=personal')}><i class="icon icon-user"></i>{t.personalDetails}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=contact')}><i class="icon icon-phone"></i>Contact details</a>
+                                        <a onClick={() => router.push('/dashboard?name=contact')}><i class="icon icon-phone"></i>{t.contactDetails}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=education')}><i class="icon icon-book"></i>Education</a>
+                                        <a onClick={() => router.push('/dashboard?name=education')}><i class="icon icon-book"></i>{t.educationCap}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=subject')}><i class="icon icon-book-open"></i>{clientData?.isTutorAccount ? "Subjects I can teach" : "Subjects I need learn"}</a>
+                                        <a onClick={() => router.push('/dashboard?name=subject')}><i class="icon icon-book-open"></i>{clientData?.isTutorAccount ? t.subjectICanTeach : t.subjectINeedLearn}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=whoBooked')}><i class="icon icon-user"></i>Who booked me</a>
+                                        <a onClick={() => router.push('/dashboard?name=whoBooked')}><i class="icon icon-user"></i>{t.whoBookedMe}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=myBooking')}><i class="icon icon-calendar"></i>My booking status</a>
+                                        <a onClick={() => router.push('/dashboard?name=myBooking')}><i class="icon icon-calendar"></i>{t.myBookingStatus}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=myConnections')}><i class="icon icon-user-plus"></i>My connections</a>
+                                        <a onClick={() => router.push('/dashboard?name=myConnections')}><i class="icon icon-user-plus"></i>{t.myConnections}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=wishList')}><i class="icon icon-heart"></i>My savings list</a>
+                                        <a onClick={() => router.push('/dashboard?name=wishList')}><i class="icon icon-heart"></i>{t.mySavingsList}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => router.push('/dashboard?name=settings')}><i class="icon icon-settings"></i>Settings</a>
+                                        <a onClick={() => router.push('/dashboard?name=settings')}><i class="icon icon-settings"></i>{t.settings}</a>
                                     </li>
                                     <li>
-                                        <a onClick={() => handleLogout()}><i class="icon icon-log-out"></i>Logout</a>
+                                        <a onClick={() => handleLogout()}><i class="icon icon-log-out"></i>{t.logout}</a>
                                     </li>
                                 </ul>}
                             </li>

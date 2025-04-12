@@ -64,3 +64,9 @@ export const validateNoBDPhoneNumber = (text) => {
     }
     return true; // Valid - no phone number found
 }
+export const convertToBanglaNumber = (number) => {
+    const banglaDigits = ['০', '১', '২', '৩', '৪', '৫', '৬', '৭', '৮', '৯'];
+    return number?.toString().split('').map(digit =>
+        banglaDigits[digit] || digit
+    ).join('');
+};
