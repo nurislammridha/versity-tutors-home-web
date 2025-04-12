@@ -1,7 +1,9 @@
+import { useLanguage } from '@/context/LanguageContext';
 import { useRouter } from 'next/navigation';
 import React from 'react'
 
 const PrimaFooter = ({ isHome = false, data = null }) => {
+    const { language, t } = useLanguage()
     const router = useRouter()
     const handleClick = (id) => {
         const filtered = {
@@ -27,8 +29,8 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                     {isHome && (
                         <div className="container" id='subjects'>
                             <div className="tu-footer_maintitle">
-                                <h5>Explore tutor from our huge collection</h5>
-                                <h3>Approach tutors by your favourite subjects</h3>
+                                <h5>{t.exploreTutor}</h5>
+                                <h3>{t.approachTutor}</h3>
                             </div>
                             <div className="row tu-footer_row">
                                 {data !== null && data.map((item, index) => (
@@ -41,13 +43,13 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
 
                                                         onClick={() => handleSub(item?._id, item2._id)}
                                                     >
-                                                        {item2?.subCategoryName}</a></li>
+                                                        {language === "en" ? item2?.subCategoryName : item2?.subCategoryNameBn}</a></li>
                                             ))}
                                             <li className="tu-footerlist-explore">
                                                 <a
 
                                                     onClick={() => handleClick(item?._id)}
-                                                >Explore all</a></li>
+                                                >{t.explore}</a></li>
                                         </ul>
                                     </div>
                                 ))}
@@ -64,7 +66,7 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                 <strong className="tu-footerlogo">
                                     <a ><img src="/images/logo_white.png" alt="Logo" /></a>
                                 </strong>
-                                <p className="tu-footerdescription">Accusamus etidio dignissimos ducimus blanditiis praesentium volupta eleniti atquete corrupti quolores etmquasa molestias epturi sinteam occaecati cupiditate non providente mikume molareshe.</p>
+                                <p className="tu-footerdescription">{t.foot}</p>
                                 <ul className="tu-socialmedia">
                                     <li className="tu-facebookv3"><a target="_blank"><i className="fab fa-facebook-f"></i></a></li>
                                     <li className="tu-twitterv3"><a target="_blank"><i className="fab fa-twitter"></i></a></li>
@@ -74,12 +76,12 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                                 </ul>
                             </div>
                             <div className="col-lg-5">
-                                <h5 className="tu-footertitle">Feel free to share your question</h5>
+                                <h5 className="tu-footertitle">{t.feelFree}</h5>
                                 <ul className="tu-footerlist tu-footericonlist">
-                                    <li><a ><i className="icon icon-phone-call"></i><em>+62 877 77263549</em><span>( Mon to Sun 9am - 11pm GMT )</span></a></li>
-                                    <li><a ><i className="icon icon-mail"></i><em>hello@youremailid.co.uk</em></a></li>
-                                    <li><a ><i className="icon icon-printer"></i><em>+62 811 09998263</em></a></li>
-                                    <li><a ><i className="fab fa-whatsapp"></i><em>(+33)7 75 55 9375</em><span>( Mon to Sun 9am - 11pm GMT )</span></a></li>
+                                    <li><a ><i className="icon icon-phone-call"></i><em>{t.footerPhone}</em><span>( {t.availableTime} )</span></a></li>
+                                    <li><a ><i className="icon icon-mail"></i><em>{t.footerEmail}</em></a></li>
+                                    <li><a ><i className="icon icon-printer"></i><em>{t.footerPhone}</em></a></li>
+                                    <li><a ><i className="fab fa-whatsapp"></i><em>{t.footerWhatsApp}</em><span>( {t.availableTime} )</span></a></li>
                                 </ul>
                             </div>
                             {/* <div className="col-12">
@@ -126,18 +128,18 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                             <div className="col-12 mt-5">
                                 <div className="tu-footerlistholder  tu-seperator m-0">
                                     <div className="tu-footercontent-two">
-                                        <h5 className="tu-footertitle">Useful links</h5>
+                                        <h5 className="tu-footertitle">{t.usefulLinks}</h5>
                                         <ul className="tu-footerlist">
-                                            <li><a >About</a></li>
-                                            <li><a >Success stories</a></li>
-                                            <li><a >Online classNamees</a></li>
-                                            <li><a >Join our community</a></li>
-                                            <li><a >Courses</a></li>
-                                            <li><a >Sign in now</a></li>
-                                            <li><a >Programs &amp; degrees</a></li>
-                                            <li><a >How it works</a></li>
-                                            <li><a >Learning materials</a></li>
-                                            <li><a >F.A.Q</a></li>
+                                            <li><a >{t.about}</a></li>
+                                            <li><a >{t.successStories}</a></li>
+                                            <li><a >{t.onlineClass}</a></li>
+                                            <li><a >{t.joinOurCommunity}</a></li>
+                                            <li><a >{t.courses}</a></li>
+                                            <li><a >{t.signInNow}</a></li>
+                                            <li><a >{t.programsDegrees}</a></li>
+                                            <li><a >{t.howItWorks}</a></li>
+                                            <li><a >{t.learningMaterial}</a></li>
+                                            <li><a >{t.faq}</a></li>
                                         </ul>
                                     </div>
                                     {/* <div className="tu-footercontent d-xl-flex">
@@ -165,12 +167,12 @@ const PrimaFooter = ({ isHome = false, data = null }) => {
                     <div className="tu-footercopyright">
                         <div className="container">
                             <div className="tu-footercopyright_content">
-                                <p>© 1994 - 2022 All Rights Reserved.</p>
+                                <p>©{t.allRight}</p>
                                 <ul className="tu-footercopyright_list">
-                                    <li><a >Careers</a></li>
-                                    <li><a >Terms of use</a></li>
-                                    <li><a >Privacy policy</a></li>
-                                    <li><a >Cookie notice</a></li>
+                                    <li><a >{t.career}</a></li>
+                                    <li><a >{t.termsOfUse}</a></li>
+                                    <li><a >{t.privacyPolicy}</a></li>
+                                    <li><a >{t.cookieNotice}</a></li>
                                 </ul>
                             </div>
                         </div>

@@ -1,9 +1,10 @@
 import { useLanguage } from '@/context/LanguageContext'
 import React from 'react'
+import { convertToBanglaNumber } from '../../public/function/globalFunction'
 
 const BetterLearningBetterResult = ({ data }) => {
     const { totalActiveTutor, totalStudent, totalSubject, totalArea } = data || {}
-    const { t } = useLanguage()
+    const { language, t } = useLanguage()
     return (
         <>
             {/* <!-- PLATFORM START --> */}
@@ -94,21 +95,21 @@ const BetterLearningBetterResult = ({ data }) => {
                             <li>
                                 <img src="images/stats/img-01.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to={totalActiveTutor} data-speed="8000" data-refresh-interval="50">{totalActiveTutor}</span></h4>
+                                    <h4><span data-from="0" data-to={totalActiveTutor} data-speed="8000" data-refresh-interval="50">{language === "en" ? totalActiveTutor : convertToBanglaNumber(totalActiveTutor)}</span></h4>
                                     <p>{t.totalInstructor}</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="images/stats/img-02.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to={totalStudent} data-speed="8000" data-refresh-interval="50">{totalStudent}</span></h4>
+                                    <h4><span data-from="0" data-to={totalStudent} data-speed="8000" data-refresh-interval="50">{language === "en" ? totalStudent : convertToBanglaNumber(totalStudent)}</span></h4>
                                     <p>{t.totalStudent}</p>
                                 </div>
                             </li>
                             <li>
                                 <img src="images/stats/img-03.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to={totalSubject} data-speed="8000" data-refresh-interval="50">{totalSubject}</span></h4>
+                                    <h4><span data-from="0" data-to={totalSubject} data-speed="8000" data-refresh-interval="50">{language === "en" ? totalSubject : convertToBanglaNumber(totalSubject)}</span></h4>
                                     {/* <h4><span data-from="0" data-to="20" data-speed="8000" data-refresh-interval="50">20</span>+ Hours</h4> */}
                                     <p>{t.totalSubjects}</p>
                                 </div>
@@ -116,7 +117,7 @@ const BetterLearningBetterResult = ({ data }) => {
                             <li>
                                 <img src="images/stats/img-04.png" alt="img" />
                                 <div class="tu-stats_info">
-                                    <h4><span data-from="0" data-to={totalArea} data-speed="8000" data-refresh-interval="50">{totalArea}</span></h4>
+                                    <h4><span data-from="0" data-to={totalArea} data-speed="8000" data-refresh-interval="50">{language === "en" ? totalArea : convertToBanglaNumber(totalArea)}</span></h4>
                                     {/* <h4><span data-from="0" data-to="7" data-speed="8000" data-refresh-interval="50">7</span>+ Million</h4> */}
                                     <p>{t.totalArea}</p>
                                 </div>

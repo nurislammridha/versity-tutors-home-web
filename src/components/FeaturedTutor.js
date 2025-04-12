@@ -5,7 +5,10 @@ import $ from 'jquery';
 import Splide from '@splidejs/splide';
 import '@splidejs/splide/dist/css/splide.min.css';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
+import { convertToBanglaNumber } from '../../public/function/globalFunction';
 const FeaturedTutor = () => {
+    const { language, t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const filteredProfile = useSelector((state) => state.homeInfo.filteredProfiles);
@@ -44,9 +47,9 @@ const FeaturedTutor = () => {
                         <div className="col-lg-8">
                             <div className="tu-maintitle text-center">
                                 <img src="/images/zigzag-line.svg" alt="Image" />
-                                <h4>Our featured instructors</h4>
-                                <h2>Every instructor is professional and highly qualified</h2>
-                                <p>Accusamus et iusidio dignissimos ducimus blanditiis praesentium voluptatum deleniti atque corrupti quos dolores etmquasa molestias epturi sint occaecati cupiditate non providente mikume molareshe.</p>
+                                <h4>{t.fInstructor}</h4>
+                                <h2>{t.everyInstructor}</h2>
+                                <p>{t.meetTop}</p>
                             </div>
                         </div>
                     </div>
@@ -58,7 +61,7 @@ const FeaturedTutor = () => {
                                         <div className="tu-featureitem">
                                             <figure>
                                                 <a ><img src={item?.subject[0].categoryInfo?.img?.url || `/images/index/qualified/img-01.jpg`} alt="image-description" style={{ width: 612, height: 300 }} /></a>
-                                                <span className="tu-featuretag">FEATURED</span>
+                                                <span className="tu-featuretag">{t.featured}</span>
                                             </figure>
                                             <div className="tu-authorinfo">
                                                 <div className="tu-authordetail">
@@ -67,28 +70,28 @@ const FeaturedTutor = () => {
                                                     </figure>
                                                     <div className="tu-authorname">
                                                         <h5><a onClick={() => router.push(`/details/${item._id}`)}> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
-                                                        <span>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</span>
+                                                        <span>{language === "en" ? `${item?.districtInfo?.districtName}, ${item?.divisionInfo?.divisionName}` : `${item?.districtInfo?.districtNameBn}, ${item?.divisionInfo?.divisionNameBn}`}</span>
                                                     </div>
                                                     <ul className="tu-authorlist">
                                                         <li>
-                                                            <span>Starting from:<em>&#2547;{item.hourlyFee}/Month</em></span>
+                                                            <span>{t.startingFrom}:<em>&#2547;{language === "en" ? item.hourlyFee : convertToBanglaNumber(item.hourlyFee)}/{t.month}</em></span>
                                                         </li>
                                                         <li>
-                                                            <span>Mobile:<em>01XXXXXXXXX</em></span>
+                                                            <span>{t.mobile}:<em>{t.hideMobile}</em></span>
                                                         </li>
                                                         <li>
-                                                            <span>Whatsapp:<em>01XXXXXXXXX</em></span>
+                                                            <span>{t.whatsapp}:<em>{t.hideMobile}</em></span>
                                                         </li>
                                                         <li>
-                                                            <span>Title:<em>{item?.tagline}</em></span>
+                                                            <span>{t.title}:<em>{item?.tagline}</em></span>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="tu-instructors_footer">
                                                     <div className="tu-rating">
                                                         <i className="fas fa-star"></i>
-                                                        <h6>{item?.averageRating}</h6>
-                                                        <span>({item?.totalComments})</span>
+                                                        <h6>{language === "en" ? item?.averageRating : convertToBanglaNumber(item?.averageRating)}</h6>
+                                                        <span>({language === "en" ? item?.totalComments : convertToBanglaNumber(item?.totalComments)})</span>
                                                     </div>
                                                     {/* <div className="tu-instructors_footer-right">
                                                         <a ="javascript:void(0);"><i className="icon icon-heart"></i></a>
@@ -103,7 +106,7 @@ const FeaturedTutor = () => {
                         </div>
                     </div>
                     <div className="tu-mainbtn">
-                        <a className="tu-primbtn-lg"><span>Explore all instructors</span><i className="icon icon-chevron-right"></i></a>
+                        <a className="tu-primbtn-lg"><span>{t.exploreAll}</span><i className="icon icon-chevron-right"></i></a>
                     </div>
                 </div>
             </section>
