@@ -9,8 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { ToastContainer } from 'react-toastify';
+import { useLanguage } from '@/context/LanguageContext';
+import { convertToBanglaNumber } from '../../public/function/globalFunction';
 
 const DetailsPage = ({ id }) => {
+    const { language, t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [isLogin, setIsLogin] = useState(false)
@@ -31,15 +34,15 @@ const DetailsPage = ({ id }) => {
         let arr = unlockInfo || []
         arr.push(clientData?._id)
         confirmAlert({
-            title: !isLogin ? "You are advised to log in" : isBooked ? "Un Able to Unlock" : "Confirm To Unlock",
-            message: !isLogin ? "Are you sure you want to login?" : isBooked ? "This profile is busy with her schedule" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            title: !isLogin ? t.youAreAdviseToLogin : isBooked ? t.unAbleUnlock : t.confirmUnlock,
+            message: !isLogin ? t.areYouSure : isBooked ? t.thisProfileIsBusy : t.oneConnection,
             buttons: [
                 {
-                    label: !isLogin ? "Login" : isBooked ? "Ok" : "Yes",
+                    label: !isLogin ? t.login : isBooked ? t.ok : t.yes,
                     onClick: () => !isLogin ? router.push('/login') : !isBooked && dispatch(GetUnlock(arr, id, clientData?._id)),
                 },
                 {
-                    label: !isLogin ? "Not Login" : isBooked ? "I will wait" : "No",
+                    label: !isLogin ? t.notLogin : isBooked ? t.iWillWait : t.no,
                 },
             ],
         });
@@ -48,15 +51,15 @@ const DetailsPage = ({ id }) => {
         let arr = unlockInfo || []
         arr.push(clientData?._id)
         confirmAlert({
-            title: !isLogin ? "You are advised to log in" : isBooked ? "Un Able to Unlock" : isUnlocked ? "Confirm To Book" : "Confirm To Unlock",
-            message: !isLogin ? "Are you sure you want to login?" : isBooked ? "This profile is busy with her schedule" : isUnlocked ? "Are you sure to book?" : `After unlock one connection'll be reduces. Are you sure to unlock this profile?`,
+            title: !isLogin ? t.youAreAdviseToLogin : isBooked ? t.unAbleUnlock : isUnlocked ? t.confirmToBook : t.confirmUnlock,
+            message: !isLogin ? t.areYouSure : isBooked ? t.thisProfileIsBusy : isUnlocked ? t.toBook : t.oneConnection,
             buttons: [
                 {
-                    label: !isLogin ? "Login" : "Yes",
+                    label: !isLogin ? t.login : t.yes,
                     onClick: () => !isLogin ? router.push('/login') : isUnlocked ? handleBook() : dispatch(GetUnlock(arr, id, clientData?._id)),
                 },
                 {
-                    label: !isLogin ? "Not Login" : "No",
+                    label: !isLogin ? t.notLogin : t.no,
                 },
             ],
         });
@@ -113,27 +116,27 @@ const DetailsPage = ({ id }) => {
                                                             <h5>{tagline}</h5>
                                                         </div>
                                                         <div className="tu-listinginfo_price">
-                                                            <span>Starting from:</span>
-                                                            <h4>${hourlyFee}/month</h4>
+                                                            <span>{t.startingFrom}:</span>
+                                                            <h4>${language === "en" ? hourlyFee : convertToBanglaNumber(hourlyFee)}/{t.month}</h4>
                                                         </div>
                                                     </div>
                                                     <ul className="tu-tutorreview">
                                                         <li>
-                                                            <span><i className="fa fa-star tu-coloryellow"> <em>{averageRating}<span>/5.0</span></em> </i>  <em>({totalComments})</em></span>
+                                                            <span><i className="fa fa-star tu-coloryellow"> <em>{language === "en" ? averageRating : convertToBanglaNumber(averageRating)}<span>/5.0</span></em> </i>  <em>({language === "en" ? totalComments : convertToBanglaNumber(totalComments)})</em></span>
                                                         </li>
                                                         <li>
-                                                            <span><i className="fa fa-check-circle tu-colorgreen"><em>{unlockInfo.length}</em></i><em>profile unlocked him</em></span>
+                                                            <span><i className="fa fa-check-circle tu-colorgreen"><em>{language === "en" ? unlockInfo.length : convertToBanglaNumber(unlockInfo.length)}</em></i><em>{t.profileUnlockedHim}</em></span>
                                                         </li>
                                                         <li>
-                                                            <span><i className="icon icon-map-pin"><span>{districtInfo.districtName}, {divisionInfo?.divisionName}</span></i></span>
+                                                            <span><i className="icon icon-map-pin"><span>{language === "en" ? `${districtInfo.districtName}, ${divisionInfo?.divisionName}` : `${districtInfo.districtNameBn}, ${divisionInfo?.divisionNameBn}`}</span></i></span>
                                                         </li>
                                                     </ul>
                                                     <div className="tu-detailitem">
-                                                        <h6>Languages I know</h6>
+                                                        <h6>{t.languageIKnow}</h6>
                                                         <div className="tu-languagelist">
                                                             <ul className="tu-languages">
-                                                                <li>Bangla</li>
-                                                                <li>English</li>
+                                                                <li>{t.bangla}</li>
+                                                                <li>{t.english}</li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -155,7 +158,7 @@ const DetailsPage = ({ id }) => {
 
                                                             onClick={() => !isStatusLoading && handleWish()}
                                                         >
-                                                            <i className="icon icon-heart"></i><span>{isStatusLoading ? isWished ? "Removing" : "Saving" : isWished ? "Saved" : "Save"}</span></a>
+                                                            <i className="icon icon-heart"></i><span>{isStatusLoading ? isWished ? t.removing : t.saving : isWished ? t.saved : t.save}</span></a>
                                                     </li>
                                                 }
                                                 {/* <li><a ="login.html" className="tu-secbtn">Let’s talk now</a></li> */}
@@ -165,7 +168,7 @@ const DetailsPage = ({ id }) => {
                                                         className="tu-primbtn"
                                                         onClick={() => !isBookLoading && handlePreBook()}
                                                     >
-                                                        {isBookLoading ? "Booking.." : "Book a tution"}
+                                                        {isBookLoading ? t.booking : t.bookATution}
                                                     </a>
                                                 </li>
                                             </ul>
@@ -174,17 +177,17 @@ const DetailsPage = ({ id }) => {
                                     <div className="tu-detailstabs">
                                         <ul className="nav nav-tabs tu-nav-tabs" id="myTab" role="tablist">
                                             <li className="nav-item" role="presentation">
-                                                <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><i className="icon icon-home"></i><span>Introduction</span></button>
+                                                <button className="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true"><i className="icon icon-home"></i><span>{t.introduction}</span></button>
                                             </li>
                                             <li className="nav-item" role="presentation">
-                                                <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i className="icon icon-message-circle"></i><span>Reviews</span></button>
+                                                <button className="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false"><i className="icon icon-message-circle"></i><span>{t.reviews}</span></button>
                                             </li>
                                         </ul>
                                         <div className="tab-content tu-tab-content" id="myTabContent">
                                             <div className="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                                 <div className="tu-tabswrapper">
                                                     <div className="tu-tabstitle">
-                                                        <h4>A brief introduction</h4>
+                                                        <h4>{t.aBriefIntroduction}</h4>
                                                     </div>
                                                     <div className="tu-description">
                                                         {tutorBriefIntroduction}
@@ -193,7 +196,7 @@ const DetailsPage = ({ id }) => {
                                                 </div>
                                                 <div className="tu-tabswrapper">
                                                     <div className="tu-tabstitle">
-                                                        <h4>Education</h4>
+                                                        <h4>{t.education}</h4>
                                                     </div>
                                                     <div className="accordion tu-accordionedu" id="accordionFlushExampleaa">
                                                         <div id="tu-edusortable" className="tu-edusortable">
@@ -230,20 +233,20 @@ const DetailsPage = ({ id }) => {
                                                 </div>
                                                 <div className="tu-tabswrapper">
                                                     <div className="tu-tabstitle">
-                                                        {isTutorAccount ? <h4>I can teach</h4> : <h4>I need learn</h4>}
+                                                        {isTutorAccount ? <h4>{t.iCanTeach} </h4> : <h4>{t.iNeedLearn}</h4>}
                                                     </div>
                                                     <ul className="tu-icanteach">
                                                         {subject?.length > 0 && subject.map((item, index) => (
                                                             <li key={index}>
                                                                 <div className="tu-tech-title">
-                                                                    <h6>{item?.categoryInfo.categoryName}</h6>
+                                                                    <h6>{language === "en" ? item?.categoryInfo.categoryName : item?.categoryInfo.categoryNameBn}</h6>
                                                                 </div>
                                                                 <ul className="tu-serviceslist">
                                                                     {item?.subCategories?.length > 0 && item.subCategories.map((item2, index2) => (
                                                                         <li key={index2}>
                                                                             <a
                                                                             //  
-                                                                            >{item2?.subCategoryInfo.subCategoryName}</a>
+                                                                            >{language === "en" ? item2?.subCategoryInfo?.subCategoryName : item2?.subCategoryInfo?.subCategoryNameBn}</a>
                                                                         </li>
                                                                     ))}
                                                                 </ul>
@@ -512,29 +515,29 @@ const DetailsPage = ({ id }) => {
                                 <div className="col-xl-4 col-xxl-3">
                                     <aside className="tu-asidedetail" style={{ height: "100%" }}>
                                         <div className="tu-asideinfo text-center">
-                                            <h6>{isBooked ? "I'm Booked now, Please wait and check after few days." : isTutorAccount ? "Hello! You can have my teaching services direct at" : "Hello! You may contract me direct at"}</h6>
+                                            <h6>{isBooked ? t.bookedNow : isTutorAccount ? t.myTeachingService : t.youMayContact}</h6>
                                         </div>
                                         <ul className="tu-featureinclude">
                                             <li>
-                                                <span className="icon icon-home tu-colorgreen"> <i>My home</i> </span>
+                                                <span className="icon icon-home tu-colorgreen"> <i>{t.myHome}</i> </span>
                                                 {isTeachingLocationTutorHome && <em className="fa fa-check-circle tu-colorgreen"></em>}
                                             </li>
                                             <li>
-                                                <span className="icon icon-map-pin tu-colorblue"> <i>Student home</i> </span>
+                                                <span className="icon icon-map-pin tu-colorblue"> <i>{t.studentHome}</i> </span>
                                                 {isTeachingLocationStudentHome && <em className="fa fa-check-circle tu-colorgreen"></em>}
                                             </li>
                                             <li>
-                                                <span className="icon icon-video tu-colororange"> <i>Online</i> </span>
+                                                <span className="icon icon-video tu-colororange"> <i>{t.online}</i> </span>
                                                 {isTeachingLocationOnline && <em className="fa fa-check-circle tu-colorgreen"></em>}
                                             </li>
                                         </ul>
                                         <div style={{ position: "sticky", top: 0, zIndex: 999 }}>
                                             <div className="tu-contactbox">
-                                                <h6>Contact details</h6>
+                                                <h6>{t.contactDetails}</h6>
                                                 <ul className="tu-listinfo">
                                                     <li>
                                                         <span className="tu-bg-maroon"><i className="icon icon-phone-call "></i></span>
-                                                        <h6>{isUnlocked ? phone : "01XXXXXXXXX"}
+                                                        <h6>{isUnlocked ? phone : t.hideMobile}
                                                             {/* <em>*** - ***</em> */}
                                                         </h6>
                                                     </li>
@@ -548,7 +551,7 @@ const DetailsPage = ({ id }) => {
                                                     </li>
                                                     <li>
                                                         <span className="tu-bg-green"><i className="fab fa-whatsapp"></i></span>
-                                                        <h6>{isUnlocked ? whatsapp : "01XXXXXXXX"} </h6>
+                                                        <h6>{isUnlocked ? whatsapp : t.hideMobile} </h6>
                                                     </li>
                                                     <li>
                                                         <span className="tu-bg-orange"><i className="icon icon-printer"></i></span>
@@ -560,19 +563,19 @@ const DetailsPage = ({ id }) => {
                                             </div>
                                             {isUnlocked ?
                                                 <div className="tu-unlockfeature text-center">
-                                                    <h3 className='text-center'>Full Address</h3>
-                                                    <div>{`${areaInfo?.areaName}>${subDistrictInfo?.subDistrictName}.${districtInfo?.districtName}>${divisionInfo?.divisionName}`}</div>
+                                                    <h3 className='text-center'>{t.fullAddress}</h3>
+                                                    <div>{language === "en" ? `${areaInfo?.areaName}>${subDistrictInfo?.subDistrictName}.${districtInfo?.districtName}>${divisionInfo?.divisionName}` : `${areaInfo?.areaNameBn}>${subDistrictInfo?.subDistrictNameBn}.${districtInfo?.districtNameBn}>${divisionInfo?.divisionNameBn}`}</div>
                                                     <div>{address}</div>
                                                 </div> :
                                                 <div className="tu-unlockfeature text-center">
                                                     <h6>
-                                                        Click the button below to unlock the contact details
+                                                        {t.clickTheButton}
                                                     </h6>
                                                     <a
 
                                                         className="tu-primbtn tu-btngreen"
                                                         onClick={() => !isUnlockLoading && handleUnlock()}
-                                                    ><span>{isUnlockLoading ? "Unlocking.." : "Unlock feature"}</span><i className="icon icon-lock"></i></a>
+                                                    ><span>{isUnlockLoading ? t.unlocking : t.unlockFeature}</span><i className="icon icon-lock"></i></a>
                                                 </div>
                                             }
                                         </div>

@@ -1,10 +1,13 @@
+import { useLanguage } from '@/context/LanguageContext';
 import { AreaBySubDistrictId, DistrictByDivisionId, GetCategoryList, GetDivisionList, GetProfiles, GetSubCategoryByCategoryId, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction';
 import { useRouter, useSearchParams } from 'next/navigation';
 import React, { Suspense, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { convertToBanglaNumber } from '../../public/function/globalFunction';
 
 const ProfilesBody = ({ clientData, isLogin }) => {
     const router = useRouter()
+    const { language, t } = useLanguage()
     const searchParams = useSearchParams();
     const lookingFor = searchParams.get('lookingFor');
     const classes = searchParams.get('classes');
@@ -101,21 +104,21 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                 <div class="col-lg-12">
                                     <div class="tu-listing-wrapper">
                                         <div class="tu-sort">
-                                            <h3>{total} Search results in <mark>{isTutorAccount ? "Tutors" : "Students"}</mark> <span>{search}</span></h3>
+                                            <h3>{language === "en" ? total : convertToBanglaNumber(total)}  {t.searchResult}<mark>{isTutorAccount ? t.tutor : t.student}</mark> <span>{search}</span></h3>
                                             {/* <h3>{total} Search result  in<span>{search}</span></h3> */}
                                             <div class="tu-sort-right-area">
                                                 <div class="tu-sortby">
-                                                    <span>Sort by price: </span>
+                                                    <span>{t.sortPrice} : </span>
                                                     <div class="tu-select">
                                                         <select
                                                             class="form-control tu-selectv"
                                                             value={sortBy}
                                                             onChange={(e) => setSortBy(e.target.value)}
                                                         >
-                                                            <option>Select sort by </option>
+                                                            <option> {t.selectSortBy}</option>
                                                             {/* <option value={"Best Match"}>Best Match </option> */}
-                                                            <option value={"Price low to high"}>Price low to high </option>
-                                                            <option value={'Price high to low'}>Price high to low</option>
+                                                            <option value={"Price low to high"}>{t.priceLowToHigh} </option>
+                                                            <option value={'Price high to low'}>{t.priceHighToLow}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -133,7 +136,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         <input
                                                             type="text"
                                                             class="form-control"
-                                                            placeholder="enter name, location, class, subject or title"
+                                                            placeholder={t.enterSearch}
                                                             value={search}
                                                             onChange={(e) => setSearch(e.target.value)}
                                                         />
@@ -156,7 +159,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                 <figure>
                                                     <img src="images/listing/shape.png" alt="image" />
                                                 </figure>
-                                                <span>Start from here</span>
+                                                <span>{t.startFromHere}</span>
                                             </div>
                                         </div>
 
@@ -168,7 +171,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                         <div class="tu-aside-menu">
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
-                                                    <h5>Education level & subjects</h5>
+                                                    <h5>{t.educationLevel}</h5>
                                                 </div>
                                                 <div id="side2" class="collapse show">
                                                     <div class="tu-aside-content">
@@ -185,16 +188,16 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         setSubCategoryId([])
                                                                     }}
                                                                 >
-                                                                    <option label="Select education level"></option>
+                                                                    <option label={t.selectEducationLevel}></option>
                                                                     {categoryList?.length > 0 && categoryList.map((item, index) => (
-                                                                        <option key={index} value={item._id}>{item.categoryName}</option>
+                                                                        <option key={index} value={item._id}>{language === "en" ? item.categoryName : item.categoryNameBn}</option>
                                                                     ))}
                                                                 </select>
                                                             </div>
                                                         </div>
                                                         {subCategoryList !== null && subCategoryList.length > 0 &&
                                                             <div class="tu-filterselect">
-                                                                <h6>Choose subjects</h6>
+                                                                <h6>{t.chooseSub}</h6>
                                                                 <ul class="tu-categoriesfilter">
                                                                     {subCategoryList.map((item, index) => (
                                                                         <li key={index}>
@@ -206,7 +209,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                                     checked={subCategoryId.includes(item._id)}
                                                                                     onChange={() => handleCheckboxChange(item._id)}
                                                                                 />
-                                                                                <label htmlFor={`expcheck${index}`}>{item.subCategoryName}</label>
+                                                                                <label htmlFor={`expcheck${index}`}>{language === "en" ? item.subCategoryName : item.subCategoryNameBn}</label>
                                                                             </div>
                                                                         </li>
                                                                     ))}
@@ -224,7 +227,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                             </div>
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side21" role="button" aria-expanded="true">
-                                                    <h5>Locations</h5>
+                                                    <h5>{t.locations}</h5>
                                                 </div>
                                                 <div id="side21" class="collapse show">
                                                     <div class="tu-aside-content">
@@ -243,9 +246,9 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         setAreaId("")
                                                                     }}
                                                                 >
-                                                                    <option label="Select division"></option>
+                                                                    <option label={t.selectDivision}></option>
                                                                     {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                        <option key={index} value={item._id}>{item.divisionName}</option>
+                                                                        <option key={index} value={item._id}>{language === "en" ? item.divisionName : item.divisionNameBn}</option>
                                                                     ))}
                                                                 </select>
                                                             </div>
@@ -262,9 +265,9 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         setAreaId("")
                                                                     }}
                                                                 >
-                                                                    <option label="Select district"></option>
+                                                                    <option label={t.selectDistrict}></option>
                                                                     {districtList?.length > 0 && districtList.map((item, index) => (
-                                                                        <option key={index} value={item._id}>{item.districtName}</option>
+                                                                        <option key={index} value={item._id}>{language === "en" ? item.districtName : item.districtNameBn}</option>
                                                                     ))}
                                                                 </select>
                                                             </div>
@@ -280,9 +283,9 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         setAreaId("")
                                                                     }}
                                                                 >
-                                                                    <option label="Select sub District"></option>
+                                                                    <option label={t.selectSubDis}></option>
                                                                     {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
-                                                                        <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                                        <option key={index} value={item._id}>{language === "en" ? item.subDistrictName : item.subDistrictNameBn}</option>
                                                                     ))}
                                                                 </select>
                                                             </div>
@@ -297,9 +300,9 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         setAreaId(e.target.value)
                                                                     }}
                                                                 >
-                                                                    <option label="Select Area"></option>
+                                                                    <option label={t.selectArea}></option>
                                                                     {areaList?.length > 0 && areaList.map((item, index) => (
-                                                                        <option key={index} value={item._id}>{item.areaName}</option>
+                                                                        <option key={index} value={item._id}>{language === "en" ? item.areaName : item.areaNameBn}</option>
                                                                     ))}
                                                                 </select>
                                                             </div>
@@ -311,7 +314,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                             </div>
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side3" role="button" aria-expanded="true">
-                                                    <h5>Price range</h5>
+                                                    <h5>{t.priceRange}</h5>
                                                 </div>
                                                 <div id="side3" class="collapse show">
                                                     <div class="tu-aside-content">
@@ -321,7 +324,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                     type="number"
                                                                     class="form-control tu-input-field"
                                                                     step="1"
-                                                                    placeholder="Min price"
+                                                                    placeholder={t.minPrice}
                                                                     id="tu-min-value"
                                                                     value={minPrice}
                                                                     onChange={(e) => setMinPrice(e.target.value)}
@@ -330,7 +333,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                     type="number"
                                                                     class="form-control tu-input-field"
                                                                     step="1"
-                                                                    placeholder="Max price"
+                                                                    placeholder={t.maxPrice}
                                                                     id="tu-max-value"
                                                                     value={maxPrice}
                                                                     onChange={(e) => setMaxPrice(e.target.value)}
@@ -450,7 +453,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                         </div> */}
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1ab" role="button" aria-expanded="true">
-                                                    <h5>Miscellaneous</h5>
+                                                    <h5>{t.miscellaneous}</h5>
                                                 </div>
                                                 <div id="side1ab" class="collapse show">
                                                     <div class="tu-aside-content">
@@ -464,7 +467,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         checked={isTeachingLocationOnline}
                                                                         onChange={() => setTeachingLocationOnline(!isTeachingLocationOnline)}
                                                                     />
-                                                                    <label for="nameaa">Online bookings</label>
+                                                                    <label for="nameaa">{t.onlineBooking}</label>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -476,7 +479,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         checked={isTeachingLocationTutorHome}
                                                                         onChange={() => setTeachingLocationTutorHome(!isTeachingLocationTutorHome)}
                                                                     />
-                                                                    <label for="nameaa1">Tutor Home/Batch</label>
+                                                                    <label for="nameaa1">{t.tutorHome}</label>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -488,7 +491,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         checked={isTeachingLocationStudentHome}
                                                                         onChange={() => setTeachingLocationStudentHome(!isTeachingLocationStudentHome)}
                                                                     />
-                                                                    <label for="nameaa2">Student Home</label>
+                                                                    <label for="nameaa2">{t.studentHome}</label>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -500,7 +503,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         checked={gender === "Male"}
                                                                         onChange={() => setGender("Male")}
                                                                     />
-                                                                    <label for="namea111">Male only</label>
+                                                                    <label for="namea111">{t.maleOnly}</label>
                                                                 </div>
                                                             </li>
                                                             <li>
@@ -512,7 +515,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                         checked={gender === "Female"}
                                                                         onChange={() => setGender("Female")}
                                                                     />
-                                                                    <label for="namea21">Female only</label>
+                                                                    <label for="namea21">{t.femaleOnly}</label>
                                                                 </div>
                                                             </li>
                                                         </ul>
@@ -540,29 +543,29 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                 <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>
                                                                 {/* <h6>BBBB bbbb </h6> */}
                                                                 <div class="tu-listing-location">
-                                                                    <span>{item?.averageRating} <i class="fa-solid fa-star"></i><em>({item?.totalComments})</em></span>
+                                                                    <span>{language === "en" ? item?.averageRating : convertToBanglaNumber(item?.averageRating)} <i class="fa-solid fa-star"></i><em>({language === "en" ? item?.totalComments : convertToBanglaNumber(item?.totalComments)})</em></span>
                                                                     <span><i className="icon icon-book"></i>{item?.tagline}</span>
-                                                                    <address><i class="icon icon-map-pin"></i>{item?.districtInfo?.districtName} ,{item?.divisionInfo?.divisionName}</address>
+                                                                    <address><i class="icon icon-map-pin"></i>{language === "en" ? `${item?.districtInfo?.districtName}, ${item?.divisionInfo?.divisionName}` : `${item?.districtInfo?.districtNameBn}, ${item?.divisionInfo?.divisionNameBn}`}</address>
 
                                                                 </div>
                                                             </div>
                                                         </div>
                                                         <div class="tu-listinginfo_price">
-                                                            <span>Starting from:</span>
-                                                            <h4>&#2547;{item.hourlyFee}/Month</h4>
+                                                            <span>{t.startingFrom}:</span>
+                                                            <h4>&#2547;{language === "en" ? item.hourlyFee : convertToBanglaNumber(item.hourlyFee)}/{t.month}</h4>
                                                         </div>
                                                     </div>
                                                     <div class="tu-listinginfo_description">
                                                         <p>{item.tutorBriefIntroduction}</p>
                                                     </div>
                                                     <div class="tu-listinginfo_service">
-                                                        <h6>You can get teaching service direct at</h6>
+                                                        <h6>{t.youCanGet}</h6>
                                                         <ul class="tu-service-list">
                                                             {item?.isTeachingLocationTutorHome &&
                                                                 <li>
                                                                     <span>
                                                                         <i class="icon icon-home tu-greenclr"></i>
-                                                                        My home
+                                                                        {t.myHome}
                                                                     </span>
                                                                 </li>
                                                             }
@@ -570,7 +573,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                 <li>
                                                                     <span>
                                                                         <i class="icon icon-map-pin tu-blueclr"></i>
-                                                                        Student home
+                                                                        {t.studentHome}
                                                                     </span>
                                                                 </li>
                                                             }
@@ -578,7 +581,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                                 <li>
                                                                     <span>
                                                                         <i class="icon icon-video tu-orangeclr"></i>
-                                                                        Online
+                                                                        {t.online}
                                                                     </span>
                                                                 </li>
                                                             }
@@ -592,13 +595,13 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     </div>
                                                     <div class="tu-btnarea">
                                                         {/* <a ="login.html" class="tu-secbtn">Let’s chat</a> */}
-                                                        <a class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>View full profile</a>
+                                                        <a class="tu-primbtn" onClick={() => router.push(`/details/${item._id}`)}>{t.viewFullProfile}</a>
                                                     </div>
                                                 </div>
                                             </div>
                                         )) :
                                             (
-                                                <h2 className='w-100 d-block alert alert-success'>No data found</h2>
+                                                <h2 className='w-100 d-block alert alert-success'>{t.noDataFound}</h2>
                                             )}
 
 
@@ -613,7 +616,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     const pageNum = index + 1;
                                                     return (
                                                         <li key={pageNum} className={page === pageNum ? "active" : ""}>
-                                                            <a onClick={() => handlePageChange(pageNum)}>{pageNum}</a>
+                                                            <a onClick={() => handlePageChange(pageNum)}>{language === "en" ? pageNum : convertToBanglaNumber(pageNum)}</a>
                                                         </li>
                                                     );
                                                 })}

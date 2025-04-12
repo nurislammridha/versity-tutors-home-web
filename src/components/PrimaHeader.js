@@ -1,8 +1,11 @@
+import { useLanguage } from '@/context/LanguageContext'
 import { useRouter } from 'next/navigation'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 
 const PrimaHeader = ({ isLogin, clientData }) => {
     const router = useRouter()
+    const [isLanMenu, setLanMenu] = useState(false)
+    const { language, changeLanguage, t } = useLanguage()
     return (
         <>
             <header className="tu-header">
@@ -20,6 +23,27 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                         </button>
                         <div className="collapse navbar-collapse tu-themenav" id="navbarSupportedContent">
                             <ul className="navbar-nav">
+                                <li class="menu-item-has-children nav-item" onMouseEnter={() => setLanMenu(true)} onMouseLeave={() => setLanMenu(false)}>
+                                    <a>{language === 'en' ? 'English' : 'বাংলা'}</a>
+                                    {isLanMenu &&
+                                        <ul class="sub-menu">
+                                            <li>
+                                                <a onClick={() => {
+                                                    changeLanguage('en')
+                                                    setLanMenu(false)
+                                                }}>English</a>
+                                            </li>
+                                            <li>
+                                                <a onClick={() => {
+                                                    changeLanguage('bn')
+                                                    setLanMenu(false)
+                                                }}>বাংলা</a>
+                                            </li>
+
+                                        </ul>
+                                    }
+
+                                </li>
                                 {/* <li className="nav-item">
                                     <a className="nav-link" >
                                         Online classNamees
@@ -29,7 +53,7 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                                 {/* <li className="nav-item">
                                     <a className="nav-link" >Learning material<span className="tu-tag tu-bggreen">FREE</span></a>
                                 </li> */}
-                                {isLogin && <li className="nav-item">
+                                {/* {isLogin && <li className="nav-item">
                                     <a
                                         className="nav-link"
 
@@ -37,7 +61,7 @@ const PrimaHeader = ({ isLogin, clientData }) => {
                                     >
                                         {clientData?.isTutorAccount ? "Student Profile" : "Tutor Profile"}
                                     </a>
-                                </li>}
+                                </li>} */}
                                 {/* <li className="menu-item-has-children nav-item">
                                     <a className="active" ="#">Pages</a>
                                     <ul className="sub-menu">

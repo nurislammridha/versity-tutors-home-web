@@ -3,11 +3,13 @@ import { FalseSubmitReview, GetReviewByClientId, SubmitReview } from '@/redux/_r
 import React, { useEffect, useState } from 'react'
 import ReactStars from "react-rating-stars-component";
 import { useDispatch, useSelector } from 'react-redux';
-import { timeAgo } from '../../public/function/globalFunction';
+import { convertToBanglaNumber, timeAgo } from '../../public/function/globalFunction';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 const Reviews = ({ clientId, commenterId, isLogin }) => {
+    const { language, t } = useLanguage()
     const dispatch = useDispatch()
     const router = useRouter()
     const [rating, setRating] = useState(4); // Default rating
@@ -23,15 +25,15 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
     }
     const handleLogin = () => {
         confirmAlert({
-            title: "You are advised to log in",
-            message: "Are you sure, you want to login?",
+            title: t.youAreAdviseToLogin,
+            message: t.areYouSure,
             buttons: [
                 {
-                    label: "Login",
+                    label: t.login,
                     onClick: () => router.push('/login'),
                 },
                 {
-                    label: "Not Login",
+                    label: t.notLogin,
                 },
             ],
         });
@@ -61,7 +63,7 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
             <div className="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                 <div className="tu-tabswrapper">
                     <div className="tu-boxtitle">
-                        <h4>Reviews ({total})</h4>
+                        <h4>{t.reviews} ({language === "en" ? total : convertToBanglaNumber(total)})</h4>
                     </div>
                     <div className="tu-commentarea">
                         {list && list.length > 0 ?
@@ -75,7 +77,7 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
                                             <div className="tu-commentauthor">
                                                 <h6><span>{`${item?.commenterId?.firstName} ${item?.commenterId?.lastName}`}</span>{timeAgo(item?.createdAt)}</h6>
                                                 <div className="tu-listing-location tu-ratingstars">
-                                                    <span>{item?.starRating}</span>
+                                                    <span>{language === "en" ? item?.starRating : convertToBanglaNumber(item?.starRating)}</span>
                                                     <span className={`tu-stars tu-sm-stars star${item?.starRating}`}>
                                                         <span></span>
                                                     </span>
@@ -88,20 +90,20 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
                                     </div>
                                 </div>
                             )) :
-                            <div>No comment found</div>
+                            <div>{t.noCommentFound}</div>
                         }
 
 
                         <div className="show-more">
                             <a
                                 onClick={() => handleMore()}
-                            >Show more</a>
+                            >{t.showMore}</a>
                         </div>
                     </div>
                 </div>
                 <div className="tu-tabswrapper">
                     <div className="tu-boxtitle">
-                        <h4>Add your review</h4>
+                        <h4>{t.addYourReview}</h4>
                     </div>
                     <form className="tu-themeform" id="tu-reviews-form">
                         <fieldset>
@@ -109,9 +111,9 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
                                 <div className="form-group-wrap">
                                     <div className="form-group">
                                         <div className="tu-reviews">
-                                            <label className="tu-label">Give rating to your review</label>
+                                            <label className="tu-label">{t.giveRating}</label>
                                             <div className="tu-my-ratingholder">
-                                                <h6>Good experience</h6>
+                                                <h6>{t.goodExperience}</h6>
                                                 <div className="tu-addreview">
                                                     <ReactStars
                                                         count={5} // Number of stars
@@ -127,7 +129,7 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
 
                                     </div>
                                     <div className="form-group tu-message-text">
-                                        <label className="tu-label">Review details</label>
+                                        <label className="tu-label">{t.reviewDetails}</label>
                                         <div className="tu-placeholderholder">
                                             <textarea
                                                 className="form-control tu-textarea"
@@ -142,13 +144,13 @@ const Reviews = ({ clientId, commenterId, isLogin }) => {
 
                                             </textarea>
                                             <div className="tu-placeholder">
-                                                <span>Enter description</span>
+                                                <span>{t.enterDescription}</span>
                                             </div>
                                         </div>
                                         <div className="tu-input-counter">
-                                            <span>Characters left:</span>
-                                            <b className="tu_current_comment">{500 - review.length}</b>
-                                            /<em className="tu_maximum_comment"> 500</em>
+                                            <span>{t.charLeft}:</span>
+                                            <b className="tu_current_comment">{language === "en" ? 500 - review.length : convertToBanglaNumber(500 - review.length)}</b>
+                                            /<em className="tu_maximum_comment"> {t.fiveTh}</em>
                                         </div>
                                     </div>
 
