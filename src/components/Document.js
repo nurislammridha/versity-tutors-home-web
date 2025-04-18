@@ -5,7 +5,9 @@ import { formatDate } from '../../public/function/globalFunction';
 import { useRouter } from 'next/navigation';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { useLanguage } from '@/context/LanguageContext';
 const UploadDocument = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [isAdd, setAdd] = useState(false)
@@ -25,15 +27,15 @@ const UploadDocument = ({ clientData }) => {
     const handleRemove = (item) => {
         setDeletedId(item?._id)
         confirmAlert({
-            title: "Remove",
-            message: `Are you sure you want to remove?`,
+            title: t.remove,
+            message: t.sureToRemove,
             buttons: [
                 {
-                    label: "Yes",
+                    label: t.yes,
                     onClick: () => dispatch(DeleteDocumentCloudinary(item)),
                 },
                 {
-                    label: "No",
+                    label: t.no,
                 },
             ],
         });
@@ -69,10 +71,10 @@ const UploadDocument = ({ clientData }) => {
                             {!isAdd ? (<>
                                 <div class="tu-boxsm d-flex justify-content-between">
                                     <div class="tu-boxsmtitle">
-                                        <h4>My Document Management</h4>
+                                        <h4>{t.docManagement}</h4>
                                     </div>
                                     <div class="tu-boxsmtitle">
-                                        <a className='btn btn-success' style={{ color: "#FFF" }} onClick={() => setAdd(true)}>Add Document</a>
+                                        <a className='btn btn-success' style={{ color: "#FFF" }} onClick={() => setAdd(true)}>{t.addDoc}</a>
                                     </div>
                                 </div>
                                 <div class="tu-box">
@@ -82,10 +84,10 @@ const UploadDocument = ({ clientData }) => {
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
-                                                    <th scope="col">Title</th>
-                                                    <th scope="col">Date</th>
-                                                    <th scope="col">Preview</th>
-                                                    <th scope="col">Action</th>
+                                                    <th scope="col">{t.title}</th>
+                                                    <th scope="col">{t.date}</th>
+                                                    <th scope="col">{t.preview}</th>
+                                                    <th scope="col">{t.action}</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -94,11 +96,11 @@ const UploadDocument = ({ clientData }) => {
                                                         <th scope="row">{index + 1}</th>
                                                         <td>{item?.title}</td>
                                                         <td>{formatDate(item?.createdAt)}</td>
-                                                        <td><a className='btn btn-info btn-sm' onClick={() => handlePreview(item)}>Preview</a></td>
+                                                        <td><a className='btn btn-info btn-sm' onClick={() => handlePreview(item)}>{t.preview}</a></td>
                                                         <td>
                                                             {deletedId == item?._id && isDeleteDocumentLoading ?
                                                                 <div class="spinner-border text-primary" role="status">
-                                                                    <span class="sr-only">Loading...</span>
+                                                                    <span class="sr-only">{t.loading}</span>
                                                                 </div> :
                                                                 <a
                                                                     className='btn btn-sm btn-danger'
@@ -113,25 +115,25 @@ const UploadDocument = ({ clientData }) => {
                                                 ))}
                                             </tbody>
                                         </table>
-                                    ) : (<div>No data found</div>)
+                                    ) : (<div>{t.noDataFound}</div>)
                                     }
                                 </div>
                             </>) : (<>
                                 <div class="tu-boxsm d-flex justify-content-between">
                                     <div class="tu-boxsmtitle">
-                                        <h4>Add Document</h4>
+                                        <h4>{t.addDoc}</h4>
                                     </div>
                                     <div class="tu-boxsmtitle">
-                                        <a className='btn btn-success' style={{ color: "#FFF" }} onClick={() => setAdd(false)}>Document List</a>
+                                        <a className='btn btn-success' style={{ color: "#FFF" }} onClick={() => setAdd(false)}>{t.docList}</a>
                                     </div>
                                 </div>
                                 <div class="tu-box">
                                     <div >
                                         <div className="mb-3">
-                                            <label className="form-label">Document Title</label>
+                                            <label className="form-label">{t.docTitle}</label>
                                             <input
                                                 type="text"
-                                                placeholder='enter document title'
+                                                placeholder={t.enterDocTitle}
                                                 className="form-control"
                                                 value={title}
                                                 onChange={e => setTitle(e.target.value)}
@@ -140,7 +142,7 @@ const UploadDocument = ({ clientData }) => {
                                         </div>
 
                                         <div className="mb-3">
-                                            <label className="form-label">Choose Document (Image/PDF)</label>
+                                            <label className="form-label">{t.chooseDoc}</label>
                                             <input
                                                 type="file"
                                                 className="form-control"
@@ -166,7 +168,7 @@ const UploadDocument = ({ clientData }) => {
                     <div className="modal-dialog modal-xl" onClick={(e) => e.stopPropagation()}>
                         <div className="modal-content">
                             <div className="modal-header">
-                                <h5 className="modal-title">File Preview</h5>
+                                <h5 className="modal-title">{t.filePreview}</h5>
                                 <button type="button" className="btn-close" onClick={() => setShowModal(false)} />
                             </div>
                             <div className="modal-body" style={{ height: '80vh' }}>

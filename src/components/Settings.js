@@ -5,22 +5,24 @@ import { formatDate } from '../../public/function/globalFunction';
 import { useRouter } from 'next/navigation';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import { useLanguage } from '@/context/LanguageContext';
 const Settings = ({ clientData }) => {
+    const { t } = useLanguage()
     const dispatch = useDispatch()
     const [index, setIndex] = useState(-1)
     const isStatusLoading = useSelector((state) => state.homeInfo.isStatusLoading);
     const handleBooked = (isBooked) => {
         setIndex(1)
         confirmAlert({
-            title: `Confirm To ${isBooked ? "Free Me" : "Booked me"}`,
-            message: `After ${isBooked ? "Free Me , You will receive ne request" : "Booked me you will not be able new request"}. Are you sure to ${isBooked ? "Free Me" : "Booked me"}?`,
+            title: `${t.confirmTo} ${isBooked ? t.freeMe : t.bookedMe}`,
+            message: `${t.after} ${isBooked ? t.receiveReq : t.youWillNot}. ${t.areYourSure} ${isBooked ? t.freeMe : t.bookedMe}?`,
             buttons: [
                 {
-                    label: "Yes",
+                    label: t.yes,
                     onClick: () => dispatch(StatusSubmit({ isBooked: !isBooked }, clientData?._id)),
                 },
                 {
-                    label: "No",
+                    label: t.no,
                 },
             ],
         });
@@ -32,11 +34,11 @@ const Settings = ({ clientData }) => {
             message: `After Request to admin, You will be approved. Are you sure to Request for approving"`,
             buttons: [
                 {
-                    label: "Yes",
+                    label: t.yes,
                     onClick: () => dispatch(StatusSubmit({ isRequestToApprove: true, isApproved: false }, clientData?._id, clientData)),
                 },
                 {
-                    label: "No",
+                    label: t.no,
                 },
             ],
         });
@@ -58,8 +60,8 @@ const Settings = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>Some of My Operational Status</h4>
-                                    <h4>{clientData?.isApproved ? "APPROVED" : "UN APPROVE"}</h4>
+                                    <h4>{t.someOp}</h4>
+                                    <h4>{clientData?.isApproved ? t.approved : t.unApprove}</h4>
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -67,30 +69,30 @@ const Settings = ({ clientData }) => {
                                     <thead>
                                         <tr>
                                             <th scope="col">#</th>
-                                            <th scope="col">Operation Name</th>
-                                            <th scope="col">Status</th>
+                                            <th scope="col">{t.opName}</th>
+                                            <th scope="col">{t.status}</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr >
                                             <th scope="row">01</th>
-                                            <td> {clientData?.isBooked ? "I'm booked now, Make My Status free" : "I'm free now,  Make My Status booked"}</td>
+                                            <td> {clientData?.isBooked ? t.bookedNowNow : t.freeNow}</td>
                                             <td>
                                                 <a
                                                     className='btn btn-success btn-sm'
                                                     onClick={() => !isStatusLoading && handleBooked(clientData?.isBooked)}
-                                                >{index === 1 && isStatusLoading ? "Loading..." : clientData?.isBooked ? "Free Me" : "Booked Me"}</a>
+                                                >{index === 1 && isStatusLoading ? t.loading : clientData?.isBooked ? t.freeMe : t.bookedMe}</a>
                                             </td>
                                         </tr>
                                         {clientData?.isTutorAccount &&
                                             <tr >
                                                 <th scope="row">02</th>
-                                                <td>{clientData?.isRequestToApprove ? "Request was sent to admin for approving me" : "Send Request to admin for approving me"}</td>
+                                                <td>{clientData?.isRequestToApprove ? t.reqSent : t.reqToAdmin}</td>
                                                 <td>
                                                     <a
                                                         className='btn btn-success btn-sm'
                                                         onClick={() => !clientData?.isRequestToApprove && !isStatusLoading && handleRequest()}
-                                                    >{index === 2 && isStatusLoading ? "Loading" : clientData?.isRequestToApprove ? "Request sent" : "Send Request"}</a>
+                                                    >{index === 2 && isStatusLoading ? t.loading : clientData?.isRequestToApprove ? t.requestSent : t.sendReq}</a>
                                                 </td>
                                             </tr>
                                         }

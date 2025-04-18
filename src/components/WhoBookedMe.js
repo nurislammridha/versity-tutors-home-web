@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../public/function/globalFunction';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 
 const WhoBookedMe = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [status, setStatus] = useState("initiate") //initiate accepted rejected
@@ -32,7 +34,7 @@ const WhoBookedMe = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>My Booking Management</h4>
+                                    <h4>{t.myBookingManagement}</h4>
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -45,7 +47,7 @@ const WhoBookedMe = ({ clientData }) => {
 
                                             onClick={() => setStatus("initiate")}
                                         >
-                                            Initiate
+                                            {t.initiate}
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -55,7 +57,7 @@ const WhoBookedMe = ({ clientData }) => {
 
                                             onClick={() => setStatus("accepted")}
                                         >
-                                            Accepted
+                                            {t.accepted}
                                         </a>
                                     </li>
                                     <li class="nav-item">
@@ -65,7 +67,7 @@ const WhoBookedMe = ({ clientData }) => {
 
                                             onClick={() => setStatus("rejected")}
                                         >
-                                            Rejected
+                                            {t.rejected}
                                         </a>
                                     </li>
                                 </ul>
@@ -74,11 +76,11 @@ const WhoBookedMe = ({ clientData }) => {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Phone</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Details</th>
-                                                <th scope="col">Action</th>
+                                                <th scope="col">{t.name}</th>
+                                                <th scope="col">{t.phone}</th>
+                                                <th scope="col">{t.date}</th>
+                                                <th scope="col">{t.details}</th>
+                                                <th scope="col">{t.action}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -92,7 +94,7 @@ const WhoBookedMe = ({ clientData }) => {
                                                         <a
                                                             className='btn btn-sm btn-info'
                                                             onClick={() => router.push(`/details/${item.bookerId?._id}`)}
-                                                        >Details</a>
+                                                        >{t.details}</a>
                                                     </td>
                                                     <td>
                                                         {status === "initiate" ?
@@ -101,13 +103,13 @@ const WhoBookedMe = ({ clientData }) => {
                                                                     className='btn btn-sm btn-success'
                                                                     onClick={() => !isUpdateBookLoading && handleAccept(item)}
                                                                 >
-                                                                    {isUpdateBookLoading ? "Accepting" : "Accept"}
+                                                                    {isUpdateBookLoading ? t.accepting : t.accept}
                                                                 </a>
                                                                 <a
                                                                     className='btn btn-sm btn-danger ml-2'
                                                                     onClick={() => !isUpdateBookLoading && handleReject(item)}
                                                                 >
-                                                                    {isUpdateBookLoading ? "Rejecting" : "Reject"}
+                                                                    {isUpdateBookLoading ? t.rejecting : t.reject}
                                                                 </a>
                                                             </>) :
                                                             <span className='badge bg-secondary'>{item.status.toUpperCase()}</span>
@@ -117,7 +119,7 @@ const WhoBookedMe = ({ clientData }) => {
                                             ))}
                                         </tbody>
                                     </table>
-                                ) : (<div>No data found</div>)
+                                ) : (<div>{t.noDataFound}</div>)
                                 }
                             </div>
                         </div>

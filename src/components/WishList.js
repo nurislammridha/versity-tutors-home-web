@@ -4,22 +4,24 @@ import { useRouter } from 'next/navigation';
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import { StatusSubmit } from '@/redux/_redux/CommonAction';
+import { useLanguage } from '@/context/LanguageContext';
 const WishList = ({ clientData }) => {
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const { wishList } = clientData || {}
     const handleRemove = (id) => {
         const updatedWishList = clientData?.wishList.filter(item => item._id.toString() !== id);
         confirmAlert({
-            title: "Remove",
-            message: `Are you sure you want to remove?`,
+            title: t.remove,
+            message: t.sureToRemove,
             buttons: [
                 {
-                    label: "Yes",
+                    label: t.yes,
                     onClick: () => dispatch(StatusSubmit({ wishList: updatedWishList }, clientData._id,)),
                 },
                 {
-                    label: "No",
+                    label: t.no,
                 },
             ],
         });
@@ -38,7 +40,7 @@ const WishList = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>My Savings List</h4>
+                                    <h4>{t.mySavingsList}</h4>
 
                                 </div>
                             </div>
@@ -49,9 +51,9 @@ const WishList = ({ clientData }) => {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Tag Line</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">{t.name}</th>
+                                                <th scope="col">{t.tagLine}</th>
+                                                <th scope="col">{t.status}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -76,7 +78,7 @@ const WishList = ({ clientData }) => {
 
                                         </tbody>
                                     </table>
-                                ) : (<div>No savings found</div>)
+                                ) : (<div>{t.noDataFound}</div>)
                                 }
 
                             </div>

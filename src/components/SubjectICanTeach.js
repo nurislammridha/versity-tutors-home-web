@@ -2,8 +2,10 @@ import { AddSubjectSubmit, FalseEducationUpdated, GetCategoryList, GetSubCategor
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { catIdToCatName, filteredArray, subCatIdToSubCatName } from '../../public/function/globalFunction';
+import { useLanguage } from '@/context/LanguageContext';
 
 const SubjectICanTeach = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [showModal, setShowModal] = useState(false);
     const [action, setAction] = useState("delete")
@@ -69,14 +71,14 @@ const SubjectICanTeach = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>{clientData.isTutorAccount ? "I can teach" : "I need learn"}</h4>
+                                    <h4>{clientData.isTutorAccount ? t.iCanTeach : t.iNeedLearn}</h4>
                                     <a
 
                                         onClick={() => {
                                             setShowModal(true)
                                             setAction("add")
                                         }}
-                                    >Add new</a>
+                                    >{t.addNew}</a>
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -86,7 +88,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                         subjects.map((item, index) => (
                                             <li key={index}>
                                                 <div class="tu-tech-title">
-                                                    <h6>{item?.categoryInfo?.categoryName}</h6>
+                                                    <h6>{language === "en" ? item?.categoryInfo?.categoryName : item?.categoryInfo?.categoryNameBn}</h6>
                                                     <div class="tu-icon-holder">
                                                         <a
 
@@ -106,14 +108,14 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 <ul class="tu-serviceslist">
                                                     {item.subCategories.map((item2, index) => (
                                                         <li key={index}>
-                                                            <a >{item2.subCategoryInfo?.subCategoryName}</a>
+                                                            <a >{language === "en" ? item2.subCategoryInfo?.subCategoryName : item2.subCategoryInfo?.subCategoryNameBn}</a>
                                                         </li>
                                                     ))}
 
                                                 </ul>
                                             </li>
                                         ))
-                                        : (<div>No data found</div>)}
+                                        : (<div>{t.noDataFound}</div>)}
                                 </ul>
                             </div>
                         </div>
@@ -126,7 +128,7 @@ const SubjectICanTeach = ({ clientData }) => {
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5>{action === "edit" ? "Edit" : "Add"} subjects</h5>
+                            <h5>{action === "edit" ? "Edit" : "Add"} {t.subjects}</h5>
                             <a className="tu-close" onClick={() => setShowModal(false)}><i class="icon icon-x"></i></a>
                         </div>
                         <div class="modal-body">
@@ -134,7 +136,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                 <fieldset>
                                     <div class="tu-themeform__wrap">
                                         <div class="form-group">
-                                            <label class="tu-label">Please select what you can teach</label>
+                                            <label class="tu-label">{t.pleaseSelectWhatYouCanTeach}</label>
                                             <div class="tu-select">
                                                 <select
                                                     id="selectv10"
@@ -151,7 +153,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 >
                                                     <option label="Select education level"></option>
                                                     {categoryList?.length > 0 && categoryList.map((item, index) => (
-                                                        <option key={index} value={item._id}>{item.categoryName}</option>
+                                                        <option key={index} value={item._id}>{language === "en" ? item.categoryName : item.categoryNameBn}</option>
                                                     ))}
                                                 </select>
                                             </div>
@@ -171,7 +173,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                     <option label="Select subject from list"></option>
                                                     {subCategoryList?.length > 0 &&
                                                         filteredArray(subCategoryList, subject.subCategories).map((item, index) => (
-                                                            <option key={index} value={item._id}>{item.subCategoryName}</option>
+                                                            <option key={index} value={item._id}>{language === "en" ? item.subCategoryName : item.subCategoryNameBn}</option>
                                                         ))}
                                                 </select>
                                             </div>
@@ -193,7 +195,7 @@ const SubjectICanTeach = ({ clientData }) => {
                                                 class="tu-primbtn-lg"
                                                 onClick={() => !isPersonalLoading && handleSubmit()}
                                             >
-                                                {isPersonalLoading ? "Saving.." : action === "edit" ? "Update changes" : "Save changes"}
+                                                {isPersonalLoading ? "Saving.." : action === "edit" ? t.updateChanges : t.saveChanges}
                                             </a>
                                         </div>
                                     </div>

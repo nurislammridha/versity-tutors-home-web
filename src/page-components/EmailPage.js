@@ -4,8 +4,10 @@ import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import { CheckBuyerSubmit, FalseIsLoginComplete } from '@/redux/_redux/CommonAction';
+import { useLanguage } from '@/context/LanguageContext';
 
 const EmailPage = () => {
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
@@ -38,14 +40,14 @@ const EmailPage = () => {
                             <img src="images/login/img-01.png" alt="images" />
                         </figure>
                         <div className="tu-login-left_title">
-                            <h2>Yes! we’re making progress</h2>
-                            <span>every minute & every second</span>
+                            <h2>{t.weAreMakingProgress}</h2>
+                            <span>{t.everyMinutes}</span>
                         </div>
                     </div>
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
-                            <h2>Welcome!</h2>
-                            <h3>We know you will come back</h3>
+                            <h2>{t.welcome}</h2>
+                            <h3>{t.weKnowYouWillComeBack}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>
@@ -63,7 +65,7 @@ const EmailPage = () => {
                                                     onChange={(e) => setEmail(e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Your email address</span>
+                                                    <span>{t.emailAddress}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
@@ -73,7 +75,7 @@ const EmailPage = () => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isCheckBuyerLoading && handleSubmit()}
                                             >
-                                                <span>{isCheckBuyerLoading ? "SUBMITTING" : "SUBMIT"}</span>
+                                                <span>{isCheckBuyerLoading ? t.submitting : t.submit}</span>
                                                 <i className="icon icon-arrow-right"></i>
                                             </a>
                                         </div>

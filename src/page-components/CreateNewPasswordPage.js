@@ -4,8 +4,10 @@ import { CreatePasswordSubmit, FalseIsLoginComplete, GetSignUpInput, sendEmailOt
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { useLanguage } from '@/context/LanguageContext';
 
 const CreateNewPasswordPage = () => {
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [email, setEmail] = useState("")
@@ -44,14 +46,14 @@ const CreateNewPasswordPage = () => {
                             <img src="images/login/img-01.png" alt="images" />
                         </figure>
                         <div className="tu-login-left_title">
-                            <h2>Yes! we’re making progress</h2>
-                            <span>every minute & every second</span>
+                            <h2>{t.weAreMakingProgress}</h2>
+                            <span>{t.everyMinutes}</span>
                         </div>
                     </div>
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
-                            <h2>Welcome!</h2>
-                            <h3>We know you will come back</h3>
+                            <h2>{t.welcome}</h2>
+                            <h3>{t.weKnowYouWillComeBack}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>
@@ -68,7 +70,7 @@ const CreateNewPasswordPage = () => {
                                                     onChange={(e) => setPassword(e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>New password</span>
+                                                    <span>{t.newPassword}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
@@ -84,7 +86,7 @@ const CreateNewPasswordPage = () => {
                                                     onChange={(e) => setCPassword(e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Confirm New password</span>
+                                                    <span>{t.confirmNewPassword}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
@@ -94,7 +96,7 @@ const CreateNewPasswordPage = () => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isCreatePasswordLoading && handleSubmit()}
                                             >
-                                                <span>{isCreatePasswordLoading ? "SUBMITTING" : "SUBMIT"}</span>
+                                                <span>{isCreatePasswordLoading ? t.submitting : t.submit}</span>
                                                 <i className="icon icon-arrow-right"></i>
                                             </a>
                                         </div>

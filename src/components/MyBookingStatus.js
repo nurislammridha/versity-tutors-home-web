@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { formatDate } from '../../public/function/globalFunction';
 import { useRouter } from 'next/navigation';
+import { useLanguage } from '@/context/LanguageContext';
 
 const MyBookingStatus = ({ clientData }) => {
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const isBookByBookerLoading = useSelector((state) => state.homeInfo.isBookByBookerLoading);
@@ -25,7 +27,7 @@ const MyBookingStatus = ({ clientData }) => {
                         <div class="tu-boxarea">
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
-                                    <h4>My Booking Status</h4>
+                                    <h4>{t.myBookingStatus}</h4>
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -35,11 +37,11 @@ const MyBookingStatus = ({ clientData }) => {
                                         <thead>
                                             <tr>
                                                 <th scope="col">#</th>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Phone</th>
-                                                <th scope="col">Date</th>
-                                                <th scope="col">Details</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">{t.name}</th>
+                                                <th scope="col">{t.phone}</th>
+                                                <th scope="col">{t.date}</th>
+                                                <th scope="col">{t.details}</th>
+                                                <th scope="col">{t.status}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -53,7 +55,7 @@ const MyBookingStatus = ({ clientData }) => {
                                                         <a
                                                             className='btn btn-sm btn-info'
                                                             onClick={() => router.push(`/details/${item.clientId?._id}`)}
-                                                        >Details</a>
+                                                        >{t.details}</a>
                                                     </td>
                                                     <td >
                                                         <span className='badge bg-secondary'>{item?.status.toUpperCase()}</span>
@@ -63,7 +65,7 @@ const MyBookingStatus = ({ clientData }) => {
 
                                         </tbody>
                                     </table>
-                                ) : (<div>No data found</div>)
+                                ) : (<div>{t.noDataFound}</div>)
                                 }
 
                             </div>

@@ -1,6 +1,7 @@
 "use client"
 import PrimaButton from '@/components/PrimaButton'
 import PrimaText from '@/components/PrimaText'
+import { useLanguage } from '@/context/LanguageContext'
 import { FalseIsLoginComplete, sendEmailOtp, SignUpSubmit } from '@/redux/_redux/CommonAction'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -8,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
 const SignUpOtpPage = () => {
+    const { t } = useLanguage()
     const dispatch = useDispatch()
     const router = useRouter()
     const [otp, setOtp] = useState("")
@@ -86,14 +88,14 @@ const SignUpOtpPage = () => {
                             <img src="images/login/img-01.png" alt="images" />
                         </figure>
                         <div className="tu-login-left_title">
-                            <h2>Yes! we’re making progress</h2>
-                            <span>every minute & every second</span>
+                            <h2>{t.weAreMakingProgress}</h2>
+                            <span>{t.everyMinutes}</span>
                         </div>
                     </div>
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
-                            <h2>Welcome!</h2>
-                            <h3>Otp was send to {signUpInput.email}</h3>
+                            <h2>{t.welcome}</h2>
+                            <h3>{t.otpWasSendTo} {signUpInput.email}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>
@@ -110,14 +112,14 @@ const SignUpOtpPage = () => {
                                                     onChange={(e) => setOtp(e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Otp</span>
+                                                    <span>{t.otp}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <PrimaText
-                                                content={seconds > 0 || minutes > 0 ? `Time Remaining ${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}` : "Didn't receive otp?"}
+                                                content={seconds > 0 || minutes > 0 ? `${t.timeRemaining} ${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}` : t.didNotReceivedOtp}
                                                 color='#000'
                                                 size='16px'
                                                 right='10px'
@@ -126,7 +128,7 @@ const SignUpOtpPage = () => {
                                                 <PrimaButton
                                                     width='fit-content'
                                                     height='fit-content'
-                                                    content={isEmailOtpLoading ? "Resending OTP" : "Resend OTP"}
+                                                    content={isEmailOtpLoading ? t.resendingOtp : t.resendOtp}
                                                     color='#6a307d'
                                                     size='14px'
                                                     bgColor='#fff'
@@ -142,7 +144,7 @@ const SignUpOtpPage = () => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isSignUpLoading && handleSubmit()}
                                             >
-                                                <span>{isSignUpLoading ? "SUBMITING OTP" : "SUBMIT OTP"}</span><i className="icon icon-arrow-right"></i>
+                                                <span>{isSignUpLoading ? t.submittingOtp : t.submitOtp}</span><i className="icon icon-arrow-right"></i>
                                             </a>
                                         </div>
 

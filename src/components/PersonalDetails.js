@@ -1,8 +1,11 @@
+import { useLanguage } from '@/context/LanguageContext'
 import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { convertToBanglaNumber } from '../../public/function/globalFunction'
 
 const PersonalDetails = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const personal = useSelector((state) => state.homeInfo.personal);
     const divisionList = useSelector((state) => state.homeInfo.divisionList);
@@ -46,7 +49,7 @@ const PersonalDetails = ({ clientData }) => {
                         <div className="tu-boxarea">
                             <div className="tu-boxsm">
                                 <div className="tu-boxsmtitle">
-                                    <h4>Personal details</h4>
+                                    <h4>{t.personalDetails}</h4>
                                 </div>
                             </div>
                             <div className="tu-box">
@@ -55,7 +58,7 @@ const PersonalDetails = ({ clientData }) => {
                                         <div className="tu-themeform__wrap">
                                             <div className="form-group-wrap">
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">First name</label>
+                                                    <label className="tu-label">{t.firstName}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="text"
@@ -66,13 +69,13 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("firstName", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Your first name</span>
+                                                            <span>{t.yourFirstName}</span>
                                                             <em>*</em>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Last name</label>
+                                                    <label className="tu-label">{t.lastName}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="text"
@@ -83,13 +86,13 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("lastName", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Your last name</span>
+                                                            <span>{t.yourLastName}</span>
                                                             <em>*</em>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Your Title</label>
+                                                    <label className="tu-label">{t.yourTitle}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="text"
@@ -100,12 +103,12 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("tagline", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>{isTutorAccount ? "Ex: BSC in MATH" : "Ex: HSC in Science"}</span>
+                                                            <span>{isTutorAccount ? t.bscInMath : t.hscInScience}</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Monthly fee</label>
+                                                    <label className="tu-label">{t.monthlyFee}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="number"
@@ -116,13 +119,13 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("hourlyFee", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Your monthly fee</span>
+                                                            <span>{t.yourMonthlyFee}</span>
                                                             <em>*</em>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Division</label>
+                                                    <label className="tu-label">{t.division}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select Division"
@@ -135,7 +138,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                 handleInput("divisionInfo", e.target.value)
                                                             }}
                                                         >
-                                                            <option label="Select Division"></option>
+                                                            <option label={t.selectDivision}></option>
                                                             {divisionList?.length > 0 && divisionList.map((item, index) => (
                                                                 <option key={index} value={item._id}>{item.divisionName}</option>
                                                             ))}
@@ -143,7 +146,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">District</label>
+                                                    <label className="tu-label">{t.district}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select city"
@@ -156,7 +159,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                 handleInput("districtInfo", e.target.value)
                                                             }}
                                                         >
-                                                            <option label="Select District"></option>
+                                                            <option label={t.selectDistrict}></option>
                                                             {districtList?.length > 0 && districtList.map((item, index) => (
                                                                 <option key={index} value={item._id}>{item.districtName}</option>
                                                             ))}
@@ -164,7 +167,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Sub District</label>
+                                                    <label className="tu-label">{t.subDistrict}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select city"
@@ -177,7 +180,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                 handleInput("subDistrictInfo", e.target.value)
                                                             }}
                                                         >
-                                                            <option label="Select Sub District"></option>
+                                                            <option label={t.selectSubDistrict}></option>
                                                             {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
                                                                 <option key={index} value={item._id}>{item.subDistrictName}</option>
                                                             ))}
@@ -185,7 +188,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Area</label>
+                                                    <label className="tu-label">{t.area}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select city"
@@ -198,7 +201,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                 handleInput("areaInfo", e.target.value)
                                                             }}
                                                         >
-                                                            <option label="Select Area"></option>
+                                                            <option label={t.selectArea}></option>
                                                             {areaList?.length > 0 && areaList.map((item, index) => (
                                                                 <option key={index} value={item._id}>{item.areaName}</option>
                                                             ))}
@@ -206,7 +209,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Details Address</label>
+                                                    <label className="tu-label">{t.detailsAddress}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="text"
@@ -217,13 +220,13 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("address", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Details Address</span>
+                                                            <span>{t.detailsAddress}</span>
                                                             {/* <em>*</em> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Zipcode</label>
+                                                    <label className="tu-label">{t.zipcode}</label>
                                                     <div className="tu-placeholderholder">
                                                         <input
                                                             type="number"
@@ -233,13 +236,13 @@ const PersonalDetails = ({ clientData }) => {
                                                             onChange={(e) => handleInput("zipCode", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
-                                                            <span>Enter zipcode</span>
+                                                            <span>{t.enterZipCode}</span>
                                                             {/* <em>*</em> */}
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">Gender</label>
+                                                    <label className="tu-label">{t.gender}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select city"
@@ -252,9 +255,9 @@ const PersonalDetails = ({ clientData }) => {
                                                             }}
                                                         >
                                                             <option label="Select Gender"></option>
-                                                            <option value="Male">Male</option>
-                                                            <option value="Female">Female</option>
-                                                            <option value="Other">Other</option>
+                                                            <option value="Male">{t.male}</option>
+                                                            <option value="Female">{t.female}</option>
+                                                            <option value="Other">{t.other}</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -277,7 +280,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     </ul>
                                                 </div> */}
                                                 <div className="form-group">
-                                                    <label className="tu-label">{isTutorAccount ? "I can teach on" : "I need tutor on"}</label>
+                                                    <label className="tu-label">{isTutorAccount ? t.iCanTeachOn : t.iNeedTutorOn}</label>
                                                     <ul className="tu-status-filter">
                                                         <li>
                                                             <div className="tu-status-contnent">
@@ -289,7 +292,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                         checked={isTeachingLocationTutorHome}
                                                                         onChange={() => handleInput("isTeachingLocationTutorHome", !isTeachingLocationTutorHome)}
                                                                     />
-                                                                    <label for="home">My home</label>
+                                                                    <label for="home">{t.myHome}</label>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -303,7 +306,7 @@ const PersonalDetails = ({ clientData }) => {
                                                                         checked={isTeachingLocationStudentHome}
                                                                         onChange={() => handleInput("isTeachingLocationStudentHome", !isTeachingLocationStudentHome)}
                                                                     />
-                                                                    <label for="home1">{isTutorAccount ? "Student" : "Tutor"} home</label>
+                                                                    <label for="home1">{isTutorAccount ? t.student : t.tutor} {t.home}</label>
                                                                 </div>
                                                             </div>
                                                         </li>
@@ -317,14 +320,14 @@ const PersonalDetails = ({ clientData }) => {
                                                                         checked={isTeachingLocationOnline}
                                                                         onChange={() => handleInput("isTeachingLocationOnline", !isTeachingLocationOnline)}
                                                                     />
-                                                                    <label for="online">Online</label>
+                                                                    <label for="online">{t.online}</label>
                                                                 </div>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label className="tu-label">A brief introduction</label>
+                                                    <label className="tu-label">{t.aBriefIntro}</label>
                                                     <div className="tu-placeholderholder">
                                                         <textarea
                                                             className="form-control"
@@ -334,14 +337,14 @@ const PersonalDetails = ({ clientData }) => {
                                                         // onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                         ></textarea>
                                                         <div className="tu-placeholder">
-                                                            <span>Enter description</span>
+                                                            <span>{t.enterDescription}</span>
                                                         </div>
                                                     </div>
                                                     <div className="tu-input-counter">
-                                                        <span>Characters left:</span>
-                                                        <b>{500 - tutorBriefIntroduction?.length || 0}</b>
+                                                        <span>{t.charLeft}:</span>
+                                                        <b>{language === "en" ? 500 - tutorBriefIntroduction?.length || 0 : convertToBanglaNumber(500 - tutorBriefIntroduction?.length || 0)}</b>
                                                         /
-                                                        <em> 500</em>
+                                                        <em>{t.fiveTh}</em>
                                                     </div>
                                                 </div>
                                             </div>
@@ -352,13 +355,13 @@ const PersonalDetails = ({ clientData }) => {
                         </div>
                     </div>
                     <div className="tu-btnarea-two">
-                        <span>Save & update the latest changes to the live</span>
+                        <span>{t.saveUpdate}</span>
                         <a
 
                             className="tu-primbtn-lg tu-primbtn-orange"
                             onClick={() => !isPersonalLoading && handleSubmit()}
                         >
-                            {isPersonalLoading ? "Saving.." : "Save & update"}
+                            {isPersonalLoading ? t.saving : t.saveAndUpdate}
                         </a>
                     </div>
                 </div>

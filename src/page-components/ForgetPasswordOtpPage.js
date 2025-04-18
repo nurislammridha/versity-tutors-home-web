@@ -1,12 +1,14 @@
 "use client"
 import PrimaButton from '@/components/PrimaButton'
 import PrimaText from '@/components/PrimaText'
+import { useLanguage } from '@/context/LanguageContext'
 import { CreatePasswordSubmit, FalseIsLoginComplete, sendEmailOtp, SetPasswordSubmit, SignUpSubmit } from '@/redux/_redux/CommonAction'
 import { useRouter } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ForgetPasswordOtpPage = () => {
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [otp, setOtp] = useState("")
@@ -81,14 +83,14 @@ const ForgetPasswordOtpPage = () => {
                             <img src="images/login/img-01.png" alt="images" />
                         </figure>
                         <div className="tu-login-left_title">
-                            <h2>Yes! we’re making progress</h2>
-                            <span>every minute & every second</span>
+                            <h2>{t.weAreMakingProgress}</h2>
+                            <span>{t.everyMinutes}</span>
                         </div>
                     </div>
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
-                            <h2>Welcome!</h2>
-                            <h3>Otp was send to {resetInfo.email}</h3>
+                            <h2>{t.welcome}</h2>
+                            <h3>{t.otpWasSendTo} {resetInfo.email}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>
@@ -105,14 +107,14 @@ const ForgetPasswordOtpPage = () => {
                                                     onChange={(e) => setOtp(e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Otp</span>
+                                                    <span>{t.otp}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group">
                                             <PrimaText
-                                                content={seconds > 0 || minutes > 0 ? `Time Remaining ${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}` : "Didn't receive otp?"}
+                                                content={seconds > 0 || minutes > 0 ? `${t.timeRemaining} ${minutes < 10 ? "0" + minutes : minutes}:${seconds < 10 ? "0" + seconds : seconds}` : t.didNotReceivedOtp}
                                                 color='#000'
                                                 size='16px'
                                                 right='10px'
@@ -121,7 +123,7 @@ const ForgetPasswordOtpPage = () => {
                                                 <PrimaButton
                                                     width='fit-content'
                                                     height='fit-content'
-                                                    content={isCreatePasswordLoading ? "Resending OTP" : "Resend OTP"}
+                                                    content={isCreatePasswordLoading ? t.resendingOtp : t.resendOtp}
                                                     color='#6a307d'
                                                     size='14px'
                                                     bgColor='#fff'
@@ -137,7 +139,7 @@ const ForgetPasswordOtpPage = () => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isSetPasswordLoading && handleSubmit()}
                                             >
-                                                <span>{isSetPasswordLoading ? "SUBMITING OTP" : "SUBMIT OTP"}</span><i className="icon icon-arrow-right"></i>
+                                                <span>{isSetPasswordLoading ? t.submittingOtp : t.submitOtp}</span><i className="icon icon-arrow-right"></i>
                                             </a>
                                         </div>
 

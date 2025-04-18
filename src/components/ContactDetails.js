@@ -1,8 +1,10 @@
+import { useLanguage } from '@/context/LanguageContext'
 import { ContactSubmit } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 const ContactDetails = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [phone, setPhone] = useState("")
     const [email, setEmail] = useState("")
@@ -29,7 +31,7 @@ const ContactDetails = ({ clientData }) => {
                         <div className="tu-boxarea">
                             <div className="tu-boxsm">
                                 <div className="tu-boxsmtitle">
-                                    <h4>Contact details</h4>
+                                    <h4>{t.contactDetails}</h4>
                                 </div>
                             </div>
                             <div className="tu-box">
@@ -38,7 +40,7 @@ const ContactDetails = ({ clientData }) => {
                                         <div className="tu-themeform__wrap">
                                             <div className="form-group-wrap">
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Phone number</label>
+                                                    <label className="tu-label">{t.phoneNumber}</label>
                                                     <div className="tu-inputicon">
                                                         <div className="tu-facebookv3">
                                                             <i className="icon icon-phone-call"></i>
@@ -53,14 +55,14 @@ const ContactDetails = ({ clientData }) => {
                                                                 onChange={(e) => setPhone(e.target.value)}
                                                             />
                                                             <div className="tu-placeholder">
-                                                                <span>01XXXXXXXXX</span>
+                                                                <span>{t.hideMobile}</span>
                                                                 {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Email address</label>
+                                                    <label className="tu-label">{t.emailAddress}</label>
                                                     <div className="tu-inputicon">
                                                         <div className="tu-facebookv3">
                                                             <i className="icon icon-mail"></i>
@@ -75,14 +77,14 @@ const ContactDetails = ({ clientData }) => {
                                                                 onChange={(e) => setEmail(e.target.value)}
                                                             />
                                                             <div className="tu-placeholder">
-                                                                <span>Enter email address</span>
+                                                                <span>{t.enterEmailAddress}</span>
                                                                 {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Skype ID</label>
+                                                    <label className="tu-label">{t.skypeId}</label>
                                                     <div className="tu-inputicon">
                                                         <div className="tu-facebookv3">
                                                             <i className="fa-brands fa-skype"></i>
@@ -96,14 +98,14 @@ const ContactDetails = ({ clientData }) => {
                                                                 onChange={(e) => setSkype(e.target.value)}
                                                             />
                                                             <div className="tu-placeholder">
-                                                                <span>Enter skype id</span>
+                                                                <span>{t.enterSkypeId}</span>
                                                                 {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">Whatsapp number</label>
+                                                    <label className="tu-label">{t.whatsappNumber}</label>
                                                     <div className="tu-inputicon">
                                                         <div className="tu-facebookv3">
                                                             <i className="fa-brands fa-whatsapp"></i>
@@ -117,14 +119,14 @@ const ContactDetails = ({ clientData }) => {
                                                                 onChange={(e) => setWhatsapp(e.target.value)}
                                                             />
                                                             <div className="tu-placeholder">
-                                                                <span>Enter whatsapp number</span>
+                                                                <span>{t.enterWhatsappNumber}</span>
                                                                 {/* <em>*</em> */}
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group">
-                                                    <label className="tu-label">Website</label>
+                                                    <label className="tu-label">{t.website}</label>
                                                     <div className="tu-inputicon">
                                                         <div className="tu-facebookv3">
                                                             <i className="icon icon-globe"></i>
@@ -138,7 +140,7 @@ const ContactDetails = ({ clientData }) => {
                                                                 onChange={(e) => setWebsite(e.target.value)}
                                                             />
                                                             <div className="tu-placeholder">
-                                                                <span>Enter website URL</span>
+                                                                <span>{t.enterWebsiteUrl}</span>
                                                                 {/* <em>*</em> */}
                                                             </div>
                                                         </div>
@@ -152,13 +154,13 @@ const ContactDetails = ({ clientData }) => {
                         </div>
                     </div>
                     <div className="tu-btnarea-two">
-                        <span>Save & update the latest changes to the live</span>
+                        <span>{t.saveUpdate}</span>
                         <a
 
                             className="tu-primbtn-lg tu-primbtn-orange"
                             onClick={() => !isPersonalLoading && handleSubmit()}
                         >
-                            {isPersonalLoading ? "Saving.." : "Save & update"}
+                            {isPersonalLoading ? t.saving : t.saveAndUpdate}
                         </a>
                     </div>
                 </div>

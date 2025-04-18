@@ -1,9 +1,12 @@
 "use client"
+import { useLanguage } from '@/context/LanguageContext';
 import { AddEducationSubmit, FalseEducationUpdated, GetEducationInput, SetEducationData, SetEducationUpdate } from '@/redux/_redux/CommonAction';
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { convertToBanglaNumber } from '../../public/function/globalFunction';
 
 const Education = ({ clientData }) => {
+    const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [showModal, setShowModal] = useState(false);
     const [action, setAction] = useState("delete")
@@ -62,14 +65,14 @@ const Education = ({ clientData }) => {
                         <div className="tu-boxarea">
                             <div className="tu-boxsm">
                                 <div className="tu-boxsmtitle">
-                                    <h4>Add education</h4>
+                                    <h4>{t.addEducation}</h4>
                                     <a
 
                                         onClick={() => {
                                             setShowModal(true)
                                             setAction("add")
                                         }}
-                                    >Add new</a>
+                                    >{t.addNew}</a>
                                 </div>
                             </div>
                             <div className="tu-box">
@@ -113,7 +116,7 @@ const Education = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                             ))
-                                            : (<div>No educations data found</div>)}
+                                            : (<div>{t.noEducationsDataFound}</div>)}
 
                                     </div>
                                 </div>
@@ -128,7 +131,7 @@ const Education = ({ clientData }) => {
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5>{action === "edit" ? "Edit" : "Add"} education</h5>
+                            <h5>{action === "edit" ? "Edit" : "Add"} {t.education}</h5>
                             <a className="tu-close" onClick={() => setShowModal(false)}><i className="icon icon-x"></i></a>
                         </div>
                         <div className="modal-body">
@@ -136,7 +139,7 @@ const Education = ({ clientData }) => {
                                 <fieldset>
                                     <div className="tu-themeform__wrap">
                                         <div className="form-group">
-                                            <label className="tu-label">Degree/course title</label>
+                                            <label className="tu-label">{t.degreeTitle}</label>
                                             <div className="tu-placeholderholder">
                                                 <input
                                                     type="text"
@@ -147,13 +150,13 @@ const Education = ({ clientData }) => {
                                                     onChange={(e) => handleChange("degree", e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Enter title here</span>
+                                                    <span>{t.enterTitleHere}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label className="tu-label">University/Institute title</label>
+                                            <label className="tu-label">{t.universityTitle}</label>
                                             <div className="tu-placeholderholder">
                                                 <input
                                                     type="text"
@@ -164,13 +167,13 @@ const Education = ({ clientData }) => {
                                                     onChange={(e) => handleChange("institute", e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Enter title here</span>
+                                                    <span>{t.enterTitleHere}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label className="tu-label">Loaction</label>
+                                            <label className="tu-label">{t.locations}</label>
                                             <div className="tu-placeholderholder">
                                                 <input
                                                     type="text"
@@ -180,14 +183,14 @@ const Education = ({ clientData }) => {
                                                     onChange={(e) => handleChange("location", e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Enter location</span>
+                                                    <span>{t.enterLocation}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group-wrap">
                                             <div className="form-group pb-0">
-                                                <label className="tu-label">Start & end date</label>
+                                                <label className="tu-label">{t.startEndDate}</label>
                                             </div>
                                             <div className="form-group form-group-half">
                                                 <div className="tu-placeholderholder">
@@ -201,7 +204,7 @@ const Education = ({ clientData }) => {
                                                         onChange={(e) => handleChange("startDate", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
-                                                        <span>Enter start date</span>
+                                                        <span>{t.enterStartDate}</span>
                                                         <em>*</em>
                                                     </div>
                                                     {/* </div> */}
@@ -219,7 +222,7 @@ const Education = ({ clientData }) => {
                                                         onChange={(e) => handleChange("endDate", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
-                                                        <span>Enter end date</span>
+                                                        <span>{t.enterEndDate}</span>
                                                         <em>*</em>
                                                     </div>
                                                     {/* </div> */}
@@ -234,12 +237,12 @@ const Education = ({ clientData }) => {
                                                         checked={isOngoing}
                                                         onChange={() => handleChange("isOngoing", !isOngoing)}
                                                     />
-                                                    <label for="expcheck2">This degree/course is currently ongoing</label>
+                                                    <label for="expcheck2">{t.currentlyOngoing}</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="form-group">
-                                            <label className="tu-label">Description</label>
+                                            <label className="tu-label">{t.description}</label>
                                             <div className="tu-placeholderholder">
                                                 <textarea
                                                     className="form-control tu-input-field"
@@ -250,15 +253,15 @@ const Education = ({ clientData }) => {
                                                     onChange={(e) => handleChange("description", e.target.value)}
                                                 ></textarea>
                                                 <div className="tu-placeholder">
-                                                    <span>Enter description</span>
+                                                    <span>{t.enterDescription}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
                                             <div className="tu-input-counter">
-                                                <span>Characters left:</span>
-                                                <b>{500 - description?.length}</b>
+                                                <span>{t.charLeft}:</span>
+                                                <b>{language === "en" ? 500 - description?.length : convertToBanglaNumber(500 - description?.length)}</b>
                                                 /
-                                                <em> 500</em>
+                                                <em> {t.fiveTh}</em>
                                             </div>
                                         </div>
                                         <div className="form-group tu-formbtn">
@@ -267,7 +270,7 @@ const Education = ({ clientData }) => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isPersonalLoading && handleSubmit()}
                                             >
-                                                {isPersonalLoading ? "Saving.." : action === "edit" ? "Update changes" : "Save changes"}
+                                                {isPersonalLoading ? t.saving : action === "edit" ? t.updateChanges : t.saveChanges}
                                             </a>
                                         </div>
                                     </div>

@@ -11,6 +11,7 @@ import Settings from '@/components/Settings'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import WhoBookedMe from '@/components/WhoBookedMe'
 import WishList from '@/components/WishList'
+import { useLanguage } from '@/context/LanguageContext'
 import { FalseUpdatedProfile, UploadAvatarImg } from '@/redux/_redux/CommonAction'
 import { useRouter, useSearchParams } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -18,6 +19,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
 
 const DashboardPage = () => {
+    const { t } = useLanguage()
     const dispatch = useDispatch()
     const router = useRouter()
     const searchParams = useSearchParams();
@@ -94,7 +96,7 @@ const DashboardPage = () => {
                                         </figure>
                                         <div className="tu-uploadinfo text-center">
                                             <h6>
-                                                Your profile photo should not be larger that 500px X 500px & weight should not exceede 100kb
+                                                {t.profilePhotoSize}
                                             </h6>
                                             <div className="tu-uploadimgbtn">
                                                 <input type="file" name="file" className="tu-primbtn" id="uploadimg" />
@@ -104,7 +106,7 @@ const DashboardPage = () => {
                                                     style={{ cursor: "pointer" }}
                                                     onClick={() => !isAvatarLoading && handleUpload()}
                                                 >
-                                                    {isAvatarLoading ? "Uploading.'." : "Upload photo"}
+                                                    {isAvatarLoading ? t.uploading : t.uploadPhoto}
                                                 </label>
                                             </div>
                                         </div>
@@ -115,67 +117,67 @@ const DashboardPage = () => {
                                                 className={state === "personal" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("personal")}
                                             >
-                                                <i className="icon icon-user"></i><span>Personal details</span>
+                                                <i className="icon icon-user"></i><span>{t.personalDetails}</span>
                                             </a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "contact" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("contact")}
-                                            ><i className="icon icon-phone"></i><span>Contact details</span></a>
+                                            ><i className="icon icon-phone"></i><span>{t.contactDetails}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "education" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("education")}><i className="icon icon-book"></i><span>Education</span></a>
+                                                onClick={() => setState("education")}><i className="icon icon-book"></i><span>{t.educationCap}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "subject" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("subject")}
-                                            ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? "Subjects I can teach" : "Subjects I need learn"}</span></a>
+                                            ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? t.subjectICanTeach : t.subjectINeedLearn}</span></a>
                                         </li>
                                         {clientData?.isTutorAccount && <li className="nav-item">
                                             <a
                                                 className={state === "document" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("document")}
-                                            ><i className="icon icon-file"></i><span>Upload Document</span></a>
+                                            ><i className="icon icon-file"></i><span>{t.uploadDocument}</span></a>
                                         </li>}
                                         <li className="nav-item">
                                             <a
                                                 className={state === "whoBooked" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("whoBooked")}
-                                            ><i className="icon icon-user"></i><span>Who booked me</span></a>
+                                            ><i className="icon icon-user"></i><span>{t.whoBookedMe}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "myBooking" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("myBooking")}
-                                            ><i className="icon icon-calendar"></i><span>My booking status</span></a>
+                                            ><i className="icon icon-calendar"></i><span>{t.myBookingStatus}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "myConnections" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("myConnections")}
-                                            ><i className="icon icon-user-plus"></i><span>My connections</span></a>
+                                            ><i className="icon icon-user-plus"></i><span>{t.myConnections}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "wishList" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("wishList")}
-                                            ><i className="icon icon-heart"></i><span>Saving List</span></a>
+                                            ><i className="icon icon-heart"></i><span>{t.mySavingsList}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "settings" ? "active nav-link" : "nav-link"}
                                                 onClick={() => setState("settings")}
-                                            ><i className="icon icon-settings"></i><span>Settings</span></a>
+                                            ><i className="icon icon-settings"></i><span>{t.settings}</span></a>
                                         </li>
                                         <li className="nav-item">
                                             <a
                                                 className={state === "myConnections" ? "active nav-link" : "nav-link"}
                                                 onClick={() => handleLogout()}
-                                            ><i className="icon icon-log-out"></i><span>Logout</span></a>
+                                            ><i className="icon icon-log-out"></i><span>{t.logout}</span></a>
                                         </li>
                                         {/* <li className="nav-item">
                                             <a ="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>

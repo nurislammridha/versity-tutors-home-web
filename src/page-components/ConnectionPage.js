@@ -1,12 +1,15 @@
 "use client"
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
+import { useLanguage } from '@/context/LanguageContext'
 import { GetConnectionPackage, SubmitBuyPackage } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { ToastContainer } from 'react-toastify'
+import { convertToBanglaNumber } from '../../public/function/globalFunction'
 
 const ConnectionPage = () => {
+    const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [clickId, setClickId] = useState("")
     const [isLogin, setIsLogin] = useState(false)
@@ -41,9 +44,9 @@ const ConnectionPage = () => {
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="tu-pricingtop">
-                                        <h4>Expand your great experience</h4>
-                                        <h2>Buy a best price package</h2>
-                                        <p>Spending a single connection you may unlock a profile features with access to book a profile</p>
+                                        <h4>{t.expandYourGreatExperience}</h4>
+                                        <h2>{t.buyBestPrice}</h2>
+                                        <p>{t.spendingASingleConnection}</p>
                                     </div>
                                 </div>
                                 <div class="col-lg-12">
@@ -55,25 +58,25 @@ const ConnectionPage = () => {
                                                         <div class="tu-planlist">
                                                             <div class="tu-plandetail">
                                                                 <h4 className='text-center'>{item?.name}</h4>
-                                                                <h6 className='text-center mt-1'>{item?.connections} Connection</h6>
-                                                                <h2 className='text-center' style={{ color: '#F97316' }}>&#2547;{item?.price}</h2>
-                                                                <span className='text-center'>Including all taxes</span>
+                                                                <h6 className='text-center mt-1'>{language === "en" ? item?.connections : convertToBanglaNumber(item?.connections)} {t.connection}</h6>
+                                                                <h2 className='text-center' style={{ color: '#F97316' }}>&#2547;{language === "en" ? item?.price : convertToBanglaNumber(item?.price)}</h2>
+                                                                <span className='text-center'>{t.includingAllTaxes}</span>
                                                                 <p>
-                                                                    Using 1 connection you may access.
+                                                                    {t.usingConnection}
                                                                 </p>
                                                             </div>
                                                             <ul class="tu-planperks">
                                                                 <li>
-                                                                    <span>Phone: <i class="fa fa-check tu-colorgreen"></i></span>
+                                                                    <span>{t.phone}: <i class="fa fa-check tu-colorgreen"></i></span>
                                                                 </li>
                                                                 <li>
-                                                                    <span>Whatsapp: <i class="fa fa-check tu-colorgreen"></i></span>
+                                                                    <span>{t.whatsapp}: <i class="fa fa-check tu-colorgreen"></i></span>
                                                                 </li>
                                                                 <li>
-                                                                    <span>Email:<i class="fa fa-check tu-colorgreen"></i></span>
+                                                                    <span>{t.email}:<i class="fa fa-check tu-colorgreen"></i></span>
                                                                 </li>
                                                                 <li>
-                                                                    <span>Booking:<i class="fa fa-check tu-colorgreen"></i></span>
+                                                                    <span>{t.booking}:<i class="fa fa-check tu-colorgreen"></i></span>
                                                                 </li>
                                                             </ul>
                                                             <div class="tu-btnarea">
@@ -84,7 +87,7 @@ const ConnectionPage = () => {
                                                                         !isPackageBuying && handleSubmit(item)
                                                                     }}
                                                                 >
-                                                                    {isPackageBuying && clickId === item?._id ? "Buying.." : "Buy now"}
+                                                                    {isPackageBuying && clickId === item?._id ? t.buying : t.buyNow}
                                                                 </a>
                                                             </div>
                                                         </div>

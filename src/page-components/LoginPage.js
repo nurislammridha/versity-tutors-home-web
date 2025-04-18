@@ -1,11 +1,12 @@
 "use client"
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useTransition } from 'react'
 import { FalseIsLoginComplete, GetSignUpInput, LoginSubmit, sendEmailOtp } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 
 const LoginPage = () => {
+    const { t } = useTransition()
     const router = useRouter()
     const dispatch = useDispatch()
     const [isShow, setShow] = useState(true)
@@ -72,14 +73,14 @@ const LoginPage = () => {
                             <img src="images/login/img-01.png" alt="images" />
                         </figure>
                         <div className="tu-login-left_title">
-                            <h2>Yes! we’re making progress</h2>
-                            <span>every minute & every second</span>
+                            <h2>{t.weAreMakingProgress}</h2>
+                            <span>{t.everyMinutes}</span>
                         </div>
                     </div>
                     <div className="tu-login-right">
                         <div className="tu-login-right_title">
-                            <h2>Welcome!</h2>
-                            <h3>We know you will come back</h3>
+                            <h2>{t.welcome}</h2>
+                            <h3>{t.weKnowYouWillComeBack}</h3>
                         </div>
                         <form className="tu-themeform tu-login-form">
                             <fieldset>
@@ -92,12 +93,12 @@ const LoginPage = () => {
                                                     type="email"
                                                     className="form-control"
                                                     required=""
-                                                    placeholder="Email address"
+                                                    placeholder={t.emailAddress}
                                                     value={loginInput.mailOrPhone}
                                                     onChange={(e) => handleChange("mailOrPhone", e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Your email address</span>
+                                                    <span>{t.emailAddress}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
@@ -113,7 +114,7 @@ const LoginPage = () => {
                                                     onChange={(e) => handleChange("password", e.target.value)}
                                                 />
                                                 <div className="tu-placeholder">
-                                                    <span>Enter password</span>
+                                                    <span>{t.enterPassword}</span>
                                                     <em>*</em>
                                                 </div>
                                             </div>
@@ -123,7 +124,7 @@ const LoginPage = () => {
                                                 className="tu-primbtn-lg"
                                                 onClick={() => !isGoogle && !isFacebook && !isLoginLoading ? handleSubmit() : {}}
                                             >
-                                                <span>{!isGoogle && !isFacebook && isLoginLoading ? "Login in" : "Login"}</span>
+                                                <span>{!isGoogle && !isFacebook && isLoginLoading ? t.loginIn : t.login}</span>
                                                 <i className="icon icon-arrow-right"></i>
                                             </a>
                                         </div>
@@ -146,14 +147,14 @@ const LoginPage = () => {
 
                                                 onClick={() => router.push("/sign-up")}
                                             >
-                                                Joi us today
+                                                {t.joinUsToday}
                                             </a>
                                             <a
                                                 // ="lost-password.html"
                                                 className="tu-password-clr_light"
                                                 onClick={() => router.push('/email')}
                                             >
-                                                Lost password?
+                                                {t.lostPassword}
                                             </a>
                                         </div>
                                     </div>
