@@ -1,12 +1,13 @@
 "use client"
-import React, { useEffect, useState, useTransition } from 'react'
+import React, { useEffect, useState } from 'react'
 import { FalseIsLoginComplete, GetSignUpInput, LoginSubmit, sendEmailOtp } from '@/redux/_redux/CommonAction';
 import { useRouter } from 'next/navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import { useLanguage } from '@/context/LanguageContext';
 
 const LoginPage = () => {
-    const { t } = useTransition()
+    const { t } = useLanguage()
     const router = useRouter()
     const dispatch = useDispatch()
     const [isShow, setShow] = useState(true)
