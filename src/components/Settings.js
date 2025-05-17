@@ -35,7 +35,7 @@ const Settings = ({ clientData }) => {
             buttons: [
                 {
                     label: t.yes,
-                    onClick: () => dispatch(StatusSubmit({ isRequestToApprove: true, isApproved: false }, clientData?._id, clientData)),
+                    onClick: () => dispatch(StatusSubmit({ reviewStatus: "requestInitiated", isApproved: false }, clientData?._id, clientData)),
                 },
                 {
                     label: t.no,
@@ -61,7 +61,8 @@ const Settings = ({ clientData }) => {
                             <div class="tu-boxsm">
                                 <div class="tu-boxsmtitle">
                                     <h4>{t.someOp}</h4>
-                                    <h4>{clientData?.isApproved ? t.approved : t.unApprove}</h4>
+                                    {/* <h4>{clientData?.isApproved ? t.approved : t.unApprove}</h4> */}
+                                    <h4>{clientData?.reviewStatus}</h4>
                                 </div>
                             </div>
                             <div class="tu-box">
@@ -87,12 +88,19 @@ const Settings = ({ clientData }) => {
                                         {clientData?.isTutorAccount &&
                                             <tr >
                                                 <th scope="row">02</th>
-                                                <td>{clientData?.isRequestToApprove ? t.reqSent : t.reqToAdmin}</td>
+                                                <td>{clientData?.reviewStatus === "requestInitiated" ? t.reqSent : t.reqToAdmin}</td>
                                                 <td>
                                                     <a
                                                         className='btn btn-success btn-sm'
-                                                        onClick={() => !clientData?.isRequestToApprove && !isStatusLoading && handleRequest()}
-                                                    >{index === 2 && isStatusLoading ? t.loading : clientData?.isRequestToApprove ? t.requestSent : t.sendReq}</a>
+                                                        onClick={() => clientData?.reviewStatus !== "requestInitiated" && !isStatusLoading && handleRequest()}
+                                                    >
+                                                        {index === 2 && isStatusLoading
+                                                            ? t.loading
+                                                            : ["requestInitiated", "underReview", "approved"].includes(clientData?.reviewStatus)
+                                                                ? t.requestSent
+                                                                : t.sendReq}
+
+                                                    </a>
                                                 </td>
                                             </tr>
                                         }
