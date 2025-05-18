@@ -35,7 +35,7 @@ const Settings = ({ clientData }) => {
             buttons: [
                 {
                     label: t.yes,
-                    onClick: () => dispatch(StatusSubmit({ reviewStatus: "requestInitiated", isApproved: false }, clientData?._id, clientData)),
+                    onClick: () => dispatch(StatusSubmit({ reviewStatus: clientData?.reviewStatus == "created" ? "requestInitiated" : "receiveForReview", isApproved: false }, clientData?._id, clientData)),
                 },
                 {
                     label: t.no,
@@ -92,11 +92,11 @@ const Settings = ({ clientData }) => {
                                                 <td>
                                                     <a
                                                         className='btn btn-success btn-sm'
-                                                        onClick={() => clientData?.reviewStatus !== "requestInitiated" && !isStatusLoading && handleRequest()}
+                                                        onClick={() => ["created", "sendForReview"].includes(clientData?.reviewStatus) && !isStatusLoading && handleRequest()}
                                                     >
                                                         {index === 2 && isStatusLoading
                                                             ? t.loading
-                                                            : ["requestInitiated", "underReview", "approved"].includes(clientData?.reviewStatus)
+                                                            : ["requestInitiated", "underReview", "approved", "rejected"].includes(clientData?.reviewStatus)
                                                                 ? t.requestSent
                                                                 : t.sendReq}
 
