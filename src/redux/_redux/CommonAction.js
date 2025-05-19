@@ -949,9 +949,32 @@ export const StatusSubmit = (data, id, client) => (dispatch) => {
                 dispatch(GetClientById(id))
                 const post = { clientInfo: client?._id, title: `${client?.firstName} ${client?.lastName} request you to accept him/her account`, redirectUrl: "/approve-tutor", isAdmin: true }
                 dispatch(CreateNotification(post))
+                //update review history
+                if (client?.moderationHistory?.length > 0) {
+                    const url1 = `${process.env.NEXT_PUBLIC_API_URL}moderationHistory/${client?.moderationHistory}`;
+
+                    const d = new Date()
+                    const updateData = {
+                        endingTime: d,
+                        isTaskComplete: false,
+                        lastStatus: "receiveForReview",
+                        comment: "After fixing I re submit my profile",
+                        statusHistory: [{ status: "receiveForReview", comment: "After fixing I re submit my profile" }]
+                    }
+                    Axios.put(url1, updateData)
+                        .then((res) => {
+                            //
+                        })
+                        .catch((err) => {
+                            console.log('err', err)
+                            const message = JSON.parse(err.request.response).message;
+                            showToast("error", message);
+                        });
+                }
             }
         }).catch((err) => {
-            showToast("success", err);
+            console.log('error', err)
+            // showToast("success", err);
         });
     } catch (error) {
         dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
