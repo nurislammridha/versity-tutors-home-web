@@ -69,34 +69,6 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                         </ul>
                     </div>
                     <ul class="nav-item tu-afterlogin">
-                        {/* <li>
-                            <a class="nav-link"
-                                onClick={() => handleOpenNotification()}
-                            ><span class="icon icon-bell">{unreadCount > 0 && <i class="tu-messagenoti">{unreadCount}</i>}</span></a>
-                            {isNotification &&
-                                <ul class="sub-notification list-group">
-                                    {list && list.length > 0 ? list.map((item, index) => (
-                                        item?.isSeen ? <li class="list-group-item notification-item seen"
-                                            onClick={() => router.push(item.redirectUrl)}
-                                        >
-                                            <span>{item?.title}</span>
-                                        </li> :
-                                            <li class="list-group-item notification-item unseen"
-                                                onClick={() => handleSeen(item)}
-                                            >
-                                                <strong>{item?.title}</strong> - Click to view
-                                            </li>
-                                    ))
-                                        : (
-                                            <li class="list-group-item notification-item seen"
-
-                                            >
-                                                <span>No notification found</span> - Thank you for joining us!
-                                            </li>
-                                        )}
-                                </ul>
-                            }
-                        </li> */}
                         <li class="menu-item-has-children nav-item" onMouseEnter={() => setLanMenu(true)} onMouseLeave={() => setLanMenu(false)}>
                             <a>{language === 'en' ? 'English' : 'বাংলা'}</a>
                             {isLanMenu &&
@@ -118,7 +90,37 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                             }
 
                         </li>
-                        {isLogin ? (
+                        {isLogin ? (<>
+                            <li>
+                                <a class="nav-link"
+                                    onClick={() => handleOpenNotification()}
+                                ><span class="icon icon-bell">{unreadCount > 0 && <i class="tu-messagenoti">{unreadCount}</i>}</span></a>
+                                {isNotification &&
+                                    <ul class="sub-notification list-group">
+                                        {list && list.length > 0 ? list.map((item, index) => (
+                                            item?.isSeen ? <li class="list-group-item notification-item seen"
+                                                onClick={() => router.push(item.redirectUrl)}
+                                            >
+                                                <span>{item?.title}</span>
+                                            </li> :
+                                                <li class="list-group-item notification-item unseen"
+                                                    onClick={() => handleSeen(item)}
+                                                >
+                                                    <strong>{item?.title}</strong> - Click to view
+                                                </li>
+                                        ))
+                                            : (
+                                                <li class="list-group-item notification-item seen"
+
+                                                >
+                                                    <span>No notification found</span> - Thank you for joining us!
+                                                </li>
+                                            )}
+                                    </ul>
+                                }
+                            </li>
+
+
                             <li class="menu-item-has-children" onMouseEnter={() => setMenu(true)} onMouseLeave={() => setMenu(false)}>
                                 <strong>
                                     <a class="nav-link" onClick={() => router.push('/dashboard?name=personal')}><img src={clientData?.avatar?.url} alt="image-description" /></a></strong>
@@ -155,7 +157,7 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                     </li>
                                 </ul>}
                             </li>
-                        ) : (
+                        </>) : (
                             <li>
                                 <a
                                     className="nav-link"

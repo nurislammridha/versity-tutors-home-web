@@ -938,7 +938,7 @@ export const GetUnlock = (arr, id, myId) => (dispatch) => {
 };
 //any thing update without checking/ validation
 export const StatusSubmit = (data, id, client) => (dispatch) => {
-
+    const { reviewStatus } = data || {}
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_STATUS_LOADING, payload: true })
     try {
@@ -947,7 +947,11 @@ export const StatusSubmit = (data, id, client) => (dispatch) => {
                 dispatch({ type: Types.IS_STATUS_LOADING, payload: false });
                 showToast("success", res.data.message);
                 dispatch(GetClientById(id))
-                const post = { clientInfo: client?._id, title: `${client?.firstName} ${client?.lastName} request you to accept him/her account`, redirectUrl: "/approve-tutor", isAdmin: true }
+                const post = { clientInfo: client?._id, title: `${client?.firstName} ${client?.lastName} has ${reviewStatus === "requestInitiated" ? "initiated a review request" : "resubmitted him/her profile for review"}`, redirectUrl: reviewStatus === "requestInitiated" ? "/request-initiated-tutor" : "/receive-for-review", isAdmin: true }
+                if (client?.moderationHistory?.length > 0) {
+                    post.roleInfo = client?.assignedModerator
+                    post.roleId = client?.assignedModerator
+                }
                 dispatch(CreateNotification(post))
                 //update review history
                 if (client?.moderationHistory?.length > 0) {
