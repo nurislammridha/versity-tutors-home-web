@@ -98,12 +98,12 @@ const SecondaryHeader = ({ isLogin, clientData }) => {
                                 {isNotification &&
                                     <ul class="sub-notification list-group">
                                         {list && list.length > 0 ? list.map((item, index) => (
-                                            item?.isSeen ? <li class="list-group-item notification-item seen"
+                                            item?.isSeen ? <li key={index} class="list-group-item notification-item seen"
                                                 onClick={() => router.push(item.redirectUrl)}
                                             >
                                                 <span>{item?.title}</span>
                                             </li> :
-                                                <li class="list-group-item notification-item unseen"
+                                                <li key={index} class="list-group-item notification-item unseen"
                                                     onClick={() => handleSeen(item)}
                                                 >
                                                     <strong>{item?.title}</strong> - Click to view
