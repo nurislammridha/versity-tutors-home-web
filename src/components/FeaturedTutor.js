@@ -66,7 +66,7 @@ const FeaturedTutor = () => {
                                             <div className="tu-authorinfo">
                                                 <div className="tu-authordetail">
                                                     <figure>
-                                                        <img src={item.avatar.url} alt="image-description" />
+                                                        <img src={item?.avatar?.url} alt="image-description" />
                                                     </figure>
                                                     <div className="tu-authorname">
                                                         <h5><a onClick={() => router.push(`/details/${item._id}`)}> {`${item.firstName} ${item.lastName}`}</a>  <i className="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>

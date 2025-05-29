@@ -6,86 +6,144 @@ import { useDispatch, useSelector } from 'react-redux'
 import { convertToBanglaNumber } from '../../public/function/globalFunction';
 
 const ProfilesBody = ({ clientData, isLogin }) => {
-    const router = useRouter()
-    const { language, t } = useLanguage()
+    const router = useRouter();
+    const dispatch = useDispatch();
     const searchParams = useSearchParams();
-    const lookingFor = searchParams.get('lookingFor');
+    const { language, t } = useLanguage();
+
+    // Initial query params from URL
+    const lookingFor = searchParams.get('lookingFor'); // All, Tutor, Student
     const classes = searchParams.get('classes');
     const division = searchParams.get('division');
     const district = searchParams.get('district');
     const subjects = searchParams.get('subjects');
-    const dispatch = useDispatch()
-    const [categoryId, setCategoryId] = useState("")
-    const [subCategoryId, setSubCategoryId] = useState([])
-    const [divisionId, setDivisionId] = useState("")
-    const [districtId, setDistrictId] = useState("")
-    const [subDistrictId, setSubDistrictId] = useState("")
-    const [areaId, setAreaId] = useState("")
-    const [minPrice, setMinPrice] = useState("")
-    const [maxPrice, setMaxPrice] = useState("")
-    const [gender, setGender] = useState("")
-    const [search, setSearch] = useState("")
-    const [sortBy, setSortBy] = useState("Best Match")
-    const [isTutorAccount, setTutorAccount] = useState(null)
-    const [currentPage, setCurrentPage] = useState(1)
-    const [isTeachingLocationOnline, setTeachingLocationOnline] = useState(false)
-    const [isTeachingLocationTutorHome, setTeachingLocationTutorHome] = useState(false)
-    const [isTeachingLocationStudentHome, setTeachingLocationStudentHome] = useState(false)
 
-    const categoryList = useSelector((state) => state.homeInfo.categoryList);
-    const subCategoryList = useSelector((state) => state.homeInfo.subCategoryList);
-    const isProfilesLoading = useSelector((state) => state.homeInfo.isProfilesLoading);
-    const filteredProfile = useSelector((state) => state.homeInfo.filteredProfiles);
-    const divisionList = useSelector((state) => state.homeInfo.divisionList);
-    const districtList = useSelector((state) => state.homeInfo.districtList);
-    const subDistrictList = useSelector((state) => state.homeInfo.subDistrictList);
-    const areaList = useSelector((state) => state.homeInfo.areaList);
+    // Filter states
+    const [profileType, setProfileType] = useState("All");
+    const [categoryId, setCategoryId] = useState("");
+    const [subCategoryId, setSubCategoryId] = useState([]);
+    const [divisionId, setDivisionId] = useState("");
+    const [districtId, setDistrictId] = useState("");
+    const [subDistrictId, setSubDistrictId] = useState("");
+    const [areaId, setAreaId] = useState("");
+    const [minPrice, setMinPrice] = useState("");
+    const [maxPrice, setMaxPrice] = useState("");
+    const [gender, setGender] = useState("");
+    const [search, setSearch] = useState("");
+    const [sortBy, setSortBy] = useState("Best Match");
+    const [isTeachingLocationOnline, setTeachingLocationOnline] = useState(false);
+    const [isTeachingLocationTutorHome, setTeachingLocationTutorHome] = useState(false);
+    const [isTeachingLocationStudentHome, setTeachingLocationStudentHome] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    // Redux selectors
+    const {
+        categoryList,
+        subCategoryList,
+        isProfilesLoading,
+        filteredProfiles: filteredProfile,
+        divisionList,
+        districtList,
+        subDistrictList,
+        areaList,
+    } = useSelector((state) => state.homeInfo);
+
     const { pagination, result: filteredProfiles } = filteredProfile || { pagination: {}, result: null }
     const { total, page, limit, totalPages, } = pagination || {}
+
+
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= totalPages) {
-            setCurrentPage(newPage)
-            // dispatch(GetProfiles({ filters: { isTutorAccount: true }, page: newPage, limit: 5 }))
+            setCurrentPage(newPage);
         }
     };
+
     const handleCheckboxChange = (id) => {
         setSubCategoryId((prevIds) =>
             prevIds.includes(id) ? prevIds.filter((item) => item !== id) : [...prevIds, id]
         );
     };
 
+    // Fetch dependent data when IDs change
     useEffect(() => {
-        dispatch(GetCategoryList())
+        if (categoryId) dispatch(GetSubCategoryByCategoryId(categoryId));
+        if (divisionId) dispatch(DistrictByDivisionId(divisionId));
+        if (districtId) dispatch(SubDistrictByDistrictId(districtId));
+        if (subDistrictId) dispatch(AreaBySubDistrictId(subDistrictId));
+    }, [categoryId, divisionId, districtId, subDistrictId]);
+
+    // Initial fetch for categories and divisions
+    useEffect(() => {
+        dispatch(GetCategoryList());
         dispatch(GetDivisionList());
-        if (clientData !== null && isLogin) {
-            setTutorAccount(!clientData?.isTutorAccount)
-            // dispatch(GetProfiles({ filters: { isTutorAccount, isApproved: isTutorAccount ? true : false }, limit: 5 }))
-        } else {
-            lookingFor?.length > 0 && lookingFor === "Tutor" ? setTutorAccount(true) : setTutorAccount(false)
-            division?.length > 0 && setDivisionId(division)
-            district?.length > 0 && setDistrictId(district)
-            classes?.length > 0 && setCategoryId(classes)
-            subjects?.length > 0 && setSubCategoryId(subjects)
+    }, []);
+
+    // Set initial filters from URL
+    useEffect(() => {
+        if (lookingFor) setProfileType(lookingFor);
+        if (division) setDivisionId(division);
+        if (district) setDistrictId(district);
+        if (classes) setCategoryId(classes);
+        if (subjects) setSubCategoryId(subjects.split(',')); // assuming comma-separated subjects
+    }, [lookingFor, division, district, classes, subjects]);
+
+    // Fetch filtered profiles
+    useEffect(() => {
+        const filters = {
+            categoryId,
+            subCategoryId,
+            divisionId,
+            districtId,
+            subDistrictId,
+            areaId,
+            gender,
+        };
+
+        // Add hourly fee range if valid
+        if (Number(minPrice) > 0 && Number(maxPrice) > 0) {
+            filters.hourlyFee = { min: Number(minPrice), max: Number(maxPrice) };
         }
-    }, [clientData, lookingFor, division, district, classes, subjects])
-    useEffect(() => {
-        categoryId.length > 0 && dispatch(GetSubCategoryByCategoryId(categoryId))
-        districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
-        divisionId?.length > 0 && dispatch(DistrictByDivisionId(divisionId));
-        subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
-    }, [categoryId, divisionId, districtId, subDistrictId])
-    useEffect(() => {
-        // if (clientData !== null) {
-        const obj = { search, sortBy, page: currentPage, limit: 5, filters: { isApproved: isTutorAccount ? true : false, isTutorAccount, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, gender } }
-        if (Number(maxPrice) > 0 && Number(minPrice > 0)) obj.filters.hourlyFee = { min: minPrice, max: maxPrice }
-        if (isTeachingLocationOnline) obj.filters.isTeachingLocationOnline = true
-        if (isTeachingLocationStudentHome) obj.filters.isTeachingLocationStudentHome = true
-        if (isTeachingLocationTutorHome) obj.filters.isTeachingLocationTutorHome = true
-        isTutorAccount !== null && dispatch(GetProfiles(obj))
-        // }
-    }, [isTutorAccount, currentPage, search, sortBy, categoryId, subCategoryId, divisionId, districtId, subDistrictId, areaId, maxPrice, minPrice, isTeachingLocationOnline, isTeachingLocationStudentHome, isTeachingLocationTutorHome, gender])
-    // console.log('isTutorAccount', isTutorAccount)
-    // console.log('queryString', lookingFor, division, district, classes)
+
+        // Add teaching location flags
+        if (isTeachingLocationOnline) filters.isTeachingLocationOnline = true;
+        if (isTeachingLocationTutorHome) filters.isTeachingLocationTutorHome = true;
+        if (isTeachingLocationStudentHome) filters.isTeachingLocationStudentHome = true;
+
+        // Conditionally add isTutorAccount based on profileType
+        if (profileType === 'Tutor') {
+            filters.isTutorAccount = true;
+        } else if (profileType === 'Student') {
+            filters.isTutorAccount = false;
+        }
+        // else do not include it for "All"
+
+        const obj = {
+            search,
+            sortBy,
+            page: currentPage,
+            limit: 5,
+            filters,
+        };
+
+        dispatch(GetProfiles(obj));
+    }, [
+        currentPage,
+        search,
+        sortBy,
+        categoryId,
+        subCategoryId,
+        divisionId,
+        districtId,
+        subDistrictId,
+        areaId,
+        minPrice,
+        maxPrice,
+        gender,
+        isTeachingLocationOnline,
+        isTeachingLocationTutorHome,
+        isTeachingLocationStudentHome,
+        profileType,
+    ]);
     return (
         <>
             {isProfilesLoading ?
@@ -104,7 +162,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                 <div class="col-lg-12">
                                     <div class="tu-listing-wrapper">
                                         <div class="tu-sort">
-                                            <h3>{language === "en" ? total : convertToBanglaNumber(total)}  {t.searchResult}<mark>{isTutorAccount ? t.tutor : t.student}</mark> <span>{search}</span></h3>
+                                            <h3>{language === "en" ? total : convertToBanglaNumber(total)}  {t.searchResult}<mark>{profileType}</mark> <span>{search}</span></h3>
                                             {/* <h3>{total} Search result  in<span>{search}</span></h3> */}
                                             <div class="tu-sort-right-area">
                                                 <div class="tu-sortby">
@@ -122,10 +180,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                         </select>
                                                     </div>
                                                 </div>
-                                                {/* <div class="tu-filter-btn">
-                                                <a class="tu-listbtn active" ><i class="icon icon-list"></i></a>
-                                                <a class="tu-listbtn" ><i class="icon icon-grid"></i></a>
-                                            </div> */}
+
                                             </div>
                                         </div>
                                         <div class="tu-searchbar-wrapper">
@@ -141,17 +196,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                             onChange={(e) => setSearch(e.target.value)}
                                                         />
                                                     </div>
-                                                    {/* <div class="tu-select">
-                                                    <i class="icon icon-layers"></i>
-                                                    <select id="selectv8" data-placeholderinput="Select list" data-placeholder="Select category" class="form-control">
-                                                        <option label="Select category"></option>
-                                                        <option >Automotive</option>
-                                                        <option >Beauty &amp; Care</option>
-                                                        <option >Marketing</option>
-                                                        <option >Child Care</option>
-                                                        <option >House Cleaning</option>
-                                                    </select>
-                                                </div> */}
+
                                                     <a class="tu-primbtn-lg tu-primbtn-orange"><i class="icon icon-search"></i></a>
                                                 </div>
                                             </div>
@@ -169,6 +214,34 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                     <aside class="tu-asidewrapper">
                                         <a class="tu-dbmenu"><i class="icon icon-chevron-left"></i></a>
                                         <div class="tu-aside-menu">
+                                            <div class="tu-aside-holder">
+                                                <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
+                                                    <h5>I am looking for</h5>
+                                                </div>
+                                                <div id="side2" class="collapse show">
+                                                    <div class="tu-aside-content">
+                                                        <div class="tu-filterselect">
+                                                            <div class="tu-select">
+                                                                <select
+                                                                    id="selectv7"
+                                                                    data-placeholder="Select education level"
+                                                                    data-placeholderinput="Select education level"
+                                                                    class="form-control tu-input-field"
+                                                                    value={profileType}
+                                                                    onChange={(e) => {
+                                                                        setProfileType(e.target.value)
+                                                                    }}
+                                                                >
+                                                                    <option value={"All"}>{t.all}</option>
+                                                                    <option value={"Tutor"}>{t.tutor}</option>
+                                                                    <option value={"Student"}>{t.student}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side2" role="button" aria-expanded="true">
                                                     <h5>{t.educationLevel}</h5>
@@ -350,107 +423,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     </div>
                                                 </div>
                                             </div>
-                                            {/* <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1a" role="button" aria-expanded="true">
-                                                <h5>Rating</h5>
-                                            </div>
-                                            <div id="side1a" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <ul class="tu-categoriesfilter">
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="rate" name="rate" checked />
-                                                                <label for="rate">
-                                                                    <span class="tu-stars">
-                                                                        <span></span>
-                                                                    </span>
-                                                                    <em class="tu-totalreview">
-                                                                        <span>5.0/<em>5.0</em></span>
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="rate4" name="rate4" />
-                                                                <label for="rate4">
-                                                                    <span class="tu-stars tu-fourstar">
-                                                                        <span></span>
-                                                                    </span>
-                                                                    <em class="tu-totalreview">
-                                                                        <span>4.0/<em>5.0</em></span>
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="rate3" name="rate2" checked />
-                                                                <label for="rate3">
-                                                                    <span class="tu-stars tu-threestar">
-                                                                        <span></span>
-                                                                    </span>
-                                                                    <em class="tu-totalreview">
-                                                                        <span>3.0/<em>5.0</em></span>
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="rate2a" name="rate2a" />
-                                                                <label for="rate2a">
-                                                                    <span class="tu-stars tu-twostar">
-                                                                        <span></span>
-                                                                    </span>
-                                                                    <em class="tu-totalreview">
-                                                                        <span>2.0/<em>5.0</em></span>
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div class="tu-check tu-checksm">
-                                                                <input type="checkbox" id="rate1a" name="rate1a" />
-                                                                <label for="rate1a">
-                                                                    <span class="tu-stars tu-onestar">
-                                                                        <span></span>
-                                                                    </span>
-                                                                    <em class="tu-totalreview">
-                                                                        <span>1.0/<em>5.0</em></span>
-                                                                    </em>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div> */}
-                                            {/* <div class="tu-aside-holder">
-                                            <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#Location" role="button" aria-expanded="true">
-                                                <h5>Location</h5>
-                                            </div>
-                                            <div id="Location" class="collapse show">
-                                                <div class="tu-aside-content">
-                                                    <div class="tu-filterselect">
-                                                        <div class="tu-placeholderholder">
-                                                            <input type="email" class="form-control" required="" placeholder="Full Name" />
-                                                            <div class="tu-placeholder">
-                                                                <span>Enter Location</span>
-                                                                <em>*</em>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="tu-distanceholder">
-                                                        <div class="tu-rangeslider tu-tooltiparrow">
-                                                            <span>Radius in miles  <em>m</em><span class="example-val" id="slider1-span">65</span></span>
-                                                            <div id="tu-rangeslidertwo"></div>
-                                                        </div>
 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> */}
                                             <div class="tu-aside-holder">
                                                 <div class="tu-asidetitle" data-bs-toggle="collapse" data-bs-target="#side1ab" role="button" aria-expanded="true">
                                                     <h5>{t.miscellaneous}</h5>
@@ -537,7 +510,7 @@ const ProfilesBody = ({ clientData, isLogin }) => {
                                                     <div class="tu-listinginfo_title">
                                                         <div class="tu-listinginfo-img">
                                                             <figure>
-                                                                <img src={item?.avatar.url} alt="imge" style={{ width: "50px", height: "50px" }} />
+                                                                <img src={item?.avatar?.url} alt="imge" style={{ width: "50px", height: "50px" }} />
                                                             </figure>
                                                             <div class="tu-listing-heading">
                                                                 <h5><a onClick={() => router.push(`/details/${item._id}`)}>{item?.firstName + " " + item?.lastName}</a> <i class="icon icon-check-circle tu-greenclr" data-tippy-trigger="mouseenter" data-tippy-html="#tu-verifed" data-tippy-interactive="true" data-tippy-placement="top"></i></h5>

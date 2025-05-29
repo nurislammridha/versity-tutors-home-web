@@ -128,7 +128,7 @@ const DetailsPage = ({ id }) => {
                                                             <span><i className="fa fa-check-circle tu-colorgreen"><em>{language === "en" ? unlockInfo.length : convertToBanglaNumber(unlockInfo.length)}</em></i><em>{t.profileUnlockedHim}</em></span>
                                                         </li>
                                                         <li>
-                                                            <span><i className="icon icon-map-pin"><span>{language === "en" ? `${districtInfo.districtName}, ${divisionInfo?.divisionName}` : `${districtInfo.districtNameBn}, ${divisionInfo?.divisionNameBn}`}</span></i></span>
+                                                            <span><i className="icon icon-map-pin"><span>{language === "en" ? `${districtInfo?.districtName}, ${divisionInfo?.divisionName}` : `${districtInfo?.districtNameBn}, ${divisionInfo?.divisionNameBn}`}</span></i></span>
                                                         </li>
                                                     </ul>
                                                     <div className="tu-detailitem">

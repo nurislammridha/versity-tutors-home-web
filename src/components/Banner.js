@@ -11,7 +11,7 @@ const Banner = () => {
     const divisionList = useSelector((state) => state.homeInfo.divisionList);
     const districtList = useSelector((state) => state.homeInfo.districtList);
     const [filtered, setFiltered] = useState({
-        lookingFor: "Tutor",
+        lookingFor: "",
         classes: "",
         division: "",
         district: ""

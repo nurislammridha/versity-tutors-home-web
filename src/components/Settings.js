@@ -85,25 +85,25 @@ const Settings = ({ clientData }) => {
                                                 >{index === 1 && isStatusLoading ? t.loading : clientData?.isBooked ? t.freeMe : t.bookedMe}</a>
                                             </td>
                                         </tr>
-                                        {clientData?.isTutorAccount &&
-                                            <tr >
-                                                <th scope="row">02</th>
-                                                <td>{clientData?.reviewStatus === "requestInitiated" ? t.reqSent : t.reqToAdmin}</td>
-                                                <td>
-                                                    <a
-                                                        className='btn btn-success btn-sm'
-                                                        onClick={() => ["created", "sendForReview"].includes(clientData?.reviewStatus) && !isStatusLoading && handleRequest()}
-                                                    >
-                                                        {index === 2 && isStatusLoading
-                                                            ? t.loading
-                                                            : ["requestInitiated", "underReview", "approved", "rejected"].includes(clientData?.reviewStatus)
-                                                                ? t.requestSent
-                                                                : t.sendReq}
+                                        {/* {clientData?.isTutorAccount && */}
+                                        <tr >
+                                            <th scope="row">02</th>
+                                            <td>{clientData?.reviewStatus === "requestInitiated" ? t.reqSent : t.reqToAdmin}</td>
+                                            <td>
+                                                <a
+                                                    className='btn btn-success btn-sm'
+                                                    onClick={() => ["created", "sendForReview"].includes(clientData?.reviewStatus) && !isStatusLoading && handleRequest()}
+                                                >
+                                                    {index === 2 && isStatusLoading
+                                                        ? t.loading
+                                                        : ["requestInitiated", "underReview", "approved", "rejected"].includes(clientData?.reviewStatus)
+                                                            ? t.requestSent
+                                                            : t.sendReq}
 
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        {/* } */}
 
                                     </tbody>
                                 </table>
