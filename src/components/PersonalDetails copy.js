@@ -44,48 +44,6 @@ const PersonalDetails = ({ clientData }) => {
     return (
         <>
             <div className="col-lg-8 col-xl-9">
-                <div class="mb24 mo-tab">
-                    <div class="d-flex flex-wrap justify-content-between tab-row">
-                        <div class="tab-col">
-                            <div class="tab-card active">
-                                <div className='mo-card'>
-                                    <img src="images/award.png" alt="Personal Info" />
-                                </div>
-
-                                <div class="tab-label">Personal Info</div>
-                            </div>
-                        </div>
-                        <div class="tab-col">
-                            <div class="tab-card">
-                                <div className='mo-card'>
-                                    <img src="images/man.png" alt="Educational Info" />
-                                </div>
-
-                                <div class="tab-label">Educational Info</div>
-                            </div>
-                        </div>
-                        <div class="tab-col">
-                            <div class="tab-card">
-                                <div className='mo-card'>
-                                    <img src="images/card.png" alt="Tuition Info" />
-                                </div>
-
-                                <div class="tab-label">Tuition Info</div>
-                            </div>
-                        </div>
-                        <div class="tab-col">
-                            <div class="tab-card">
-                                <div className='mo-card'>
-                                    <img src="images/upload.png" alt="Document Info" />
-                                </div>
-
-                                <div class="tab-label">Document Info</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
                 <div className="tu-profilewrapper">
                     <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
                         <div className="tu-boxarea">

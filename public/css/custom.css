@@ -1,0 +1,150 @@
+.mt24 { margin-top: 24px; }
+.mb24 { margin-bottom: 24px; }
+.mr12 { margin-right: 12px; }
+.ml12 { margin-left: 12px; }
+
+.tab-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: nowrap;
+}
+
+.tab-col {
+  flex: 1 1 0;
+}
+
+.tab-card {
+  text-align: center;
+  transition: all 0.3s ease;
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  padding: 24px 12px;
+  height: 100%;
+  cursor: pointer;
+}
+
+.tab-card.active {
+  background-color: #000;
+  color: #fff;
+}
+
+.tab-card img {
+  width: 64px;
+  height: 64px;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+
+.tab-card.active img {
+  filter: brightness(0) invert(1);
+}
+
+.tab-label {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* MOBILE DISPLAY */
+@media (max-width: 767.98px) {
+    .tu-main-section {
+        padding-top: 16px;
+    }
+    .mo-nav{
+        padding: 0 !important;
+    }
+    .mo-hide{
+        display: none;
+    }
+    .mo-tab{
+        background-color: #fff;
+        padding: 16px;
+    }
+  .tab-row {
+    flex-wrap: nowrap;
+    gap: 16px;
+    overflow-x: hidden; /* prevents scroll */
+    justify-content: space-between;
+  }
+
+  .tab-col {
+    flex: 1;
+  }
+
+  .tab-card {
+    padding: 0px 0px;
+    box-shadow: none;
+    border-radius: 0px;
+    border: none;
+  }
+.mo-card{
+     text-align: center;
+  transition: all 0.3s ease;
+  /* background: #ffffff; */
+  border-radius: 8px;
+  border: 1px solid #eeeeee;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  /* padding: 24px 12px; */
+  /* height: 100%;  */
+}
+  .tab-card img {
+    width: 40px;
+    height: 40px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+
+  .tab-label {
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+  .tab-card.active{
+  color: #000;
+  background-color: #fff;
+}
+  .tab-card.active .mo-card{
+  background-color: #000;
+  color: #fff;
+}
+}
+
+.sidebar-wrapper {
+  transition: transform 0.3s ease-in-out;
+}
+@media (max-width: 991.98px) {
+  .sidebar-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80%;
+    max-width: 320px;
+    background: #fff;
+    z-index: 1050;
+    transform: translateX(-100%);
+    overflow-y: auto; /* ✅ Make sidebar scrollable */
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+  }
+   .sidebar-wrapper::-webkit-scrollbar {
+    display: none; /* ✅ Hide scrollbar on WebKit (Chrome, Safari) */
+  }
+  .sidebar-wrapper.open {
+    transform: translateX(0);
+  }
+  .sidebar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1040;
+  }
+  .sidebar-close {
+    text-align: right;
+  }
+}

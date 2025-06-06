@@ -1,5 +1,6 @@
 "use client"
 import ContactDetails from '@/components/ContactDetails'
+import DashboardHeader from '@/components/DashboardHeader'
 import UploadDocument from '@/components/Document'
 import Education from '@/components/Education'
 import MyBookingStatus from '@/components/MyBookingStatus'
@@ -27,6 +28,7 @@ const DashboardPage = () => {
     const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
     const [avatar, setAvatar] = useState(null)
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(false)
     const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);
     const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
@@ -69,41 +71,51 @@ const DashboardPage = () => {
         setIsLogin(localStorage.getItem('isLogin') === "true" ? true : false)
         setClientData(JSON.parse(localStorage.getItem("clientData")))
     }, [])
+    useEffect(() => {
+        // Prevent scrolling when sidebar is open
+        if (isMobileMenuOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+    }, [isMobileMenuOpen]);
     return (
         <>
-            <PrimaHeader isLogin={isLogin} clientData={clientData} />
+            {/* Mobile overlay */}
+            {isMobileMenuOpen && <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>}
+
+            <DashboardHeader
+                isLogin={isLogin}
+                clientData={clientData}
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
+                isMobileMenuOpen={isMobileMenuOpen}
+            />
             <main className="tu-main tu-bgmain">
                 <div className="tu-main-section">
                     <div className="container">
                         <div className="row gy-4">
-                            <div className="col-lg-4 col-xl-3">
+                            {/* Sidebar - Desktop visible, Mobile sliding */}
+                            <div className={`sidebar-wrapper ${isMobileMenuOpen ? 'open' : ''} col-lg-4 col-xl-3`}>
+                                {/* Close button for mobile */}
+                                <div className="sidebar-close d-lg-none mb-3 mt-3">
+                                    <button className="btn btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>×</button>
+                                </div>
                                 <aside className="tu-asider-holder">
                                     <div className="tu-asidebox">
                                         <figure>
-                                            <img
-                                                src={avatar ? avatar.url : "images/profile/img-01.jpg"}
-                                                alt="image-description"
-                                            />
+                                            <img src={avatar ? avatar.url : 'images/profile/img-01.jpg'} alt="image-description" />
                                             <figcaption className="tu-uploadimage">
-                                                <input
-                                                    type="file"
-                                                    id="dropbox"
-                                                    name="dropbox"
-                                                    onChange={(e) => handleImageChange(e)}
-                                                />
-                                                <label for="dropbox"><i className="icon icon-camera"></i></label>
+                                                <input type="file" id="dropbox" name="dropbox" onChange={handleImageChange} />
+                                                <label htmlFor="dropbox"><i className="icon icon-camera"></i></label>
                                             </figcaption>
                                         </figure>
                                         <div className="tu-uploadinfo text-center">
-                                            <h6>
-                                                {t.profilePhotoSize}
-                                            </h6>
+                                            <h6>{t.profilePhotoSize}</h6>
                                             <div className="tu-uploadimgbtn">
-                                                <input type="file" name="file" className="tu-primbtn" id="uploadimg" />
+                                                <input type="file" name="file" className="tu-primbtn d-none" id="uploadimg" />
                                                 <label
-                                                    // for="uploadimg"
                                                     className="tu-primbtn"
-                                                    style={{ cursor: "pointer" }}
+                                                    style={{ cursor: 'pointer' }}
                                                     onClick={() => !isAvatarLoading && handleUpload()}
                                                 >
                                                     {isAvatarLoading ? t.uploading : t.uploadPhoto}
@@ -111,80 +123,73 @@ const DashboardPage = () => {
                                             </div>
                                         </div>
                                     </div>
+
+
+
                                     <ul className="tu-side-tabs">
-                                        <li className="nav-item ">
-                                            <a
-                                                className={state === "personal" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("personal")}
-                                            >
+                                        <li className="nav-item">
+                                            <a className={state === 'personal' ? 'active nav-link' : 'nav-link'} onClick={() => setState('personal')}>
                                                 <i className="icon icon-user"></i><span>{t.personalDetails}</span>
                                             </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "contact" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("contact")}
-                                            ><i className="icon icon-phone"></i><span>{t.contactDetails}</span></a>
+                                            <a className={state === 'contact' ? 'active nav-link' : 'nav-link'} onClick={() => setState('contact')}>
+                                                <i className="icon icon-phone"></i><span>{t.contactDetails}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "education" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("education")}><i className="icon icon-book"></i><span>{t.educationCap}</span></a>
+                                            <a className={state === 'education' ? 'active nav-link' : 'nav-link'} onClick={() => setState('education')}>
+                                                <i className="icon icon-book"></i><span>{t.educationCap}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "subject" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("subject")}
-                                            ><i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? t.subjectICanTeach : t.subjectINeedLearn}</span></a>
+                                            <a className={state === 'subject' ? 'active nav-link' : 'nav-link'} onClick={() => setState('subject')}>
+                                                <i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? t.subjectICanTeach : t.subjectINeedLearn}</span>
+                                            </a>
                                         </li>
-                                        {clientData?.isTutorAccount && <li className="nav-item">
-                                            <a
-                                                className={state === "document" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("document")}
-                                            ><i className="icon icon-file"></i><span>{t.uploadDocument}</span></a>
-                                        </li>}
+                                        {clientData?.isTutorAccount && (
+                                            <li className="nav-item">
+                                                <a className={state === 'document' ? 'active nav-link' : 'nav-link'} onClick={() => setState('document')}>
+                                                    <i className="icon icon-file"></i><span>{t.uploadDocument}</span>
+                                                </a>
+                                            </li>
+                                        )}
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "whoBooked" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("whoBooked")}
-                                            ><i className="icon icon-user"></i><span>{t.whoBookedMe}</span></a>
-                                        </li>
-                                        <li className="nav-item">
-                                            <a
-                                                className={state === "myBooking" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("myBooking")}
-                                            ><i className="icon icon-calendar"></i><span>{t.myBookingStatus}</span></a>
+                                            <a className={state === 'whoBooked' ? 'active nav-link' : 'nav-link'} onClick={() => setState('whoBooked')}>
+                                                <i className="icon icon-user"></i><span>{t.whoBookedMe}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "myConnections" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("myConnections")}
-                                            ><i className="icon icon-user-plus"></i><span>{t.myConnections}</span></a>
+                                            <a className={state === 'myBooking' ? 'active nav-link' : 'nav-link'} onClick={() => setState('myBooking')}>
+                                                <i className="icon icon-calendar"></i><span>{t.myBookingStatus}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "wishList" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("wishList")}
-                                            ><i className="icon icon-heart"></i><span>{t.mySavingsList}</span></a>
+                                            <a className={state === 'myConnections' ? 'active nav-link' : 'nav-link'} onClick={() => setState('myConnections')}>
+                                                <i className="icon icon-user-plus"></i><span>{t.myConnections}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "settings" ? "active nav-link" : "nav-link"}
-                                                onClick={() => setState("settings")}
-                                            ><i className="icon icon-settings"></i><span>{t.settings}</span></a>
+                                            <a className={state === 'wishList' ? 'active nav-link' : 'nav-link'} onClick={() => setState('wishList')}>
+                                                <i className="icon icon-heart"></i><span>{t.mySavingsList}</span>
+                                            </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a
-                                                className={state === "myConnections" ? "active nav-link" : "nav-link"}
-                                                onClick={() => handleLogout()}
-                                            ><i className="icon icon-log-out"></i><span>{t.logout}</span></a>
+                                            <a className={state === 'settings' ? 'active nav-link' : 'nav-link'} onClick={() => setState('settings')}>
+                                                <i className="icon icon-settings"></i><span>{t.settings}</span>
+                                            </a>
                                         </li>
-                                        {/* <li className="nav-item">
-                                            <a ="profile-setting-e.html" className="nav-link"><i className="icon icon-image"></i><span>Media gallery</span></a>
-                                        </li> */}
+                                        <li className="nav-item">
+                                            <a className="nav-link" onClick={() => handleLogout()}>
+                                                <i className="icon icon-log-out"></i><span>{t.logout}</span>
+                                            </a>
+                                        </li>
                                     </ul>
                                 </aside>
                             </div>
+
+
+
                             {state === "personal" && <PersonalDetails clientData={clientData} />}
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}

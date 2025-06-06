@@ -7,6 +7,7 @@ import '../../public/css/fontawesome/fontawesome.css'
 import '../../public/css/select2.min.css'
 import '../../public/css/splide.min.css'
 import '../../public/css/main.css'
+import '../../public/css/custom.css' //my design for this project
 
 import { Providers } from "./Providers";
 import BootstrapClient from "../../public/BootstrapClient";
