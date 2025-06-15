@@ -85,7 +85,6 @@ const PersonalDetails = ({ clientData }) => {
                     </div>
                 </div>
 
-
                 <div className="tu-profilewrapper">
                     <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
                         <div className="tu-boxarea">
@@ -134,38 +133,180 @@ const PersonalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">{t.yourTitle}</label>
-                                                    <div className="tu-placeholderholder">
-                                                        <input
-                                                            type="text"
-                                                            className="form-control"
-                                                            required=""
-                                                            placeholder={isTutorAccount ? "Ex: BSC in MATH" : "Ex: HSC in Science"}
-                                                            value={tagline}
-                                                            onChange={(e) => handleInput("tagline", e.target.value)}
-                                                        />
-                                                        <div className="tu-placeholder">
-                                                            <span>{isTutorAccount ? t.bscInMath : t.hscInScience}</span>
+                                                    <label className="tu-label">{"Email Address"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-mail"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="email"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter email address"
+                                                                value={""}
+                                                                onChange={(e) => setEmail(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.enterEmailAddress}</span>
+                                                                {/* <em>*</em> */}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">{t.monthlyFee}</label>
-                                                    <div className="tu-placeholderholder">
-                                                        <input
-                                                            type="number"
-                                                            className="form-control"
-                                                            required=""
-                                                            placeholder="Your monthly fee"
-                                                            value={hourlyFee}
-                                                            onChange={(e) => handleInput("hourlyFee", e.target.value)}
-                                                        />
-                                                        <div className="tu-placeholder">
-                                                            <span>{t.yourMonthlyFee}</span>
-                                                            <em>*</em>
+                                                    <label className="tu-label">{t.phoneNumber}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-phone-call"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter phone number"
+                                                                value={""}
+                                                                onChange={(e) => setPhone(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.hideMobile}</span>
+                                                                {/* <em>*</em> */}
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Additional Phone Number(Optional)"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-phone-call"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter phone number"
+                                                                value={""}
+                                                                // value={phone}
+                                                                onChange={(e) => setPhone(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.hideMobile}</span>
+                                                                {/* <em>*</em> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Whatsapp Number(Optional)"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="fa-brands fa-whatsapp"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="number"
+                                                                className="form-control"
+                                                                placeholder="Enter whatsapp number"
+                                                                value={""}
+                                                                // value={whatsapp}
+                                                                onChange={(e) => setWhatsapp(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.enterWhatsappNumber}</span>
+                                                                {/* <em>*</em> */}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{"Gender"}</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select Gender"
+                                                            data-placeholderinput="Select Gender"
+                                                            className="form-control"
+                                                            required
+                                                            value={divisionId}
+                                                            onChange={(e) => {
+                                                                handleInput("divisionId", e.target.value)
+                                                                handleInput("divisionInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={"Select gender"}></option>
+                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.divisionName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{"Religion"}</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select religion"
+                                                            data-placeholderinput="Select religion"
+                                                            className="form-control"
+                                                            required
+                                                            value={districtId}
+                                                            onChange={(e) => {
+                                                                handleInput("districtId", e.target.value)
+                                                                handleInput("districtInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={"Select religion"}></option>
+                                                            {districtList?.length > 0 && districtList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.districtName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{"Language"}</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select language"
+                                                            data-placeholderinput="Select language"
+                                                            className="form-control"
+                                                            required
+                                                            value={subDistrictId}
+                                                            onChange={(e) => {
+                                                                handleInput("subDistrictId", e.target.value)
+                                                                handleInput("subDistrictInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={"Select language"}></option>
+                                                            {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {/* location */}
+                <div className="tu-profilewrapper" style={{ marginTop: "24px" }}>
+                    <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
+                        <div className="tu-boxarea">
+                            <div className="tu-boxsm">
+                                <div className="tu-boxsmtitle">
+                                    <h4>{"Your Current Location"}</h4>
+                                </div>
+                            </div>
+                            <div className="tu-box">
+                                <form className="tu-themeform tu-dhbform">
+                                    <fieldset>
+                                        <div className="tu-themeform__wrap">
+                                            <div className="form-group-wrap">
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{t.division}</label>
                                                     <div className="tu-select">
@@ -283,90 +424,303 @@ const PersonalDetails = ({ clientData }) => {
                                                         </div>
                                                     </div>
                                                 </div>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                            <div className="tu-boxsm">
+                                <div className="tu-boxsmtitle">
+                                    <h4>{"Your Permanent Location"}</h4>
+                                </div>
+                            </div>
+                            <div className="tu-box">
+                                <form className="tu-themeform tu-dhbform">
+                                    <fieldset>
+                                        <div className="tu-themeform__wrap">
+                                            <div className="form-group-wrap">
                                                 <div className="form-group form-group-3half">
-                                                    <label className="tu-label">{t.gender}</label>
+                                                    <label className="tu-label">{t.division}</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select Division"
+                                                            data-placeholderinput="Select Division"
+                                                            className="form-control"
+                                                            required
+                                                            value={divisionId}
+                                                            onChange={(e) => {
+                                                                handleInput("divisionId", e.target.value)
+                                                                handleInput("divisionInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={t.selectDivision}></option>
+                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.divisionName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{t.district}</label>
                                                     <div className="tu-select">
                                                         <select
                                                             data-placeholder="Select city"
                                                             data-placeholderinput="Select city"
                                                             className="form-control"
                                                             required
-                                                            value={gender}
+                                                            value={districtId}
                                                             onChange={(e) => {
-                                                                handleInput("gender", e.target.value)
+                                                                handleInput("districtId", e.target.value)
+                                                                handleInput("districtInfo", e.target.value)
                                                             }}
                                                         >
-                                                            <option label="Select Gender"></option>
-                                                            <option value="Male">{t.male}</option>
-                                                            <option value="Female">{t.female}</option>
-                                                            <option value="Other">{t.other}</option>
+                                                            <option label={t.selectDistrict}></option>
+                                                            {districtList?.length > 0 && districtList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.districtName}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
                                                 </div>
-                                                {/* <div className="form-group">
-                                                    <label className="tu-label">Languages</label>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{t.subDistrict}</label>
                                                     <div className="tu-select">
-                                                        <select id="selectv5" data-placeholder="Select languages you know" className="form-control" required>
-                                                            <option label="Select languages you know"></option>
-                                                            <option value="Belize">Belize</option>
-                                                            <option value="Benin">Benin</option>
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={subDistrictId}
+                                                            onChange={(e) => {
+                                                                handleInput("subDistrictId", e.target.value)
+                                                                handleInput("subDistrictInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={t.selectSubDistrict}></option>
+                                                            {subDistrictList?.length > 0 && subDistrictList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.subDistrictName}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
-                                                    <ul className="tu-labels">
-                                                        <li><span>Arabic <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>English <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Chinese <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Hebrew <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>Spanish <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                        <li><span>German <a ="javascript:void(0);"><i className="icon icon-x"></i></a></span></li>
-                                                    </ul>
-                                                </div> */}
-                                                <div className="form-group">
-                                                    <label className="tu-label">{isTutorAccount ? t.iCanTeachOn : t.iNeedTutorOn}</label>
-                                                    <ul className="tu-status-filter">
-                                                        <li>
-                                                            <div className="tu-status-contnent">
-                                                                <div className="tu-check tu-checksm">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id="home"
-                                                                        name="expcheck"
-                                                                        checked={isTeachingLocationTutorHome}
-                                                                        onChange={() => handleInput("isTeachingLocationTutorHome", !isTeachingLocationTutorHome)}
-                                                                    />
-                                                                    <label for="home">{t.myHome}</label>
-                                                                </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{t.area}</label>
+                                                    <div className="tu-select">
+                                                        <select
+                                                            data-placeholder="Select city"
+                                                            data-placeholderinput="Select city"
+                                                            className="form-control"
+                                                            required
+                                                            value={areaId}
+                                                            onChange={(e) => {
+                                                                handleInput("areaId", e.target.value)
+                                                                handleInput("areaInfo", e.target.value)
+                                                            }}
+                                                        >
+                                                            <option label={t.selectArea}></option>
+                                                            {areaList?.length > 0 && areaList.map((item, index) => (
+                                                                <option key={index} value={item._id}>{item.areaName}</option>
+                                                            ))}
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{t.detailsAddress}</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required
+                                                            placeholder="Enter zipcode"
+                                                            value={address}
+                                                            onChange={(e) => handleInput("address", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>{t.detailsAddress}</span>
+                                                            {/* <em>*</em> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-3half">
+                                                    <label className="tu-label">{t.zipcode}</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="number"
+                                                            className="form-control"
+                                                            required placeholder="Enter zipcode"
+                                                            value={zipCode}
+                                                            onChange={(e) => handleInput("zipCode", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>{t.enterZipCode}</span>
+                                                            {/* <em>*</em> */}
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {/* parental info */}
+                <div className="tu-profilewrapper" style={{ marginTop: "24px" }}>
+                    <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
+                        <div className="tu-boxarea">
+                            <div className="tu-boxsm">
+                                <div className="tu-boxsmtitle">
+                                    <h4>{"Personal Info"}</h4>
+                                </div>
+                            </div>
+                            <div className="tu-box">
+                                <form className="tu-themeform tu-dhbform">
+                                    <fieldset>
+                                        <div className="tu-themeform__wrap">
+                                            <div className="form-group-wrap">
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Fathers name"}</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your father name"
+                                                            value={firstName}
+                                                            onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>{"Your father name"}</span>
+                                                            <em>*</em>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Father Phone Number"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-phone-call"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter phone number"
+                                                                value={""}
+                                                                onChange={(e) => setPhone(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.hideMobile}</span>
+                                                                {/* <em>*</em> */}
                                                             </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className="tu-status-contnent">
-                                                                <div className="tu-check tu-checksm">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id="home1"
-                                                                        name="expcheck"
-                                                                        checked={isTeachingLocationStudentHome}
-                                                                        onChange={() => handleInput("isTeachingLocationStudentHome", !isTeachingLocationStudentHome)}
-                                                                    />
-                                                                    <label for="home1">{isTutorAccount ? t.student : t.tutor} {t.home}</label>
-                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Mother Name(Optional)"}</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your last name"
+                                                            value={lastName}
+                                                            onChange={(e) => handleInput("lastName", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>{"Your mother name"}</span>
+                                                            <em>*</em>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Mother Phone Number(Optional)"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-phone-call"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter phone number"
+                                                                value={""}
+                                                                onChange={(e) => setPhone(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.hideMobile}</span>
+                                                                {/* <em>*</em> */}
                                                             </div>
-                                                        </li>
-                                                        <li>
-                                                            <div className="tu-status-contnent">
-                                                                <div className="tu-check tu-checksm">
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id="online"
-                                                                        name="expcheck"
-                                                                        checked={isTeachingLocationOnline}
-                                                                        onChange={() => handleInput("isTeachingLocationOnline", !isTeachingLocationOnline)}
-                                                                    />
-                                                                    <label for="online">{t.online}</label>
-                                                                </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                {/* extra info */}
+                <div className="tu-profilewrapper" style={{ marginTop: "24px" }}>
+                    <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
+                        <div className="tu-boxarea">
+                            <div className="tu-boxsm">
+                                <div className="tu-boxsmtitle">
+                                    <h4>{"Extra Info"}</h4>
+                                </div>
+                            </div>
+                            <div className="tu-box">
+                                <form className="tu-themeform tu-dhbform">
+                                    <fieldset>
+                                        <div className="tu-themeform__wrap">
+                                            <div className="form-group-wrap">
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Local Guardian Number(On Emergency"}</label>
+                                                    <div className="tu-inputicon">
+                                                        <div className="tu-facebookv3">
+                                                            <i className="icon icon-phone-call"></i>
+                                                        </div>
+                                                        <div className="tu-placeholderholder">
+                                                            <input
+                                                                type="text"
+                                                                className="form-control"
+                                                                required=""
+                                                                placeholder="Enter phone number"
+                                                                value={""}
+                                                                onChange={(e) => setPhone(e.target.value)}
+                                                            />
+                                                            <div className="tu-placeholder">
+                                                                <span>{t.hideMobile}</span>
+                                                                {/* <em>*</em> */}
                                                             </div>
-                                                        </li>
-                                                    </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group form-group-half">
+                                                    <label className="tu-label">{"Guardian Relationship"}</label>
+                                                    <div className="tu-placeholderholder">
+                                                        <input
+                                                            type="text"
+                                                            className="form-control"
+                                                            required=""
+                                                            placeholder="Your last name"
+                                                            value={lastName}
+                                                            onChange={(e) => handleInput("lastName", e.target.value)}
+                                                        />
+                                                        <div className="tu-placeholder">
+                                                            <span>{"enter guardian relationship"}</span>
+                                                            <em>*</em>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="tu-label">{t.aBriefIntro}</label>
@@ -379,7 +733,7 @@ const PersonalDetails = ({ clientData }) => {
                                                         // onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                         ></textarea>
                                                         <div className="tu-placeholder">
-                                                            <span>{t.enterDescription}</span>
+                                                            <span>{"Write about yourself..."}</span>
                                                         </div>
                                                     </div>
                                                     <div className="tu-input-counter">
@@ -397,14 +751,15 @@ const PersonalDetails = ({ clientData }) => {
                         </div>
                     </div>
                     <div className="tu-btnarea-two">
-                        <span>{t.saveUpdate}</span>
                         <a
 
-                            className="tu-primbtn-lg tu-primbtn-orange"
+                            className="tu-primbtn-lg my-btn"
                             onClick={() => !isPersonalLoading && handleSubmit()}
                         >
-                            {isPersonalLoading ? t.saving : t.saveAndUpdate}
+                            {"Next"}
+                            <i class="fa-solid fa-arrow-right"></i>
                         </a>
+
                     </div>
                 </div>
             </div>

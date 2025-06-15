@@ -47,9 +47,127 @@
   font-weight: 600;
   font-size: 1rem;
 }
+.my-previous-btn{
+  background-color: #fff;
+  margin-right: 24px;
+  color: #000;
+  border: 1px solid #ccc;
+}
+.my-previous-btn i{
+   margin-right: 10px;
+  font-size: 16px;
+}
+.my-btn{
+  background-color: #111533;
+}
+.my-btn i{
+  margin-left: 10px;
+  font-size: 16px;
+}
+.tuition-tabs-container {
+  background-color: #e6eaff; /* light blueish bg for container */
+  border-radius: 10px;
+}
+
+.tuition-tabs {
+  scrollbar-width: none; /* Firefox */
+}
+.tuition-tabs::-webkit-scrollbar {
+  display: none; /* Chrome, Safari */
+}
+
+.tab-btn {
+  min-width: 150px;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.tab-btn.active {
+  background-color: #0d0c22;
+  color: white;
+}
+
+.tab-btn.white {
+  background-color: white;
+  color: #0d0c22;
+  border: 1px solid #ccc;
+}
+
+.tab-btn.dim {
+  background-color: #f3f3f3;
+  color: #999;
+  border: 1px solid #ddd;
+}
+
+.tab-btn:hover:not(.active) {
+  box-shadow: 0 0 0 2px #ccc;
+}
+.tutoring-style{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0px;
+}
+.tutoring-style li {
+  padding: 4px;
+  max-width:183px;
+}
+.demo-check {
+  display: none;
+}
+
+.demo-check-label {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.custom-checkmark {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  font-size: 16px;
+  transition: all 0.2s ease;
+}
+
+/* Default - unchecked state */
+.demo-check + .custom-checkmark {
+  background-color: white;
+  border: 1px solid #ccc;
+  color: transparent; /* Hide icon */
+}
+
+/* Checked state */
+.demo-check:checked + .custom-checkmark {
+  background-color: #22C55E;
+  border: none;
+  color: white;
+}
+
+.demo-check:checked + .custom-checkmark::before {
+  content: "\f00c";
+}
+
+/* Responsive scroll hint - shows 2.5 tabs */
+@media (max-width: 768px) {
+  .tab-btn {
+    min-width: 60%;
+  }
+}
 
 /* MOBILE DISPLAY */
-@media (max-width: 767.98px) {
+@media (max-width: 768px) {
     .tu-main-section {
         padding-top: 16px;
     }
@@ -109,6 +227,9 @@
   background-color: #000;
   color: #fff;
 }
+.tutoring-style li {
+        max-width:100%;
+    }
 }
 
 .sidebar-wrapper {

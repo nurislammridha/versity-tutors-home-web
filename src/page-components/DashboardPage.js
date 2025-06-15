@@ -3,6 +3,7 @@ import ContactDetails from '@/components/ContactDetails'
 import DashboardHeader from '@/components/DashboardHeader'
 import UploadDocument from '@/components/Document'
 import Education from '@/components/Education'
+import EducationalDetails from '@/components/EducationalDetails'
 import MyBookingStatus from '@/components/MyBookingStatus'
 import MyConnections from '@/components/MyConnections'
 import PersonalDetails from '@/components/PersonalDetails'
@@ -10,6 +11,7 @@ import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
 import Settings from '@/components/Settings'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
+import TuitionInfo from '@/components/TuitionInfo'
 import WhoBookedMe from '@/components/WhoBookedMe'
 import WishList from '@/components/WishList'
 import { useLanguage } from '@/context/LanguageContext'
@@ -190,7 +192,9 @@ const DashboardPage = () => {
 
 
 
-                            {state === "personal" && <PersonalDetails clientData={clientData} />}
+                            {/* {state === "personal" && <PersonalDetails clientData={clientData} />} */}
+                            {/* {state === "personal" && <EducationalDetails clientData={clientData} />} */}
+                            {state === "personal" && <TuitionInfo clientData={clientData} />}
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}
                             {state === "subject" && <SubjectICanTeach clientData={clientData} />}
