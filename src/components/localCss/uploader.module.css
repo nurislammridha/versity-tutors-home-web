@@ -1,0 +1,91 @@
+.uploadCard {
+  border: 1px dashed #dee2e6;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f8f9fa;
+  display: flex;
+  flex-direction: column;
+  min-height: 240px;
+}
+
+.cardTop {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+    position: relative;
+  transition: all 0.3s ease;
+}
+
+.cardBottom {
+  background-color: #fff;
+  padding: 0.75rem;
+  border-top: 1px solid #dee2e6;
+}
+.cardBottom p:first-child {
+    font-weight: 600;
+    font-size: 14px;
+}
+/* Progress Circle */
+.circularChart {
+  width: 70px;
+  height: 70px;
+}
+
+.circleBg {
+  fill: none;
+  stroke: #eee;
+  stroke-width: 3.8;
+}
+
+.circle {
+  fill: none;
+  stroke: #4e79ff;
+  stroke-width: 2.8;
+  stroke-linecap: round;
+  transition: stroke-dasharray 0.3s ease;
+}
+
+.percentage {
+  fill: #4e79ff;
+  font-family: sans-serif;
+  font-size: 0.5em;
+  text-anchor: middle;
+}
+/* Hover Overlay */
+.hoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(3px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: 0.3s ease;
+  z-index: 1;
+}
+
+.cardTop:hover .hoverOverlay {
+  opacity: 1;
+}
+
+.hoverIcon {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  background: rgba(0,0,0,0.5);
+  padding: 6px;
+  border-radius: 50%;
+  transition: 0.3s;
+}
+
+.hoverIcon:hover {
+  background: rgba(0,0,0,0.8);
+}

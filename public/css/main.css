@@ -7844,8 +7844,10 @@ input.tu-showplaceholder::placeholder {
   }
 
   .tu-btnarea-two {
-    flex-direction: column;
-    align-items: flex-end;
+     flex-direction: row !important;
+        /* // align-items: flex-end; */
+        align-items: center;
+        justify-content: space-between !important;
   }
   .tu-btnarea-two span {
     padding-right: 0;
