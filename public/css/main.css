@@ -5624,7 +5624,7 @@ input.tu-showplaceholder::placeholder {
   position: absolute;
   background-color: #6A307D;
 }
-.tu-side-tabs .nav-item .nav-link > i {
+.tu-side-tabs .nav-item .nav-link  i {
   font-size: 18px;
   padding-right: 10px;
   color: #999999;
@@ -5632,8 +5632,10 @@ input.tu-showplaceholder::placeholder {
 .tu-side-tabs .nav-item .nav-link > span {
   display: inline-block;
 }
+.tu-side-tabs .nav-item .nav-link:hover i, .tu-side-tabs .nav-item .nav-link.active i {color: #fff !important;}
 .tu-side-tabs .nav-item .nav-link:hover, .tu-side-tabs .nav-item .nav-link.active {
-  background: #FCFCFC;
+  background: #111533;
+  color: #ffffff;
 }
 .tu-side-tabs .nav-item .nav-link:hover::before, .tu-side-tabs .nav-item .nav-link.active::before {
   height: 100%;

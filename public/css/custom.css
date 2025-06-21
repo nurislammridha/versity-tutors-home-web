@@ -27,7 +27,7 @@
 }
 
 .tab-card.active {
-  background-color: #000;
+  background-color: #111533 !important;
   color: #fff;
 }
 
@@ -45,7 +45,7 @@
 
 .tab-label {
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 19px;
 }
 .my-previous-btn{
   background-color: #fff;
@@ -65,7 +65,7 @@
   font-size: 16px;
 }
 .tuition-tabs-container {
-  background-color: #e6eaff; /* light blueish bg for container */
+  background-color:#262A49; /* light blueish bg for container */
   border-radius: 10px;
 }
 
@@ -77,7 +77,7 @@
 }
 
 .tab-btn {
-  min-width: 150px;
+  min-width: 147px;
   padding: 0.5rem 1rem;
   border: none;
   border-radius: 0.5rem;
@@ -85,23 +85,24 @@
   font-weight: 500;
   transition: all 0.3s ease;
   flex-shrink: 0;
+  font-size:16px !important;
 }
 
 .tab-btn.active {
-  background-color: #0d0c22;
+  background-color: #111533 !important;
   color: white;
 }
 
 .tab-btn.white {
   background-color: white;
   color: #0d0c22;
-  border: 1px solid #ccc;
+  border: 1px solid #323A76;
 }
 
 .tab-btn.dim {
-  background-color: #f3f3f3;
-  color: #999;
-  border: 1px solid #ddd;
+  background-color: #F7F8FC;
+  color: #999999;
+  border: 1px solid #F7F8FC;
 }
 
 .tab-btn:hover:not(.active) {
@@ -158,7 +159,40 @@
 .demo-check:checked + .custom-checkmark::before {
   content: "\f00c";
 }
-
+.dash-badge{
+  background: #262A49;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px !important;
+}
+.dash-copy img{
+  width: 16px;
+  height: 16px;
+  margin-left: 8px;
+}
+.dash-copy{
+  height: 26px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px dashed #E1E1E1;
+  color:#1C1C1C;
+font-size: 14px;
+cursor: pointer;
+  padding: 0 8px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+.profile-text{
+ font-weight: 500;
+ font-size: 16px;
+ text-align: center;
+  color: #1C1C1C;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
 /* Responsive scroll hint - shows 2.5 tabs */
 @media (max-width: 768px) {
   .tab-btn {
@@ -221,11 +255,11 @@
   }
   .tab-card.active{
   color: #000;
-  background-color: #fff;
+  background-color: #fff !important;
 }
   .tab-card.active .mo-card{
-  background-color: #000;
-  color: #fff;
+  background-color: #111533 !important;
+  color: #fff !important;
 }
 .tutoring-style li {
         max-width:100%;

@@ -77,8 +77,8 @@ const StudentTuitionInfo = ({ clientData }) => {
                         <button class="tab-btn dim">+ Add Student 3</button>
                         <button class="tab-btn dim">+ Add Student 4</button>
                         <button class="tab-btn dim">+ Add Student 5</button>
-                        <button class="tab-btn dim">+ Add Student 5</button>
-                        <button class="tab-btn dim">+ Add Student 5</button>
+                        {/* <button class="tab-btn dim">+ Add Student 5</button>
+                        <button class="tab-btn dim">+ Add Student 5</button> */}
 
                     </div>
                 </div>

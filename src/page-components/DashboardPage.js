@@ -117,14 +117,18 @@ const DashboardPage = () => {
                                         <div className="tu-uploadinfo text-center">
                                             <h6>{t.profilePhotoSize}</h6>
                                             <div className="tu-uploadimgbtn">
+
                                                 <input type="file" name="file" className="tu-primbtn d-none" id="uploadimg" />
-                                                <label
+                                                <p className='profile-text'>Imran Hossain (TS-114488)</p>
+                                                <label className='dash-copy'>Copy ID Link<img src='/images/icon.png' /></label>
+                                                <label className='dash-copy mt-3'>Copy Bio Data Link<img src='/images/icon.png' /></label>
+                                                {/* <label
                                                     className="tu-primbtn"
                                                     style={{ cursor: 'pointer' }}
                                                     onClick={() => !isAvatarLoading && handleUpload()}
                                                 >
                                                     {isAvatarLoading ? t.uploading : t.uploadPhoto}
-                                                </label>
+                                                </label> */}
                                             </div>
                                         </div>
                                     </div>
@@ -134,14 +138,23 @@ const DashboardPage = () => {
                                     <ul className="tu-side-tabs">
                                         <li className="nav-item">
                                             <a className={state === 'personal' ? 'active nav-link' : 'nav-link'} onClick={() => setState('personal')}>
-                                                <i className="icon icon-user"></i><span>{t.personalDetails}</span>
+                                                {/* <i className="icon icon-user"></i><span>{t.personalDetails}</span> */}
+                                                <i className="icon icon-user"></i><span>{"Update Profile"} </span>
                                             </a>
                                         </li>
                                         <li className="nav-item">
-                                            <a className={state === 'contact' ? 'active nav-link' : 'nav-link'} onClick={() => setState('contact')}>
-                                                <i className="icon icon-phone"></i><span>{t.contactDetails}</span>
+                                            <a
+                                                className={state === 'contact' ? 'active nav-link d-flex justify-content-between align-items-center' : 'nav-link d-flex justify-content-between align-items-center'}
+                                                onClick={() => setState('contact')}
+                                            >
+                                                <span className="d-flex align-items-center">
+                                                    <i className="icon icon-phone"></i>
+                                                    <span>{t.contactDetails}</span>
+                                                </span>
+                                                <span className='dash-badge'>Done</span>
                                             </a>
                                         </li>
+
                                         <li className="nav-item">
                                             <a className={state === 'education' ? 'active nav-link' : 'nav-link'} onClick={() => setState('education')}>
                                                 <i className="icon icon-book"></i><span>{t.educationCap}</span>
@@ -198,9 +211,9 @@ const DashboardPage = () => {
                             {/* {state === "personal" && <PersonalDetails clientData={clientData} />} */}
                             {/* {state === "personal" && <EducationalDetails clientData={clientData} />} */}
                             {/* {state === "personal" && <TuitionInfo clientData={clientData} />} */}
-                            {/* {state === "personal" && <DocumentInfo clientData={clientData} />} */}
+                            {state === "personal" && <DocumentInfo clientData={clientData} />}
                             {/* {state === "personal" && <StudentPersonalDetails clientData={clientData} />} */}
-                            {state === "personal" && <StudentTuitionInfo clientData={clientData} />}
+                            {/* {state === "personal" && <StudentTuitionInfo clientData={clientData} />} */}
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}
                             {state === "subject" && <SubjectICanTeach clientData={clientData} />}

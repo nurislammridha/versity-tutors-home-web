@@ -1,16 +1,18 @@
 .uploadCard {
-  border: 1px dashed #dee2e6;
-  border-radius: 8px;
+  border: 1px dashed #262A49;
+  border-radius: 4px;
   overflow: hidden;
-  background-color: #f8f9fa;
+  background-color: #ffffff;
   display: flex;
   flex-direction: column;
   min-height: 240px;
+  padding: 8px;
 }
 
 .cardTop {
-  background-color: #f1f1f1;
-  padding: 1rem;
+  border-radius: 4px;
+  background-color: #F7F8FC;
+  /* padding: 1rem; */
   flex: 1;
   display: flex;
   justify-content: center;
@@ -20,9 +22,10 @@
 }
 
 .cardBottom {
+  margin-top: 8px;
   background-color: #fff;
-  padding: 0.75rem;
-  border-top: 1px solid #dee2e6;
+  /* padding: 0.75rem; */
+  /* border-top: 1px solid #dee2e6; */
 }
 .cardBottom p:first-child {
     font-weight: 600;

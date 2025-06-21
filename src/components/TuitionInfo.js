@@ -87,14 +87,14 @@ const TuitionInfo = ({ clientData }) => {
 
                 {/* tuition info tabs */}
                 <div class="tuition-tabs-container px-3 py-2">
-                    <div class="tuition-tabs d-flex gap-2 overflow-auto flex-nowrap">
+                    <div class="tuition-tabs d-flex gap-3 overflow-auto flex-nowrap">
                         <button class="tab-btn active">Tuition Info 1</button>
                         <button class="tab-btn white">+ Add Tuition 2</button>
                         <button class="tab-btn dim">+ Add Tuition 3</button>
                         <button class="tab-btn dim">+ Add Tuition 4</button>
                         <button class="tab-btn dim">+ Add Tuition 5</button>
-                        <button class="tab-btn dim">+ Add Tuition 5</button>
-                        <button class="tab-btn dim">+ Add Tuition 5</button>
+                        {/* <button class="tab-btn dim">+ Add Tuition 5</button>
+                        <button class="tab-btn dim">+ Add Tuition 5</button> */}
 
                     </div>
                 </div>
