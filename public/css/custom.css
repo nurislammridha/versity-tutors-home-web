@@ -193,6 +193,14 @@ cursor: pointer;
   margin-top: 16px;
   margin-bottom: 16px;
 }
+/* styles/globals.css */
+.crop-container .reactEasyCrop_CropArea {
+  border-radius: 50% !important;
+}
+.reactEasyCrop_CropArea {
+  border-radius: 50% !important;
+}
+
 /* Responsive scroll hint - shows 2.5 tabs */
 @media (max-width: 768px) {
   .tab-btn {

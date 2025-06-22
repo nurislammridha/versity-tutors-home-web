@@ -10,6 +10,7 @@ import MyConnections from '@/components/MyConnections'
 import PersonalDetails from '@/components/PersonalDetails'
 import PrimaFooter from '@/components/PrimaFooter'
 import PrimaHeader from '@/components/PrimaHeader'
+import ProfileImageUploader from '@/components/ProfileImageUploader'
 import Settings from '@/components/Settings'
 import StudentPersonalDetails from '@/components/StudentPersonalDetails'
 import StudentTuitionInfo from '@/components/StudentTuitionInfo'
@@ -106,32 +107,7 @@ const DashboardPage = () => {
                                     <button className="btn btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>×</button>
                                 </div>
                                 <aside className="tu-asider-holder">
-                                    <div className="tu-asidebox">
-                                        <figure>
-                                            <img src={avatar ? avatar.url : 'images/profile/img-01.jpg'} alt="image-description" />
-                                            <figcaption className="tu-uploadimage">
-                                                <input type="file" id="dropbox" name="dropbox" onChange={handleImageChange} />
-                                                <label htmlFor="dropbox"><i className="icon icon-camera"></i></label>
-                                            </figcaption>
-                                        </figure>
-                                        <div className="tu-uploadinfo text-center">
-                                            <h6>{t.profilePhotoSize}</h6>
-                                            <div className="tu-uploadimgbtn">
-
-                                                <input type="file" name="file" className="tu-primbtn d-none" id="uploadimg" />
-                                                <p className='profile-text'>Imran Hossain (TS-114488)</p>
-                                                <label className='dash-copy'>Copy ID Link<img src='/images/icon.png' /></label>
-                                                <label className='dash-copy mt-3'>Copy Bio Data Link<img src='/images/icon.png' /></label>
-                                                {/* <label
-                                                    className="tu-primbtn"
-                                                    style={{ cursor: 'pointer' }}
-                                                    onClick={() => !isAvatarLoading && handleUpload()}
-                                                >
-                                                    {isAvatarLoading ? t.uploading : t.uploadPhoto}
-                                                </label> */}
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <ProfileImageUploader />
 
 
 
