@@ -3,6 +3,7 @@ import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonal
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { convertToBanglaNumber } from '../../public/function/globalFunction'
+import Select from "react-select";
 
 const EducationalDetails = ({ clientData }) => {
     const { t, language } = useLanguage()
@@ -116,48 +117,28 @@ const EducationalDetails = ({ clientData }) => {
                                                     </div>
                                                 </div>
 
+
                                                 <div className="form-group form-group-half">
-                                                    <label className="tu-label">{"Medium"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select medium"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <label className="tu-label">Medium<em className="color-red"></em></label>
+                                                    <Select
+                                                        options={[{ label: "Select medium", value: "Select medium" }]}
+                                                        value={{ label: "Select medium", value: "Select medium" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select medium"
+                                                    />
                                                 </div>
+
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Group"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select group"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[{ label: "Select medium", value: "Select medium" }]}
+                                                        value={{ label: "Select group", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Session"}</label>
@@ -178,24 +159,17 @@ const EducationalDetails = ({ clientData }) => {
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Passing Year"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select religion"
-                                                            data-placeholderinput="Select religion"
-                                                            className="form-control"
-                                                            required
-                                                            value={districtId}
-                                                            onChange={(e) => {
-                                                                handleInput("districtId", e.target.value)
-                                                                handleInput("districtInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select Year"}></option>
-                                                            {districtList?.length > 0 && districtList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.districtName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Result"}</label>
@@ -258,46 +232,32 @@ const EducationalDetails = ({ clientData }) => {
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Medium"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select medium"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Group"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select group"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Session"}</label>
@@ -318,24 +278,17 @@ const EducationalDetails = ({ clientData }) => {
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Passing Year"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select religion"
-                                                            data-placeholderinput="Select religion"
-                                                            className="form-control"
-                                                            required
-                                                            value={districtId}
-                                                            onChange={(e) => {
-                                                                handleInput("districtId", e.target.value)
-                                                                handleInput("districtInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select Year"}></option>
-                                                            {districtList?.length > 0 && districtList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.districtName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-3half">
                                                     <label className="tu-label">{"Result"}</label>
@@ -380,110 +333,75 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group-wrap">
                                                 <div className="form-group form-group-full">
                                                     <label className="tu-label">{"Institute Type"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Write institute type"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-full">
                                                     <label className="tu-label">{"Institute Name"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Write institute name"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Study Type"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select study type"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Department"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select department"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Medium"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select medium"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Session"}</label>
@@ -504,24 +422,17 @@ const EducationalDetails = ({ clientData }) => {
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Passing Year"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select passing year"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"CGPA / Current CGPA"}</label>
@@ -565,110 +476,75 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group-wrap">
                                                 <div className="form-group form-group-full">
                                                     <label className="tu-label">{"Institute Type"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Write institute type"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select institute type", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-full">
                                                     <label className="tu-label">{"Institute Name"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Write institute name"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Study Type"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select study type"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
 
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Department"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select department"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Medium"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select medium"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Session"}</label>
@@ -689,24 +565,17 @@ const EducationalDetails = ({ clientData }) => {
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"Passing Year"}</label>
-                                                    <div className="tu-select">
-                                                        <select
-                                                            data-placeholder="Select Gender"
-                                                            data-placeholderinput="Select Gender"
-                                                            className="form-control"
-                                                            required
-                                                            value={divisionId}
-                                                            onChange={(e) => {
-                                                                handleInput("divisionId", e.target.value)
-                                                                handleInput("divisionInfo", e.target.value)
-                                                            }}
-                                                        >
-                                                            <option label={"Select passing year"}></option>
-                                                            {divisionList?.length > 0 && divisionList.map((item, index) => (
-                                                                <option key={index} value={item._id}>{item.divisionName}</option>
-                                                            ))}
-                                                        </select>
-                                                    </div>
+                                                    <Select
+                                                        options={[
+                                                            { label: "Select medium", value: "Select medium" },
+                                                            { label: "Another option", value: "another" },
+                                                        ]}
+                                                        value={{ label: "Select passing year", value: "" }}
+                                                        classNamePrefix="react-select"
+                                                        className="w-100"
+                                                        placeholder="Select group"
+                                                        menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
+                                                    />
                                                 </div>
                                                 <div className="form-group form-group-half">
                                                     <label className="tu-label">{"CGPA / Current CGPA"}</label>

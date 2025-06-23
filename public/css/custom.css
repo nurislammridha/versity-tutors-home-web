@@ -2,7 +2,38 @@
 .mb24 { margin-bottom: 24px; }
 .mr12 { margin-right: 12px; }
 .ml12 { margin-left: 12px; }
+.color-red{color: red;}
+.react-select__control {
+  height: 48px !important;
+  /* font-size: 14px; */
+}
 
+.react-select__placeholder {
+  color:#999999 !important;
+  font-weight: 600 !important;
+}
+.css-hlgwow{
+  padding: 0 !important;
+}
+.css-19bb58m {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.css-1cfo1cf {
+  padding: 0 !important;
+  margin: 0 !important;
+  padding-left: 19px !important;
+}
+.css-1dimb5e-singleValue{
+  margin-left: 19px !important;
+  color:#999999 !important;
+  font-weight: 600 !important;
+}
+.react-select__menu {
+  z-index: 9999 !important;
+  background-color: white !important;
+  position: absolute !important;
+}
 .tab-row {
   display: flex;
   justify-content: space-between;

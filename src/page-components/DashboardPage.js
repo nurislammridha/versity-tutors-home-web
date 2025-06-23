@@ -185,9 +185,9 @@ const DashboardPage = () => {
 
 
                             {/* {state === "personal" && <PersonalDetails clientData={clientData} />} */}
-                            {/* {state === "personal" && <EducationalDetails clientData={clientData} />} */}
+                            {state === "personal" && <EducationalDetails clientData={clientData} />}
                             {/* {state === "personal" && <TuitionInfo clientData={clientData} />} */}
-                            {state === "personal" && <DocumentInfo clientData={clientData} />}
+                            {/* {state === "personal" && <DocumentInfo clientData={clientData} />} */}
                             {/* {state === "personal" && <StudentPersonalDetails clientData={clientData} />} */}
                             {/* {state === "personal" && <StudentTuitionInfo clientData={clientData} />} */}
                             {state === "contact" && <ContactDetails clientData={clientData} />}
