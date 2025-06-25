@@ -25,35 +25,60 @@ const initialState = {
   personal: {
     firstName: "",
     lastName: "",
-    tagline: "",
-    hourlyFee: 0,
+    email: "",
+    phone: "",
+    additionalPhone: "",
+    whatsapp: "",
+    gender: "",
+    religion: "",
+    language: [],
+    //current location
+    division: "",
     divisionId: "",
     divisionInfo: "",
-    // division: "",
+    district: "",
     districtId: "",
     districtInfo: "",
-    // district: "",
+    subDistrict: "",
     subDistrictId: "",
     subDistrictInfo: "",
-    // subDistrict: "",
+    area: "",
     areaId: "",
     areaInfo: "",
-    // area: "",
-    zipCode: "",
-    tutorBriefIntroduction: "",
-    // languageId: "",
-    // languageInfo: "",
-    // language: "",
     address: "",
-    isTeachingLocationOnline: false,
-    isTeachingLocationTutorHome: false,
-    isTeachingLocationStudentHome: false,
-    gender: true
+    zipCode: "",
+    //permanent location
+    permanentDivision: "",
+    permanentDivisionId: "",
+    permanentDivisionInfo: "",
+    permanentDistrict: "",
+    permanentDistrictId: "",
+    permanentDistrictInfo: "",
+    permanentSubDistrict: "",
+    permanentSubDistrictId: "",
+    permanentSubDistrictInfo: "",
+    permanentArea: "",
+    permanentAreaId: "",
+    permanentAreaInfo: "",
+    permanentAddress: "",
+    permanentZipCode: "",
+    //parental info
+    fatherName: "",
+    fatherPhone: "",
+    motherName: "",
+    motherPhone: "",
+    localGuardianPhone: "",
+    guardianRelationship: "",
+    tutorBriefIntroduction: "",
+
   },
   divisionList: null,
   districtList: null,
+  permanentDistrictList: null,
   subDistrictList: null,
+  permanentSubDistrictList: null,
   areaList: null,
+  permanentAreaList: null,
   isPersonalLoading: false,
   isEducationUpdated: false,
   education: {
@@ -192,15 +217,30 @@ const CommonReducer = (state = initialState, action) => {
         ...state,
         districtList: action.payload,
       };
+    case Types.PERMANENT_DISTRICT_LIST:
+      return {
+        ...state,
+        permanentDistrictList: action.payload,
+      };
     case Types.SUBDISTRICT_LIST:
       return {
         ...state,
         subDistrictList: action.payload,
       };
+    case Types.PERMANENT_SUBDISTRICT_LIST:
+      return {
+        ...state,
+        permanentSubDistrictList: action.payload,
+      };
     case Types.AREA_LIST:
       return {
         ...state,
         areaList: action.payload,
+      };
+    case Types.PERMANENT_AREA_LIST:
+      return {
+        ...state,
+        permanentAreaList: action.payload,
       };
     case Types.IS_PERSONAL_LOADING:
       return {

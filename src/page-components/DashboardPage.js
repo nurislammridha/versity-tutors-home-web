@@ -16,6 +16,7 @@ import StudentPersonalDetails from '@/components/StudentPersonalDetails'
 import StudentTuitionInfo from '@/components/StudentTuitionInfo'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import TuitionInfo from '@/components/TuitionInfo'
+import TutorTabs from '@/components/TutorTabs'
 import WhoBookedMe from '@/components/WhoBookedMe'
 import WishList from '@/components/WishList'
 import { useLanguage } from '@/context/LanguageContext'
@@ -181,13 +182,8 @@ const DashboardPage = () => {
                                     </ul>
                                 </aside>
                             </div>
-
-
-
-                            {/* {state === "personal" && <PersonalDetails clientData={clientData} />} */}
-                            {state === "personal" && <EducationalDetails clientData={clientData} />}
-                            {/* {state === "personal" && <TuitionInfo clientData={clientData} />} */}
-                            {/* {state === "personal" && <DocumentInfo clientData={clientData} />} */}
+                            {/* Main content area */}
+                            {state === "personal" && <TutorTabs clientData={clientData} />}
                             {/* {state === "personal" && <StudentPersonalDetails clientData={clientData} />} */}
                             {/* {state === "personal" && <StudentTuitionInfo clientData={clientData} />} */}
                             {state === "contact" && <ContactDetails clientData={clientData} />}

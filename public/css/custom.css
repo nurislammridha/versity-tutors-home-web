@@ -26,14 +26,28 @@
 }
 .css-1dimb5e-singleValue{
   margin-left: 19px !important;
-  color:#999999 !important;
+  /* color:#999999 !important; */
   font-weight: 600 !important;
 }
+.css-1jqq78o-placeholder {padding-left: 10px;}
 .react-select__menu {
   z-index: 9999 !important;
   background-color: white !important;
   position: absolute !important;
 }
+
+/* Hide scrollbar */
+.react-select__menu-list {
+  max-height: 200px; /* Optional: limit height to enable scrolling */
+  overflow-y: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+  -ms-overflow-style: none !important; /* IE 10+ */
+}
+
+.react-select__menu-list::-webkit-scrollbar {
+  display: none !important; /* Chrome, Safari, Opera */
+}
+
 .tab-row {
   display: flex;
   justify-content: space-between;
@@ -71,7 +85,7 @@
 }
 
 .tab-card.active img {
-  filter: brightness(0) invert(1);
+  /* filter: brightness(0) invert(1); */
 }
 
 .tab-label {

@@ -313,13 +313,13 @@ export const GetDivisionList = () => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
-export const DistrictByDivisionId = (id) => (dispatch) => {
+export const DistrictByDivisionId = (id, type = 'present') => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}district/by-division/${id}`;
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 // showToast("success", res.data.message);
-                dispatch({ type: Types.DISTRICT_LIST, payload: res.data.result });
+                dispatch({ type: type === 'present' ? Types.DISTRICT_LIST : Types.PERMANENT_DISTRICT_LIST, payload: res.data.result });
             } else {
                 showToast("error", "Something went wrong");
             }
@@ -328,13 +328,13 @@ export const DistrictByDivisionId = (id) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
-export const SubDistrictByDistrictId = (id) => (dispatch) => {
+export const SubDistrictByDistrictId = (id, type = 'present') => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}sub-district/by-district/${id}`;
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 // showToast("success", res.data.message);
-                dispatch({ type: Types.SUBDISTRICT_LIST, payload: res.data.result });
+                dispatch({ type: type === "present" ? Types.SUBDISTRICT_LIST : Types.PERMANENT_SUBDISTRICT_LIST, payload: res.data.result });
             } else {
                 showToast("error", "Something went wrong");
             }
@@ -343,13 +343,13 @@ export const SubDistrictByDistrictId = (id) => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
-export const AreaBySubDistrictId = (id) => (dispatch) => {
+export const AreaBySubDistrictId = (id, type = 'present') => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}area/by-sub-district/${id}`;
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
                 // showToast("success", res.data.message);
-                dispatch({ type: Types.AREA_LIST, payload: res.data.result });
+                dispatch({ type: type === "present" ? Types.AREA_LIST : Types.PERMANENT_AREA_LIST, payload: res.data.result });
             } else {
                 showToast("error", "Something went wrong");
             }
