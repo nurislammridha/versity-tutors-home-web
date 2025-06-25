@@ -45,7 +45,7 @@ const PersonalDetails = ({ clientData }) => {
         if (permanentSubDistrictId?.length > 0) dispatch(AreaBySubDistrictId(permanentSubDistrictId, "permanent"));
     }, [divisionId, districtId, subDistrictId, permanentDivisionId, permanentDistrictId, permanentSubDistrictId]);
     console.log('personal', personal)
-    console.log('divisionList', divisionList)
+    console.log('clientData', clientData)
     return (
         <>
 
@@ -203,7 +203,7 @@ const PersonalDetails = ({ clientData }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select religion"
-                                                    onChange={(e) => handleInput("religion", e.target.value)}
+                                                    onChange={(e) => handleInput("religion", e.value)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>

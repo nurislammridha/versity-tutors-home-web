@@ -383,40 +383,40 @@ export const SetPersonalData = (data) => (dispatch) => {
 export const PersonalSubmit = (data, id) => (dispatch) => {
     const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, division, districtId, districtInfo, district, subDistrictId, subDistrictInfo, subDistrict, areaId, areaInfo, area, zipCode, tutorBriefIntroduction, languageId,
         languageInfo, language, isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = data
-    if (firstName.length === 0) {
-        showToast("error", "First name shouldn't be empty")
-        return 0
-    } else if (lastName.length === 0) {
-        showToast("error", "Last name shouldn't be empty")
-        return 0
-    } else if (tagline.length === 0) {
-        showToast("error", "Tag line shouldn't be empty")
-        return 0
-    } else if (hourlyFee.length < 0) {
-        showToast("error", "Hourly fee shouldn't be less than zero")
-        return 0
-    } else if (divisionId.length === 0) {
-        showToast("error", "Please select a division")
-        return 0
-    } else if (districtId.length === 0) {
-        showToast("error", "Please select a district")
-        return 0
-    } else if (subDistrictId.length === 0) {
-        showToast("error", "Please select a sub district")
-        return 0
-    } else if (areaId.length === 0) {
-        showToast("error", "Please select a area")
-        return 0
-    } else if (!isTeachingLocationTutorHome && !isTeachingLocationStudentHome && !isTeachingLocationOnline) {
-        showToast("error", "Please select a which can you teach on")
-        return 0
-    } else if (tutorBriefIntroduction.length > 500) {
-        showToast("error", "Brief introduction is so long")
-        return 0
-    } else if (!validateNoBDPhoneNumber(tutorBriefIntroduction)) {
-        showToast("error", "You have not access to share phone number")
-        return 0
-    }
+    // if (firstName.length === 0) {
+    //     showToast("error", "First name shouldn't be empty")
+    //     return 0
+    // } else if (lastName.length === 0) {
+    //     showToast("error", "Last name shouldn't be empty")
+    //     return 0
+    // } else if (tagline.length === 0) {
+    //     showToast("error", "Tag line shouldn't be empty")
+    //     return 0
+    // } else if (hourlyFee.length < 0) {
+    //     showToast("error", "Hourly fee shouldn't be less than zero")
+    //     return 0
+    // } else if (divisionId.length === 0) {
+    //     showToast("error", "Please select a division")
+    //     return 0
+    // } else if (districtId.length === 0) {
+    //     showToast("error", "Please select a district")
+    //     return 0
+    // } else if (subDistrictId.length === 0) {
+    //     showToast("error", "Please select a sub district")
+    //     return 0
+    // } else if (areaId.length === 0) {
+    //     showToast("error", "Please select a area")
+    //     return 0
+    // } else if (!isTeachingLocationTutorHome && !isTeachingLocationStudentHome && !isTeachingLocationOnline) {
+    //     showToast("error", "Please select a which can you teach on")
+    //     return 0
+    // } else if (tutorBriefIntroduction.length > 500) {
+    //     showToast("error", "Brief introduction is so long")
+    //     return 0
+    // } else if (!validateNoBDPhoneNumber(tutorBriefIntroduction)) {
+    //     showToast("error", "You have not access to share phone number")
+    //     return 0
+    // }
 
     const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
     dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
