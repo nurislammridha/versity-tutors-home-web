@@ -11,7 +11,7 @@ import DocumentInfo from './DocumentInfo'
 const TutorTabs = ({ clientData }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
-    const [activeState, setActiveState] = useState("educational")
+    const [activeState, setActiveState] = useState("document")
     const personal = useSelector((state) => state.homeInfo.personal);
     const divisionList = useSelector((state) => state.homeInfo.divisionList);
     const districtList = useSelector((state) => state.homeInfo.districtList);

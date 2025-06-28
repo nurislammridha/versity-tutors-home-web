@@ -4,7 +4,8 @@
 .ml12 { margin-left: 12px; }
 .color-red{color: red;}
 .react-select__control {
-  height: 48px !important;
+  /* height: 48px !important; */
+  height: auto !important;
   /* font-size: 14px; */
 }
 
@@ -149,6 +150,9 @@
   background-color: #F7F8FC;
   color: #999999;
   border: 1px solid #F7F8FC;
+  cursor: not-allowed;
+  pointer-events: none;
+ 
 }
 
 .tab-btn:hover:not(.active) {

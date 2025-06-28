@@ -1,15 +1,15 @@
 import { useLanguage } from '@/context/LanguageContext'
-import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetEducationInput, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
+import { AreaBySubDistrictId, DepartmentNameByStudyTypeId, DistrictByDivisionId, GetDivisionList, GetEducationInput, GetInstituteTypeList, GetPersonalInput, GetStudyTypeList, InstituteNameByInstituteTypeId, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { convertToBanglaNumber } from '../../public/function/globalFunction'
 import Select from "react-select";
-import { groupOp, mediumOp, passingYearOp } from '../../public/function/optionProvider'
+import { GlobalOptions, groupOp, mediumOp, passingYearOp } from '../../public/function/optionProvider'
 
 const EducationalDetails = ({ clientData }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
-    const { education, isEducationLoading } = useSelector((state) => state.homeInfo);
+    const { education, isEducationLoading, instituteTypeList, bachelorInstituteNameList, postInstituteNameList, studyTypeList, bachelorDepartmentNameList, postDepartmentNameList } = useSelector((state) => state.homeInfo);
     const { sscInstituteName, sscMedium, sscGroup, sscSession, sscPassingYear,
         sscResult, hscInstituteName, hscMedium, hscGroup, hscSession, hscPassingYear,
         hscResult, bachelorInstituteType, bachelorInstituteTypeId, bachelorInstituteName,
@@ -28,13 +28,20 @@ const EducationalDetails = ({ clientData }) => {
         // dispatch(PersonalSubmit(personal, clientData._id))
     }
     useEffect(() => {
-        // dispatch(GetDivisionList());
+        dispatch(GetInstituteTypeList());
+        dispatch(GetStudyTypeList());
     }, []);
     useEffect(() => {
         clientData !== null && dispatch(SetPersonalData(clientData));
     }, [clientData]);
+    useEffect(() => {
+        if (bachelorInstituteTypeId?.length > 0) dispatch(InstituteNameByInstituteTypeId(bachelorInstituteTypeId));
+        if (postInstituteTypeId?.length > 0) dispatch(InstituteNameByInstituteTypeId(postInstituteTypeId, "permanent"));
+        if (bachelorStudyTypeId?.length > 0) dispatch(DepartmentNameByStudyTypeId(bachelorStudyTypeId));
+        if (postStudyTypeId?.length > 0) dispatch(DepartmentNameByStudyTypeId(postStudyTypeId, "permanent"));
+    }, [bachelorInstituteTypeId, postInstituteTypeId, bachelorStudyTypeId, postStudyTypeId]);
 
-
+    console.log('education', education)
     return (
         <>
             {/* ssc olevel dakhil */}
@@ -276,26 +283,32 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group form-group-full">
                                                 <label className="tu-label">{"Institute Type"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={groupOp()}
-                                                    value={sscGroup ? { label: sscGroup, value: sscGroup } : null}
+                                                    options={GlobalOptions(instituteTypeList, "instituteType", "_id")}
+                                                    value={bachelorInstituteType ? { label: bachelorInstituteType, value: bachelorInstituteTypeId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select institute type"
-                                                    onChange={(e) => handleInput("sscGroup", e.value)}
+                                                    onChange={(e) => {
+                                                        handleInput("bachelorInstituteType", e.label)
+                                                        handleInput("bachelorInstituteTypeId", e.value)
+                                                        handleInput("bachelorInstituteName", "")
+                                                        handleInput("bachelorInstituteNameId", "")
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-full">
                                                 <label className="tu-label">{"Institute Name"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(bachelorInstituteNameList, "instituteName", "_id")}
+                                                    value={bachelorInstituteName ? { label: bachelorInstituteName, value: bachelorInstituteNameId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select institute name"
+                                                    onChange={(e) => {
+                                                        handleInput("bachelorInstituteName", e.label)
+                                                        handleInput("bachelorInstituteNameId", e.value)
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -303,14 +316,17 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group form-group-half">
                                                 <label className="tu-label">{"Study Type"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(studyTypeList, "studyType", "_id")}
+                                                    value={bachelorStudyType ? { label: bachelorStudyType, value: bachelorStudyTypeId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select study type"
+                                                    onChange={(e) => {
+                                                        handleInput("bachelorStudyType", e.label)
+                                                        handleInput("bachelorStudyTypeId", e.value)
+                                                        handleInput("bachelorDepartment", "")
+                                                        handleInput("bachelorDepartmentId", "")
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -318,28 +334,27 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group form-group-half">
                                                 <label className="tu-label">{"Department"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(bachelorDepartmentNameList, "departmentName", "_id")}
+                                                    value={bachelorDepartment ? { label: bachelorDepartment, value: bachelorDepartmentId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select institute type"
+                                                    onChange={(e) => {
+                                                        handleInput("bachelorDepartment", e.label)
+                                                        handleInput("bachelorDepartmentId", e.value)
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-half">
                                                 <label className="tu-label">{"Medium"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={mediumOp()}
+                                                    value={bachelorMedium ? { label: bachelorMedium, value: bachelorMedium } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select medium"
+                                                    onChange={(e) => handleInput("bachelorMedium", e.label)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -349,10 +364,9 @@ const EducationalDetails = ({ clientData }) => {
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        required=""
                                                         placeholder="Your first name"
-                                                        //value={firstName}
-                                                        onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        value={bachelorSession}
+                                                        onChange={(e) => handleInput("bachelorSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
                                                         <span>{"Write session"}</span>
@@ -362,14 +376,12 @@ const EducationalDetails = ({ clientData }) => {
                                             <div className="form-group form-group-half">
                                                 <label className="tu-label">{"Passing Year"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={passingYearOp()}
+                                                    value={bachelorPassingYear ? { label: bachelorPassingYear, value: bachelorPassingYear } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select medium"
+                                                    onChange={(e) => handleInput("bachelorPassingYear", e.label)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -379,10 +391,9 @@ const EducationalDetails = ({ clientData }) => {
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        required=""
                                                         placeholder="Your first name"
-                                                        //value={firstName}
-                                                        onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        value={bachelorCgpa}
+                                                        onChange={(e) => handleInput("bachelorCgpa", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
                                                         <span>{"ex: 4:00"}</span>
@@ -413,126 +424,125 @@ const EducationalDetails = ({ clientData }) => {
                                     <div className="tu-themeform__wrap">
                                         <div className="form-group-wrap">
                                             <div className="form-group form-group-full">
-                                                <label className="tu-label">{"Institute Type"}</label>
+                                                <label className="tu-label">{"Institute Type"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select institute type", value: "" }}
+                                                    options={GlobalOptions(instituteTypeList, "instituteType", "_id")}
+                                                    value={postInstituteType ? { label: postInstituteType, value: postInstituteTypeId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select institute type"
+                                                    onChange={(e) => {
+                                                        handleInput("postInstituteType", e.label)
+                                                        handleInput("postInstituteTypeId", e.value)
+                                                        handleInput("postInstituteName", "")
+                                                        handleInput("postInstituteNameId", "")
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-full">
-                                                <label className="tu-label">{"Institute Name"}</label>
+                                                <label className="tu-label">{"Institute Name"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(postInstituteNameList, "instituteName", "_id")}
+                                                    value={postInstituteName ? { label: postInstituteName, value: postInstituteNameId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select institute name"
+                                                    onChange={(e) => {
+                                                        handleInput("postInstituteName", e.label)
+                                                        handleInput("postInstituteNameId", e.value)
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
 
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"Study Type"}</label>
+                                                <label className="tu-label">{"Study Type"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(studyTypeList, "studyType", "_id")}
+                                                    value={postStudyType ? { label: postStudyType, value: postStudyTypeId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select study type"
+                                                    onChange={(e) => {
+                                                        handleInput("postStudyType", e.label)
+                                                        handleInput("postStudyTypeId", e.value)
+                                                        handleInput("postDepartment", "")
+                                                        handleInput("postDepartmentId", "")
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
 
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"Department"}</label>
+                                                <label className="tu-label">{"Department"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={GlobalOptions(postDepartmentNameList, "departmentName", "_id")}
+                                                    value={postDepartment ? { label: postDepartment, value: postDepartmentId } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select institute type"
+                                                    onChange={(e) => {
+                                                        handleInput("postDepartment", e.label)
+                                                        handleInput("postDepartmentId", e.value)
+                                                    }}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"Medium"}</label>
+                                                <label className="tu-label">{"Medium"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={mediumOp()}
+                                                    value={postMedium ? { label: postMedium, value: postMedium } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select medium"
+                                                    onChange={(e) => handleInput("postMedium", e.label)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"Session"}</label>
+                                                <label className="tu-label">{"Session"}<em className="color-red">*</em></label>
                                                 <div className="tu-placeholderholder">
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        required=""
                                                         placeholder="Your first name"
-                                                        //value={firstName}
-                                                        onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        value={postSession}
+                                                        onChange={(e) => handleInput("postSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
                                                         <span>{"Write session"}</span>
-                                                        <em>*</em>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"Passing Year"}</label>
+                                                <label className="tu-label">{"Passing Year"}<em className="color-red">*</em></label>
                                                 <Select
-                                                    options={[
-                                                        { label: "Select medium", value: "Select medium" },
-                                                        { label: "Another option", value: "another" },
-                                                    ]}
-                                                    value={{ label: "Select passing year", value: "" }}
+                                                    options={passingYearOp()}
+                                                    value={postPassingYear ? { label: postPassingYear, value: postPassingYear } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
-                                                    placeholder="Select group"
+                                                    placeholder="Select medium"
+                                                    onChange={(e) => handleInput("postPassingYear", e.label)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
                                             <div className="form-group form-group-half">
-                                                <label className="tu-label">{"CGPA / Current CGPA"}</label>
+                                                <label className="tu-label">{"CGPA / Current CGPA"}<em className="color-red">*</em></label>
                                                 <div className="tu-placeholderholder">
                                                     <input
                                                         type="text"
                                                         className="form-control"
-                                                        required=""
                                                         placeholder="Your first name"
-                                                        //value={firstName}
-                                                        onChange={(e) => handleInput("firstName", e.target.value)}
+                                                        value={postCgpa}
+                                                        onChange={(e) => handleInput("postCgpa", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
                                                         <span>{"ex: 4:00"}</span>
-                                                        <em>*</em>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                     </div>
                                 </fieldset>

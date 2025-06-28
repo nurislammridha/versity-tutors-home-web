@@ -73,6 +73,12 @@ const initialState = {
 
   },
   divisionList: null,
+  instituteTypeList: null,
+  studyTypeList: null,
+  bachelorInstituteNameList: null,
+  postInstituteNameList: null,
+  bachelorDepartmentNameList: null,
+  postDepartmentNameList: null,
   districtList: null,
   permanentDistrictList: null,
   subDistrictList: null,
@@ -121,6 +127,38 @@ const initialState = {
     postPassingYear: "",
     postCgpa: "",
   },
+  tuitionInfos: [{
+    division: "",
+    divisionId: "",
+    district: "",
+    districtId: "",
+    subDistrict: "",
+    subDistrictId: "",
+    area: [],
+    detailsAddress: "",
+    className: "",
+    classId: "",
+    medium: "",
+    group: "",
+    subjects: [],
+    daysPerWeek: [],
+    daysPerMonth: [],
+    timeDuration: [],
+    timeShift: [],
+    studentGender: "",
+    tuitionExperience: "",
+    tuitionExperienceLabel: "",
+    expectedSalary: "",
+    expectedSalaryLabel: "",
+    isStudentHome: false,
+    isMyHome: false,
+    isOnline: false,
+    isGroupStudy: false,
+    isTakeDemoClass: true,
+    demoClass: "",
+    demoClassStyle: "",
+    demoClassPricing: ""
+  }],
   educations: [],
   subject: {
     categoryId: "",
@@ -243,6 +281,16 @@ const CommonReducer = (state = initialState, action) => {
         ...state,
         divisionList: action.payload,
       };
+    case Types.INSTITUTE_TYPE_LIST:
+      return {
+        ...state,
+        instituteTypeList: action.payload,
+      };
+    case Types.STUDY_TYPE_LIST:
+      return {
+        ...state,
+        studyTypeList: action.payload,
+      };
     case Types.DISTRICT_LIST:
       return {
         ...state,
@@ -252,6 +300,26 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         permanentDistrictList: action.payload,
+      };
+    case Types.BACHELOR_INSTITUTE_NAME_LIST:
+      return {
+        ...state,
+        bachelorInstituteNameList: action.payload,
+      };
+    case Types.POST_INSTITUTE_NAME_LIST:
+      return {
+        ...state,
+        postInstituteNameList: action.payload,
+      };
+    case Types.BACHELOR_DEPARTMENT_NAME_LIST:
+      return {
+        ...state,
+        bachelorDepartmentNameList: action.payload,
+      };
+    case Types.POST_DEPARTMENT_NAME_LIST:
+      return {
+        ...state,
+        postDepartmentNameList: action.payload,
       };
     case Types.SUBDISTRICT_LIST:
       return {
@@ -306,6 +374,22 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         education: education,
+      };
+    case Types.GET_TUITION_INPUT:
+      const tuitionData = [...state.tuitionInfos];
+      tuitionData[action.payload.index][action.payload.name] = action.payload.value;
+
+      return {
+        ...state,
+        tuitionInfos: tuitionData,
+      };
+    case Types.ADD_TUITION_TAB:
+      return {
+        ...state,
+        tuitionInfos: [
+          ...state.tuitionInfos,
+          action.payload, // should be a full tuition object
+        ],
       };
     case Types.GET_SUBJECT_INPUT:
       const { name: sName, value: sValue } = action.payload

@@ -313,6 +313,30 @@ export const GetDivisionList = () => (dispatch) => {
         showToast("error", "Something went wrong");
     }
 };
+export const GetInstituteTypeList = () => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}institute-type`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.INSTITUTE_TYPE_LIST, payload: res.data.result });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const GetStudyTypeList = () => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}study-type`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.STUDY_TYPE_LIST, payload: res.data.result });
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
 export const DistrictByDivisionId = (id, type = 'present') => (dispatch) => {
     const url = `${process.env.NEXT_PUBLIC_API_URL}district/by-division/${id}`;
     try {
@@ -320,6 +344,36 @@ export const DistrictByDivisionId = (id, type = 'present') => (dispatch) => {
             if (res.data.status) {
                 // showToast("success", res.data.message);
                 dispatch({ type: type === 'present' ? Types.DISTRICT_LIST : Types.PERMANENT_DISTRICT_LIST, payload: res.data.result });
+            } else {
+                showToast("error", "Something went wrong");
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const InstituteNameByInstituteTypeId = (id, type = 'present') => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}institute-name/by-institute-type/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                // showToast("success", res.data.message);
+                dispatch({ type: type === 'present' ? Types.BACHELOR_INSTITUTE_NAME_LIST : Types.POST_INSTITUTE_NAME_LIST, payload: res.data.result });
+            } else {
+                showToast("error", "Something went wrong");
+            }
+        });
+    } catch (error) {
+        showToast("error", "Something went wrong");
+    }
+};
+export const DepartmentNameByStudyTypeId = (id, type = 'present') => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}department-name/by-study-type/${id}`;
+    try {
+        Axios.get(url).then((res) => {
+            if (res.data.status) {
+                // showToast("success", res.data.message);
+                dispatch({ type: type === 'present' ? Types.BACHELOR_DEPARTMENT_NAME_LIST : Types.POST_DEPARTMENT_NAME_LIST, payload: res.data.result });
             } else {
                 showToast("error", "Something went wrong");
             }
@@ -477,6 +531,49 @@ export const ContactSubmit = (data, id) => (dispatch) => {
 export const GetEducationInput = (name, value) => (dispatch) => {
     const formValue = { name, value }
     dispatch({ type: Types.GET_EDUCATION_INPUT, payload: formValue });
+};
+export const GetTuitionInput = (index, name, value) => (dispatch) => {
+    dispatch({ type: Types.GET_TUITION_INPUT, payload: { index, name, value } });
+};
+export const AddTuitionTab = () => (dispatch, getState) => {
+    const current = getState().homeInfo.tuitionInfos;
+    if (current.length < 5) {
+        dispatch({
+            type: Types.ADD_TUITION_TAB,
+            payload: {
+                division: "",
+                divisionId: "",
+                district: "",
+                districtId: "",
+                subDistrict: "",
+                subDistrictId: "",
+                area: [],
+                detailsAddress: "",
+                className: "",
+                classId: "",
+                medium: "",
+                group: "",
+                subjects: [],
+                daysPerWeek: [],
+                daysPerMonth: [],
+                timeDuration: [],
+                timeShift: [],
+                studentGender: "",
+                tuitionExperience: "",
+                tuitionExperienceLabel: "",
+                expectedSalary: "",
+                expectedSalaryLabel: "",
+                isStudentHome: false,
+                isMyHome: false,
+                isOnline: false,
+                isGroupStudy: false,
+                isTakeDemoClass: true,
+                demoClass: "",
+                demoClassStyle: "",
+                demoClassPricing: ""
+            },
+        });
+    }
 };
 export const GetSubjectInput = (name, value) => (dispatch) => {
     const formValue = { name, value }

@@ -44,8 +44,7 @@ const PersonalDetails = ({ clientData }) => {
         if (permanentDistrictId?.length > 0) dispatch(SubDistrictByDistrictId(permanentDistrictId, "permanent"));
         if (permanentSubDistrictId?.length > 0) dispatch(AreaBySubDistrictId(permanentSubDistrictId, "permanent"));
     }, [divisionId, districtId, subDistrictId, permanentDivisionId, permanentDistrictId, permanentSubDistrictId]);
-    console.log('personal', personal)
-    console.log('clientData', clientData)
+
     return (
         <>
 
