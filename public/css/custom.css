@@ -135,8 +135,12 @@
   font-size:16px !important;
 }
 
+.tab-btn.added {
+  background-color: #BA3983 !important;
+  color: white;
+}
 .tab-btn.active {
-  background-color: #111533 !important;
+  background-color: #ED48A7 !important;
   color: white;
 }
 

@@ -5,26 +5,38 @@ import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import { daysPerMonthOp, daysPerWeekOp, demoClassOp, demoClassPricingOp, demoClassStyleOp, expectedSalaryOp, genderOp, GlobalOptions, groupOp, mediumOp, timeDurationOp, timingShiftOp, tuitionExperienceOp } from '../../public/function/optionProvider'
 const totalTabs = 5;
+const MAX_TABS = 5;
 const TuitionInfo = ({ clientData, setActiveState }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [activeTabIndex, setActiveTabIndex] = useState(0)
+    const [isPreviousLocation, sePreviousLocation] = useState(false);
+
     const { falseUpdated, isPersonalLoading, tuitionInfos, divisionList, districtList, subDistrictList, areaList, categoryList, subCategoryList } = useSelector((state) => state.homeInfo);
     const { division, divisionId, district, districtId, subDistrict, subDistrictId, area,
         areaId, detailsAddress, className, classId, medium, group, subjects, daysPerWeek,
         daysPerMonth, timeDuration, timeShift, studentGender, tuitionExperience,
         tuitionExperienceLabel, expectedSalary, expectedSalaryLabel, isStudentHome,
         isMyHome, isOnline, isGroupStudy, demoClass, demoClassStyle, demoClassPricing,
-        isTakeDemoClass } = tuitionInfos[activeTabIndex];
+        isTakeDemoClass } = tuitionInfos[activeTabIndex] || {};
 
     const handleInput = (index, name, value) => {
         dispatch(GetTuitionInput(index, name, value));
     };
-    const handleTab = (index) => {
-        // index > activeTabIndex && dispatch(AddTuitionTab(index))
-        dispatch(AddTuitionTab(index))
-        setActiveTabIndex(index)
-    }
+
+    const handleTabClick = (index) => {
+        // Don't allow clicking beyond the next tab
+        if (index > tuitionInfos.length) return;
+
+        // If clicked on the next white tab, add a new info item
+        if (index === tuitionInfos.length && tuitionInfos.length < MAX_TABS) {
+            // const newInfos = [...infos, { name: "" }];
+            // setInfos(newInfos);
+            dispatch(AddTuitionTab(index))
+        }
+
+        setActiveTabIndex(index);
+    };
     const handleSubmit = () => {
         dispatch(TuitionSubmit(tuitionInfos, clientData._id))
     }
@@ -52,48 +64,94 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
             setActiveState("document")
         }
     }, [falseUpdated])
+    useEffect(() => {
+        if (isPreviousLocation) {
+            const { division, divisionId, district, districtId, subDistrict, subDistrictId, area,
+                areaId, detailsAddress } = tuitionInfos[activeTabIndex - 1] || {};
+
+            handleInput(activeTabIndex, "division", division)
+            handleInput(activeTabIndex, "divisionId", divisionId)
+            handleInput(activeTabIndex, "district", district)
+            handleInput(activeTabIndex, "districtId", districtId)
+            handleInput(activeTabIndex, "subDistrict", subDistrict)
+            handleInput(activeTabIndex, "subDistrictId", subDistrictId)
+            handleInput(activeTabIndex, "area", area)
+            handleInput(activeTabIndex, "detailsAddress", detailsAddress)
+
+        }
+
+
+    }, [isPreviousLocation])
+
     console.log('tuitionInfos', tuitionInfos)
     return (
         <>
             {/* tuition info tabs */}
-            {/* <div class="tuition-tabs-container px-3 py-2">
-                <div class="tuition-tabs d-flex gap-3 overflow-auto flex-nowrap">
-                    <button class="tab-btn active" onClick={() => setActiveTabIndex(0)}>Tuition Info 1</button>
-                    <button class="tab-btn white" onClick={() => setActiveTabIndex(1)}>+ Add Tuition 2</button>
-                    <button class="tab-btn dim" onClick={() => setActiveTabIndex(2)}>+ Add Tuition 3</button>
-                    <button class="tab-btn dim" onClick={() => setActiveTabIndex(3)}>+ Add Tuition 4</button>
-                    <button class="tab-btn dim" onClick={() => setActiveTabIndex(4)}>+ Add Tuition 5</button>
-                </div>
-            </div> */}
             <div className="tuition-tabs-container px-3 py-2">
                 <div className="tuition-tabs d-flex gap-3 overflow-auto flex-nowrap">
-                    {Array.from({ length: totalTabs }).map((_, index) => {
-                        let tabClass = "tab-btn";
-                        let label = "";
-
-                        if (index <= activeTabIndex) {
-                            tabClass += " active";
-                            label = `Tuition Info ${index + 1}`;
-                        } else if (index === activeTabIndex + 1) {
-                            tabClass += " white";
-                            label = `+ Add Tuition ${index + 1}`;
+                    {[...Array(MAX_TABS)].map((_, index) => {
+                        let className = "tab-btn";
+                        if (index === activeTabIndex) {
+                            className += " active";
+                        } else if (index < tuitionInfos.length) {
+                            className += " added";
+                        } else if (index === tuitionInfos.length) {
+                            className += " white";
                         } else {
-                            tabClass += " dim";
-                            label = `+ Add Tuition ${index + 1}`;
+                            className += " dim";
                         }
+
+                        const label =
+                            index < tuitionInfos.length
+                                ? `Tuition Info ${index + 1}`
+                                : `Add Tuition ${index + 1}`;
 
                         return (
                             <button
                                 key={index}
-                                className={tabClass}
-                                onClick={() => handleTab(index)}
+                                className={className}
+                                onClick={() => handleTabClick(index)}
+                                disabled={index > tuitionInfos.length}
                             >
+                                {index < tuitionInfos.length ? (
+                                    <i class="fas fa-check me-1"></i>
+                                ) : (
+                                    <i class="fas fa-plus me-1"></i>
+                                )}
                                 {label}
                             </button>
                         );
                     })}
                 </div>
             </div>
+
+            {/* preferred tuition location */}
+            {activeTabIndex !== 0 && <div className="tu-profilewrapper" style={{ marginTop: "24px" }}>
+                <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
+                    <div className="tu-boxarea">
+                        <div className="tu-boxsm">
+                            <div className="tu-boxsmtitle">
+                                <h4 className="d-flex align-items-center gap-2">
+                                    Are you using the previous location?
+                                    <label htmlFor="demo-check" className="demo-check-label" style={{ marginBottom: "0px" }}>
+                                        <input
+                                            type="checkbox"
+                                            id="demo-check"
+                                            className="demo-check"
+                                            checked={isPreviousLocation}
+                                            onChange={() => sePreviousLocation(!isPreviousLocation)}
+                                        />
+                                        <span className="custom-checkmark"></span>
+                                    </label>
+                                </h4>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>}
             {/* preferred tuition location */}
             <div className="tu-profilewrapper" style={{ marginTop: "24px" }}>
                 <div className="tu-boxwrapper" style={{ marginTop: 0 }}>
