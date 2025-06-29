@@ -1,51 +1,19 @@
 import { useLanguage } from '@/context/LanguageContext'
-import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { convertToBanglaNumber } from '../../public/function/globalFunction'
-import Select from 'react-select'
 import PersonalDetails from './PersonalDetails'
 import EducationalDetails from './EducationalDetails'
 import TuitionInfo from './TuitionInfo'
 import DocumentInfo from './DocumentInfo'
+import { useDispatch } from 'react-redux'
+import { GetClientById } from '@/redux/_redux/CommonAction'
 const TutorTabs = ({ clientData }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
-    const [activeState, setActiveState] = useState("document")
-    const personal = useSelector((state) => state.homeInfo.personal);
-    const divisionList = useSelector((state) => state.homeInfo.divisionList);
-    const districtList = useSelector((state) => state.homeInfo.districtList);
-    const subDistrictList = useSelector((state) => state.homeInfo.subDistrictList);
-    const areaList = useSelector((state) => state.homeInfo.areaList);
-    const isPersonalLoading = useSelector((state) => state.homeInfo.isPersonalLoading);
-    const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, districtId, districtInfo, subDistrictId, subDistrictInfo, areaId, areaInfo, zipCode, tutorBriefIntroduction,
-        isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address, gender } = personal
-    const { isTutorAccount } = clientData || {}
-    const handleInput = (name, value) => {
-        console.log('name,value', name, value)
-        dispatch(GetPersonalInput(name, value))
-    }
-    const handleSubmit = () => {
-        dispatch(PersonalSubmit(personal, clientData._id))
-    }
+    const [activeState, setActiveState] = useState("personal") //personal
     useEffect(() => {
-        // dispatch(GetClientById());
-        dispatch(GetDivisionList());
-    }, []);
-    useEffect(() => {
-        clientData !== null && dispatch(SetPersonalData(clientData));
-    }, [clientData]);
+        clientData !== null && dispatch(GetClientById(clientData?._id))
+    }, [clientData])
 
-    useEffect(() => {
-        divisionId?.length > 0 && dispatch(DistrictByDivisionId(divisionId));
-    }, [divisionId]);
-    useEffect(() => {
-        districtId?.length > 0 && dispatch(SubDistrictByDistrictId(districtId));
-    }, [districtId]);
-    useEffect(() => {
-        subDistrictId?.length > 0 && dispatch(AreaBySubDistrictId(subDistrictId));
-    }, [subDistrictId]);
-    console.log('personal', personal)
     return (
         <>
             <div className="col-lg-8 col-xl-9">
@@ -90,10 +58,10 @@ const TutorTabs = ({ clientData }) => {
                     </div>
                 </div>
 
-                {activeState === "personal" && <PersonalDetails clientData={clientData} />}
-                {activeState === "educational" && <EducationalDetails clientData={clientData} />}
-                {activeState === "tutor" && <TuitionInfo clientData={clientData} />}
-                {activeState === "document" && <DocumentInfo clientData={clientData} />}
+                {activeState === "personal" && <PersonalDetails clientData={clientData} setActiveState={setActiveState} />}
+                {activeState === "educational" && <EducationalDetails clientData={clientData} setActiveState={setActiveState} />}
+                {activeState === "tutor" && <TuitionInfo clientData={clientData} setActiveState={setActiveState} />}
+                {activeState === "document" && <DocumentInfo clientData={clientData} setActiveState={setActiveState} />}
             </div>
         </>
     )

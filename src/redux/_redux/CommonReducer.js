@@ -1,3 +1,4 @@
+import { transformTuitionDataFromApi } from "../../../public/function/globalFunction";
 import * as Types from "./Types";
 
 const initialState = {
@@ -196,6 +197,8 @@ const initialState = {
   isUploadDocumentLoading: false,
   isDeleteDocumentLoading: false,
   notificationList: null,
+  falseUpdated: false,
+  imageDeleteLoading: false,
 };
 const CommonReducer = (state = initialState, action) => {
   const newState = { ...state };
@@ -355,17 +358,47 @@ const CommonReducer = (state = initialState, action) => {
         permanentZipCode, fatherName, fatherPhone, motherName, motherPhone, localGuardianPhone, guardianRelationship,
         tutorBriefIntroduction } = action.payload;
       const personalSet = {
-        firstName, lastName, email, phone, additionalPhone, whatsapp, gender, religion, language, division, divisionId,
-        divisionInfo, district, districtId, districtInfo, subDistrict, subDistrictId, subDistrictInfo, area,
-        areaId, areaInfo, address, zipCode, permanentDivision, permanentDivisionId, permanentDivisionInfo,
-        permanentDistrict, permanentDistrictId, permanentDistrictInfo, permanentSubDistrict, permanentSubDistrictId,
-        permanentSubDistrictInfo, permanentArea, permanentAreaId, permanentAreaInfo, permanentAddress,
+        firstName, lastName, email, phone, additionalPhone, whatsapp, gender, religion, language, division: divisionInfo?.divisionName, divisionId,
+        divisionInfo: divisionId, district: districtInfo?.districtName, districtId, districtInfo: districtId, subDistrict: subDistrictInfo?.subDistrictName, subDistrictId, subDistrictInfo: subDistrictId, area: areaInfo?.areaName,
+        areaId, areaInfo: areaId, address, zipCode, permanentDivision: permanentDivisionInfo?.divisionName, permanentDivisionId, permanentDivisionInfo: permanentDivisionId,
+        permanentDistrict: permanentDistrictInfo?.districtName, permanentDistrictId, permanentDistrictInfo: permanentDistrictId, permanentSubDistrict: permanentSubDistrictInfo?.subDistrictName, permanentSubDistrictId,
+        permanentSubDistrictInfo: permanentSubDistrictId, permanentArea: permanentAreaInfo?.areaName, permanentAreaId, permanentAreaInfo: permanentAreaId, permanentAddress,
         permanentZipCode, fatherName, fatherPhone, motherName, motherPhone, localGuardianPhone, guardianRelationship,
         tutorBriefIntroduction
       };
       return {
         ...state,
         personal: personalSet,
+      };
+    case Types.SET_EDUCATIONAL_DATA:
+      const { sscInstituteName, sscMedium, sscGroup, sscSession, sscPassingYear,
+        sscResult, hscInstituteName, hscMedium, hscGroup, hscSession, hscPassingYear,
+        hscResult, bachelorInstituteType, bachelorInstituteTypeId, bachelorInstituteName,
+        bachelorInstituteNameId, bachelorStudyType, bachelorStudyTypeId, bachelorDepartment,
+        bachelorDepartmentId, bachelorMedium, bachelorSession, bachelorPassingYear, bachelorCgpa,
+        postInstituteType, postInstituteTypeId, postInstituteName, postInstituteNameId,
+        postStudyType, postStudyTypeId, postDepartment, postDepartmentId, postMedium, postSession,
+        postPassingYear, postCgpa } = action.payload;
+      const educationalSet = {
+        sscInstituteName, sscMedium, sscGroup, sscSession, sscPassingYear,
+        sscResult, hscInstituteName, hscMedium, hscGroup, hscSession, hscPassingYear,
+        hscResult, bachelorInstituteType: bachelorInstituteTypeId?.instituteType, bachelorInstituteTypeId: bachelorInstituteTypeId?._id, bachelorInstituteName: bachelorInstituteNameId?.instituteName,
+        bachelorInstituteNameId: bachelorInstituteNameId?._id, bachelorStudyType: bachelorStudyTypeId?.studyType, bachelorStudyTypeId: bachelorStudyTypeId?._id, bachelorDepartment: bachelorDepartmentId?.departmentName,
+        bachelorDepartmentId: bachelorDepartmentId?._id, bachelorMedium, bachelorSession, bachelorPassingYear, bachelorCgpa,
+        postInstituteType: postInstituteTypeId?.instituteType, postInstituteTypeId: postInstituteTypeId?._id, postInstituteName: postInstituteNameId?.instituteName, postInstituteNameId: postInstituteNameId?._id,
+        postStudyType: postStudyTypeId?.studyType, postStudyTypeId: postStudyTypeId?._id, postDepartment: postDepartmentId?.departmentName, postDepartmentId: postDepartmentId?._id, postMedium, postSession,
+        postPassingYear, postCgpa
+      };
+      return {
+        ...state,
+        education: educationalSet,
+      };
+    case Types.SET_TUITION_DATA:
+
+      const tuitionInfoSet = transformTuitionDataFromApi(action.payload)
+      return {
+        ...state,
+        tuitionInfos: tuitionInfoSet,
       };
     case Types.GET_EDUCATION_INPUT:
       const { name: eName, value: eValue } = action.payload
@@ -589,6 +622,16 @@ const CommonReducer = (state = initialState, action) => {
       return {
         ...state,
         notificationList: action.payload,
+      };
+    case Types.FALSE_UPDATED:
+      return {
+        ...state,
+        falseUpdated: action.payload,
+      };
+    case Types.IMAGE_DELETE_LOADING:
+      return {
+        ...state,
+        imageDeleteLoading: action.payload,
       };
 
     default:

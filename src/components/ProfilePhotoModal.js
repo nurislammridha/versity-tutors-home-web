@@ -5,8 +5,11 @@ import ReactDOM from "react-dom";
 import Cropper from "react-easy-crop";
 import Slider from "@mui/material/Slider";
 import getCroppedImg from "./cropImage";
+import { useSelector } from "react-redux";
 
 const ProfilePhotoModal = ({ show, onClose, onSave, imageSrc }) => {
+    const isAvatarLoading = useSelector((state) => state.homeInfo.isAvatarLoading);
+    const isUpdatedProfile = useSelector((state) => state.homeInfo.isUpdatedProfile);
     const modalRef = useRef(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
@@ -34,6 +37,11 @@ const ProfilePhotoModal = ({ show, onClose, onSave, imageSrc }) => {
         document.body.classList.remove('modal-open');
         document.body.style.overflow = ''; // Restore scroll if needed
     };
+    useEffect(() => {
+        if (isUpdatedProfile) {
+            handleClose()
+        }
+    }, [isUpdatedProfile])
 
     useEffect(() => {
         let modal;
@@ -115,8 +123,9 @@ const ProfilePhotoModal = ({ show, onClose, onSave, imageSrc }) => {
                             <button className="btn btn-outline-secondary w-50" onClick={handleClose}>
                                 Cancel
                             </button>
-                            <button className="btn btn-primary w-50" onClick={handleSave}>
+                            <button className="btn btn-primary w-50" onClick={!isAvatarLoading && handleSave}>
                                 Save
+                                {isAvatarLoading && <div class="spinner-border spinner-border-sm ms-2"></div>}
                             </button>
                         </div>
                     </div>

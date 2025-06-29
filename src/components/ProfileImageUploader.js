@@ -1,9 +1,12 @@
 import { useLanguage } from '@/context/LanguageContext';
 import React, { useState } from 'react'
 import ProfilePhotoModal from './ProfilePhotoModal';
+import { useDispatch } from 'react-redux';
+import { UploadAvatarImg } from '@/redux/_redux/CommonAction';
 
-const ProfileImageUploader = () => {
+const ProfileImageUploader = ({ avatar: oldAvatar, clientData }) => {
     const { t } = useLanguage()
+    const dispatch = useDispatch()
     const [avatar, setAvatar] = useState(null)
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
@@ -17,27 +20,31 @@ const ProfileImageUploader = () => {
     };
 
     const handleSave = async (croppedImage) => {
-        const formData = new FormData();
-        formData.append("file", croppedImage);
+        dispatch(UploadAvatarImg(croppedImage, oldAvatar, clientData._id));
 
-        const res = await fetch("/api/upload", {
-            method: "POST",
-            body: formData,
-        });
+        // const formData = new FormData();
+        // formData.append("file", croppedImage);
 
-        if (res.ok) {
-            const imageUrl = URL.createObjectURL(croppedImage); // Preview update
-            setAvatar({
-                url: imageUrl,
-                publicId: croppedImage.name || null,
-            });
-        }
+        // const res = await fetch("/api/upload", {
+        //     method: "POST",
+        //     body: formData,
+        // });
+
+        // if (res.ok) {
+        //     const imageUrl = URL.createObjectURL(croppedImage); // Preview update
+        //     setAvatar({
+        //         url: imageUrl,
+        //         publicId: croppedImage.name || null,
+        //     });
+        // }
     };
+
+    console.log('oldAvatar', oldAvatar)
     return (
         <>
             <div className="tu-asidebox">
                 <figure>
-                    <img src={avatar ? avatar.url : 'images/profile/img-01.jpg'} alt="image-description" />
+                    <img src={oldAvatar ? oldAvatar.url : 'images/profile/img-01.jpg'} alt="image-description" />
                     <figcaption className="tu-uploadimage">
                         <input
                             type="file"

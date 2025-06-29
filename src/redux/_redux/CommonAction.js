@@ -1,7 +1,11 @@
-import { validateNoBDPhoneNumber } from "../../../public/function/globalFunction";
+import { transformTuitionPayload, validateNoBDPhoneNumber } from "../../../public/function/globalFunction";
 import { showToast } from "../../utils/ToastHelper";
 import * as Types from "./Types";
 import Axios from "axios";
+
+export const FalseUpdated = () => (dispatch) => {
+    dispatch({ type: Types.FALSE_UPDATED, payload: false });
+};
 export const GetSignUpInput = (name, value) => (dispatch) => {
     const formValue = { name, value }
     dispatch({ type: Types.GET_SIGNUP_INPUT, payload: formValue });
@@ -434,9 +438,15 @@ export const GetClientById = (id) => (dispatch) => {
 export const SetPersonalData = (data) => (dispatch) => {
     dispatch({ type: Types.SET_PERSONAL_DATA, payload: data });
 }
+export const SetEducationalData = (data) => (dispatch) => {
+    dispatch({ type: Types.SET_EDUCATIONAL_DATA, payload: data });
+}
+export const SetTuitionData = (data) => (dispatch) => {
+    dispatch({ type: Types.SET_TUITION_DATA, payload: data });
+}
 export const PersonalSubmit = (data, id) => (dispatch) => {
-    const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, division, districtId, districtInfo, district, subDistrictId, subDistrictInfo, subDistrict, areaId, areaInfo, area, zipCode, tutorBriefIntroduction, languageId,
-        languageInfo, language, isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = data
+    // const { firstName, lastName, tagline, hourlyFee, divisionId, divisionInfo, division, districtId, districtInfo, district, subDistrictId, subDistrictInfo, subDistrict, areaId, areaInfo, area, zipCode, tutorBriefIntroduction, languageId,
+    //     languageInfo, language, isTeachingLocationOnline, isTeachingLocationTutorHome, isTeachingLocationStudentHome, address } = data
     // if (firstName.length === 0) {
     //     showToast("error", "First name shouldn't be empty")
     //     return 0
@@ -480,7 +490,45 @@ export const PersonalSubmit = (data, id) => (dispatch) => {
                 dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
                 showToast("success", res.data.message);
                 dispatch(GetClientById(id))
-
+                dispatch({ type: Types.FALSE_UPDATED, payload: true });
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const EducationalSubmit = (data, id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    try {
+        Axios.put(url, { ...data, isApproved: false }).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+                dispatch({ type: Types.FALSE_UPDATED, payload: true });
+            }
+        }).catch((err) => {
+            showToast("success", err);
+        });
+    } catch (error) {
+        dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+        showToast("error", "Something went wrong");
+    }
+};
+export const TuitionSubmit = (data, id) => (dispatch) => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL}client/${id}`;
+    dispatch({ type: Types.IS_PERSONAL_LOADING, payload: true })
+    try {
+        Axios.put(url, { tuitionInfos: transformTuitionPayload(data), isApproved: false }).then((res) => {
+            if (res.data.status) {
+                dispatch({ type: Types.IS_PERSONAL_LOADING, payload: false });
+                showToast("success", res.data.message);
+                dispatch(GetClientById(id))
+                dispatch({ type: Types.FALSE_UPDATED, payload: true });
             }
         }).catch((err) => {
             showToast("success", err);
@@ -1107,6 +1155,8 @@ export const GetDocumentByClientId = (id) => (dispatch) => {
     try {
         Axios.get(url).then((res) => {
             if (res.data.status) {
+
+                dispatch({ type: Types.IMAGE_DELETE_LOADING, payload: false });
                 dispatch({ type: Types.IS_DOCUMENT_LOADING, payload: false });
                 dispatch({ type: Types.DOCUMENT_INFO, payload: res?.data?.result });
                 dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: false });
@@ -1155,6 +1205,7 @@ export const UploadDocInCloudinary = (title, file, id) => (dispatch) => {
     // if (file.type === "application/pdf") {
     //     url = "https://api.cloudinary.com/v1_1/nurislammridha/raw/upload";
     // }
+    // dispatch({ type: Types.FALSE_UPDATED, payload: true })
     dispatch({ type: Types.IS_UPLOAD_DOCUMENT_LOADING, payload: true })
     Axios.post(url, data).then((res) => {
         if (res.data) {
@@ -1196,3 +1247,13 @@ export const DeleteDocumentCloudinary = (item) => (dispatch) => {
         dispatch(DeleteDocument(item))
     }
 };
+export const RemoveImgByPublicId = (publicId, id, clientId) => (dispatch) => {
+    const urlRemove = `${process.env.NEXT_PUBLIC_API_URL}helper/delete-cloudinary`;
+    dispatch({ type: Types.IMAGE_DELETE_LOADING, payload: true });
+    Axios.post(urlRemove, { publicId }).then((res) => {
+        if (res) {
+            const item = { _id: id, clientId }
+            dispatch(DeleteDocument(item))
+        }
+    })
+}

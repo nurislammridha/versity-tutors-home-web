@@ -108,7 +108,7 @@ const DashboardPage = () => {
                                     <button className="btn btn-secondary" onClick={() => setIsMobileMenuOpen(false)}>×</button>
                                 </div>
                                 <aside className="tu-asider-holder">
-                                    <ProfileImageUploader />
+                                    <ProfileImageUploader avatar={avatar} clientData={clientData} />
 
 
 

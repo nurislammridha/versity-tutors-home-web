@@ -1,11 +1,11 @@
 import { useLanguage } from '@/context/LanguageContext'
-import { AreaBySubDistrictId, DistrictByDivisionId, GetDivisionList, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
+import { AreaBySubDistrictId, DistrictByDivisionId, FalseUpdated, GetDivisionList, GetPersonalInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { convertToBanglaNumber } from '../../public/function/globalFunction'
 import Select from 'react-select'
 import { genderOp, GlobalOptions, languageOp, religionOp } from '../../public/function/optionProvider'
-const PersonalDetails = ({ clientData }) => {
+const PersonalDetails = ({ clientData, setActiveState }) => {
     const { t, language: lan } = useLanguage()
     const dispatch = useDispatch()
     const {
@@ -17,11 +17,11 @@ const PersonalDetails = ({ clientData }) => {
         permanentDistrictList,
         permanentSubDistrictList,
         permanentAreaList,
-        isPersonalLoading
+        isPersonalLoading,
+        falseUpdated
     } = useSelector((state) => state.homeInfo);
     const { firstName, lastName, email, phone, additionalPhone, whatsapp, gender, religion, language, division, divisionId, divisionInfo, district, districtId, districtInfo, subDistrict, subDistrictId, subDistrictInfo, area, areaId, areaInfo, address, zipCode, permanentDivision, permanentDivisionId, permanentDivisionInfo, permanentDistrict, permanentDistrictId, permanentDistrictInfo, permanentSubDistrict, permanentSubDistrictId, permanentSubDistrictInfo, permanentArea, permanentAreaId, permanentAreaInfo, permanentAddress, permanentZipCode, fatherName, fatherPhone, motherName, motherPhone, localGuardianPhone, guardianRelationship, tutorBriefIntroduction } = personal;
 
-    const { isTutorAccount } = clientData || {}
     const handleInput = (name, value) => {
         dispatch(GetPersonalInput(name, value))
     }
@@ -44,6 +44,12 @@ const PersonalDetails = ({ clientData }) => {
         if (permanentDistrictId?.length > 0) dispatch(SubDistrictByDistrictId(permanentDistrictId, "permanent"));
         if (permanentSubDistrictId?.length > 0) dispatch(AreaBySubDistrictId(permanentSubDistrictId, "permanent"));
     }, [divisionId, districtId, subDistrictId, permanentDivisionId, permanentDistrictId, permanentSubDistrictId]);
+    useEffect(() => {
+        if (falseUpdated) {
+            dispatch(FalseUpdated())
+            setActiveState("educational")
+        }
+    }, [falseUpdated])
 
     return (
         <>
@@ -664,7 +670,11 @@ const PersonalDetails = ({ clientData }) => {
                         onClick={() => !isPersonalLoading && handleSubmit()}
                     >
                         {"Next"}
-                        <i class="fa-solid fa-arrow-right"></i>
+                        {isPersonalLoading ?
+                            <div class="spinner-border spinner-border-sm ms-2"></div> :
+                            <i class="fa-solid fa-arrow-right"></i>
+                        }
+
                     </a>
 
                 </div>

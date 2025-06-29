@@ -1,15 +1,14 @@
 import { useLanguage } from '@/context/LanguageContext'
-import { AreaBySubDistrictId, DepartmentNameByStudyTypeId, DistrictByDivisionId, GetDivisionList, GetEducationInput, GetInstituteTypeList, GetPersonalInput, GetStudyTypeList, InstituteNameByInstituteTypeId, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
+import { DepartmentNameByStudyTypeId, EducationalSubmit, FalseUpdated, GetEducationInput, GetInstituteTypeList, GetStudyTypeList, InstituteNameByInstituteTypeId, SetEducationalData, SetPersonalData } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { convertToBanglaNumber } from '../../public/function/globalFunction'
 import Select from "react-select";
 import { GlobalOptions, groupOp, mediumOp, passingYearOp } from '../../public/function/optionProvider'
 
-const EducationalDetails = ({ clientData }) => {
+const EducationalDetails = ({ clientData, setActiveState }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
-    const { education, isEducationLoading, instituteTypeList, bachelorInstituteNameList, postInstituteNameList, studyTypeList, bachelorDepartmentNameList, postDepartmentNameList } = useSelector((state) => state.homeInfo);
+    const { falseUpdated, isPersonalLoading, education, instituteTypeList, bachelorInstituteNameList, postInstituteNameList, studyTypeList, bachelorDepartmentNameList, postDepartmentNameList } = useSelector((state) => state.homeInfo);
     const { sscInstituteName, sscMedium, sscGroup, sscSession, sscPassingYear,
         sscResult, hscInstituteName, hscMedium, hscGroup, hscSession, hscPassingYear,
         hscResult, bachelorInstituteType, bachelorInstituteTypeId, bachelorInstituteName,
@@ -19,20 +18,18 @@ const EducationalDetails = ({ clientData }) => {
         postStudyType, postStudyTypeId, postDepartment, postDepartmentId, postMedium, postSession,
         postPassingYear, postCgpa } = education;
 
-
-    const { isTutorAccount } = clientData || {}
     const handleInput = (name, value) => {
         dispatch(GetEducationInput(name, value))
     }
     const handleSubmit = () => {
-        // dispatch(PersonalSubmit(personal, clientData._id))
+        dispatch(EducationalSubmit(education, clientData._id))
     }
     useEffect(() => {
         dispatch(GetInstituteTypeList());
         dispatch(GetStudyTypeList());
     }, []);
     useEffect(() => {
-        clientData !== null && dispatch(SetPersonalData(clientData));
+        clientData !== null && dispatch(SetEducationalData(clientData));
     }, [clientData]);
     useEffect(() => {
         if (bachelorInstituteTypeId?.length > 0) dispatch(InstituteNameByInstituteTypeId(bachelorInstituteTypeId));
@@ -40,7 +37,12 @@ const EducationalDetails = ({ clientData }) => {
         if (bachelorStudyTypeId?.length > 0) dispatch(DepartmentNameByStudyTypeId(bachelorStudyTypeId));
         if (postStudyTypeId?.length > 0) dispatch(DepartmentNameByStudyTypeId(postStudyTypeId, "permanent"));
     }, [bachelorInstituteTypeId, postInstituteTypeId, bachelorStudyTypeId, postStudyTypeId]);
-
+    useEffect(() => {
+        if (falseUpdated) {
+            dispatch(FalseUpdated())
+            setActiveState("tutor")
+        }
+    }, [falseUpdated])
     console.log('education', education)
     return (
         <>
@@ -554,7 +556,7 @@ const EducationalDetails = ({ clientData }) => {
                     <a
 
                         className="tu-primbtn-lg my-previous-btn"
-                        onClick={() => !isPersonalLoading && handleSubmit()}
+                        onClick={() => setActiveState("personal")}
                     >
                         <i class="fa-solid fa-arrow-left"></i>
                         {"Previous"}
@@ -566,7 +568,10 @@ const EducationalDetails = ({ clientData }) => {
                         onClick={() => !isPersonalLoading && handleSubmit()}
                     >
                         {"Next"}
-                        <i class="fa-solid fa-arrow-right"></i>
+                        {isPersonalLoading ?
+                            <div class="spinner-border spinner-border-sm ms-2"></div> :
+                            <i class="fa-solid fa-arrow-right"></i>
+                        }
                     </a>
 
                 </div>

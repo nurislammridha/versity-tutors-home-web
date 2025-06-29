@@ -1,35 +1,43 @@
 import { useLanguage } from '@/context/LanguageContext'
-import { AddTuitionTab, AreaBySubDistrictId, DistrictByDivisionId, GetCategoryList, GetDivisionList, GetPersonalInput, GetSubCategoryByCategoryId, GetTuitionInput, PersonalSubmit, SetPersonalData, SubDistrictByDistrictId } from '@/redux/_redux/CommonAction'
+import { AddTuitionTab, AreaBySubDistrictId, DistrictByDivisionId, FalseUpdated, GetCategoryList, GetDivisionList, GetPersonalInput, GetSubCategoryByCategoryId, GetTuitionInput, PersonalSubmit, SetPersonalData, SetTuitionData, SubDistrictByDistrictId, TuitionSubmit } from '@/redux/_redux/CommonAction'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
 import { daysPerMonthOp, daysPerWeekOp, demoClassOp, demoClassPricingOp, demoClassStyleOp, expectedSalaryOp, genderOp, GlobalOptions, groupOp, mediumOp, timeDurationOp, timingShiftOp, tuitionExperienceOp } from '../../public/function/optionProvider'
 const totalTabs = 5;
-const TuitionInfo = ({ clientData }) => {
+const TuitionInfo = ({ clientData, setActiveState }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
     const [activeTabIndex, setActiveTabIndex] = useState(0)
-    const { tuitionInfos, divisionList, districtList, subDistrictList, areaList, categoryList, subCategoryList } = useSelector((state) => state.homeInfo);
-    const { division, divisionId, district, districtId, subDistrict, subDistrictId, area, areaId, detailsAddress, className, classId, medium, group, subjects, daysPerWeek, daysPerMonth, timeDuration, timeShift, studentGender, tuitionExperience, tuitionExperienceLabel, expectedSalary, expectedSalaryLabel, isStudentHome, isMyHome, isOnline, isGroupStudy, demoClass, demoClassStyle, demoClassPricing, isTakeDemoClass } = tuitionInfos[activeTabIndex];
+    const { falseUpdated, isPersonalLoading, tuitionInfos, divisionList, districtList, subDistrictList, areaList, categoryList, subCategoryList } = useSelector((state) => state.homeInfo);
+    const { division, divisionId, district, districtId, subDistrict, subDistrictId, area,
+        areaId, detailsAddress, className, classId, medium, group, subjects, daysPerWeek,
+        daysPerMonth, timeDuration, timeShift, studentGender, tuitionExperience,
+        tuitionExperienceLabel, expectedSalary, expectedSalaryLabel, isStudentHome,
+        isMyHome, isOnline, isGroupStudy, demoClass, demoClassStyle, demoClassPricing,
+        isTakeDemoClass } = tuitionInfos[activeTabIndex];
 
-    const { isTutorAccount } = clientData || {}
     const handleInput = (index, name, value) => {
         dispatch(GetTuitionInput(index, name, value));
     };
     const handleTab = (index) => {
-        setActiveTabIndex(index)
+        // index > activeTabIndex && dispatch(AddTuitionTab(index))
         dispatch(AddTuitionTab(index))
+        setActiveTabIndex(index)
     }
     const handleSubmit = () => {
-        dispatch(PersonalSubmit(personal, clientData._id))
+        dispatch(TuitionSubmit(tuitionInfos, clientData._id))
     }
     useEffect(() => {
         dispatch(GetDivisionList());
         dispatch(GetCategoryList());
     }, []);
+    useEffect(() => {
+        setActiveTabIndex(tuitionInfos.length - 1)
+    }, [tuitionInfos])
 
     useEffect(() => {
-        if (clientData) dispatch(SetPersonalData(clientData));
+        if (clientData) dispatch(SetTuitionData(clientData?.tuitionInfos));
     }, [clientData]);
 
     useEffect(() => {
@@ -38,7 +46,12 @@ const TuitionInfo = ({ clientData }) => {
         if (subDistrictId?.length > 0) dispatch(AreaBySubDistrictId(subDistrictId));
         if (classId?.length > 0) dispatch(GetSubCategoryByCategoryId(classId));
     }, [divisionId, districtId, subDistrictId, classId]);
-
+    useEffect(() => {
+        if (falseUpdated) {
+            dispatch(FalseUpdated())
+            setActiveState("document")
+        }
+    }, [falseUpdated])
     console.log('tuitionInfos', tuitionInfos)
     return (
         <>
@@ -519,7 +532,7 @@ const TuitionInfo = ({ clientData }) => {
                     <a
 
                         className="tu-primbtn-lg my-previous-btn"
-                        onClick={() => !isPersonalLoading && handleSubmit()}
+                        onClick={() => setActiveState("educational")}
                     >
                         <i class="fa-solid fa-arrow-left"></i>
                         {"Previous"}
@@ -531,7 +544,10 @@ const TuitionInfo = ({ clientData }) => {
                         onClick={() => !isPersonalLoading && handleSubmit()}
                     >
                         {"Next"}
-                        <i class="fa-solid fa-arrow-right"></i>
+                        {isPersonalLoading ?
+                            <div class="spinner-border spinner-border-sm ms-2"></div> :
+                            <i class="fa-solid fa-arrow-right"></i>
+                        }
                     </a>
 
                 </div>

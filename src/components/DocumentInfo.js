@@ -1,22 +1,30 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './localCss/uploader.module.css';
 import docImg from '../../public/images/doc.png';
 import id from '../../public/images/id.png';
 import Image from 'next/image';
+import { FalseUpdated, GetDocumentByClientId, RemoveImgByPublicId, UploadDocInCloudinary } from '@/redux/_redux/CommonAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { mapApiDataToLocalObject } from '../../public/function/globalFunction';
 
 const uploadItems = [
-    { id: 'nid', title: 'Upload NID' },
-    { id: 'hscCert', title: 'Upload HSC Certificate' },
-    { id: 'sscCert', title: 'Upload SSC / O Level Certificate' },
-    { id: 'aLevelCert', title: 'Upload HSC / A Level Certificate' },
-    { id: 'paymentSlip', title: 'Upload Pay in slip (1st year)' },
+    { id: 'nid', title: 'Upload NID', docTitle: "nid" },
+    { id: 'hscCert', title: 'Upload SSC Certificate', docTitle: "hsc" },
+    { id: 'sscCert', title: 'Upload HSC / O Level Certificate', docTitle: "ssc" },
+    { id: 'aLevelCert', title: 'Upload Bachelor', docTitle: "bachelor" },
+    { id: 'paymentSlip', title: 'Upload Pay in slip (1st year)', docTitle: "slip" },
 ];
 
-const DocumentInfo = ({ clientData }) => {
+const DocumentInfo = ({ clientData, setActiveState }) => {
+    const dispatch = useDispatch()
     const [status, setStatus] = useState('uploaded'); // 'uploaded' or 'request'
     const [modalImage, setModalImage] = useState(null);
     const [showModal, setShowModal] = useState(false);
-
+    const [uploadProgress, setUploadProgress] = useState(0);
+    const [uploadedImage, setUploadedImage] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [publicId, setPublicId] = useState("");
+    const [docId, setDocId] = useState("");
     const [uploadStates, setUploadStates] = useState(
         uploadItems.reduce((acc, item) => {
             acc[item.id] = {
@@ -27,13 +35,19 @@ const DocumentInfo = ({ clientData }) => {
             return acc;
         }, {})
     );
-
-    const handlePreview = (imgSrc) => {
-        setModalImage(imgSrc);
+    const { documentData, falseUpdated, imageDeleteLoading } = useSelector((state) => state.homeInfo);
+    console.log('uploadStates', uploadStates)
+    // console.log('modalImage', modalImage)
+    const handlePreview = (state) => {
+        // ?.image?.url ? state?.image?.url : state.image
+        setModalImage(state?.image?.url);
+        setPublicId(state?.image?.publicId)
+        setDocId(state?.docInfo?._id)
         setShowModal(true);
     };
 
-    const handleFileUpload = (file, itemId) => {
+    const handleFileUpload = (file, itemId, title) => {
+        dispatch(UploadDocInCloudinary(title, file, clientData?._id))
         const reader = new FileReader();
         let progress = 0;
 
@@ -66,17 +80,64 @@ const DocumentInfo = ({ clientData }) => {
             }
         }, 100);
     };
+    // const handleFileUpload = async (file) => {
+    //         const formData = new FormData();
+    //         formData.append('file', file);
 
-    const handleDrop = (e, itemId) => {
+    //         setIsUploading(true);
+    //         setUploadProgress(0);
+
+    //         try {
+    //             await axios.post('/api/upload', formData, {
+    //                 onUploadProgress: (progressEvent) => {
+    //                     const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+    //                     setUploadProgress(percent);
+    //                 },
+    //             });
+
+    //             const reader = new FileReader();
+    //             reader.onloadend = () => {
+    //                 setUploadedImage(reader.result);
+    //                 setIsUploading(false);
+    //             };
+    //             reader.readAsDataURL(file);
+    //         } catch (error) {
+    //             console.error('Upload failed', error);
+    //             setIsUploading(false);
+    //         }
+    //     };
+    const handleDrop = (e, itemId, title) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
-        if (file) handleFileUpload(file, itemId);
+        if (file) handleFileUpload(file, itemId, title);
     };
 
-    const handleFileChange = (e, itemId) => {
+    const handleFileChange = (e, itemId, title) => {
         const file = e.target.files[0];
-        if (file) handleFileUpload(file, itemId);
+        if (file) handleFileUpload(file, itemId, title);
     };
+    const handleDelete = () => {
+        dispatch(RemoveImgByPublicId(publicId, docId, clientData?._id))
+    };
+    useEffect(() => {
+        if (clientData?._id) {
+            dispatch(GetDocumentByClientId(clientData?._id))
+        }
+
+    }, [clientData])
+    useEffect(() => {
+        if (documentData) {
+            setShowModal(false)
+            setUploadStates(mapApiDataToLocalObject(documentData))
+        }
+    }, [documentData])
+    // useEffect(() => {
+    //     if (falseUpdated) {
+    //         // setShowModal(false)
+    //         dispatch(GetDocumentByClientId(clientData?._id))
+    //         dispatch(FalseUpdated())
+    //     }
+    // }, [falseUpdated])
 
     return (
         <>
@@ -90,8 +151,8 @@ const DocumentInfo = ({ clientData }) => {
                     <div className="col-12 col-md-6 d-flex flex-wrap justify-content-md-end gap-2">
                         <button
                             className={`px-3 py-1 border rounded-2 small fw-medium ${status === 'uploaded'
-                                    ? 'border-dark text-dark bg-white'
-                                    : 'bg-white border-light text-muted'
+                                ? 'border-dark text-dark bg-white'
+                                : 'bg-white border-light text-muted'
                                 }`}
                             style={{ fontSize: '13px' }}
                             onClick={() => setStatus('uploaded')}
@@ -100,8 +161,8 @@ const DocumentInfo = ({ clientData }) => {
                         </button>
                         <button
                             className={`px-3 py-1 border rounded-2 small fw-medium ${status === 'request'
-                                    ? 'bg-secondary text-white'
-                                    : 'bg-light text-dark'
+                                ? 'bg-secondary text-white'
+                                : 'bg-light text-dark'
                                 }`}
                             style={{ fontSize: '13px' }}
                             onClick={() => setStatus('request')}
@@ -119,10 +180,10 @@ const DocumentInfo = ({ clientData }) => {
                                 <div className={styles.uploadCard}>
                                     <div
                                         className={`${styles.cardTop} d-flex flex-column justify-content-center align-items-center`}
-                                        onDrop={(e) => handleDrop(e, item.id)}
+                                        onDrop={(e) => handleDrop(e, item.id, item.docTitle)}
                                         onDragOver={(e) => e.preventDefault()}
                                         onClick={() =>
-                                            state.image && !state.isUploading && handlePreview(state.image)
+                                            state.image && !state.isUploading && handlePreview(state)
                                         }
                                     >
                                         {!state.image && !state.isUploading && (
@@ -142,7 +203,7 @@ const DocumentInfo = ({ clientData }) => {
                                                     type="file"
                                                     hidden
                                                     id={`${item.id}-upload`}
-                                                    onChange={(e) => handleFileChange(e, item.id)}
+                                                    onChange={(e) => handleFileChange(e, item.id, item.docTitle)}
                                                 />
                                             </>
                                         )}
@@ -170,7 +231,7 @@ const DocumentInfo = ({ clientData }) => {
                                         {state.image && !state.isUploading && (
                                             <>
                                                 <Image
-                                                    src={state.image}
+                                                    src={state?.image?.url ? state?.image?.url : state.image}
                                                     alt="Uploaded"
                                                     width={200}
                                                     height={130}
@@ -180,7 +241,7 @@ const DocumentInfo = ({ clientData }) => {
                                                     <i
                                                         className={`fas fa-eye ${styles.hoverIcon}`}
                                                         title="Preview"
-                                                        onClick={() => handlePreview(state.image)}
+                                                    // onClick={() => handlePreview(state?.image?.url ? state?.image?.url : state.image)}
                                                     ></i>
                                                     <i
                                                         className={`fas fa-trash ${styles.hoverIcon}`}
@@ -220,11 +281,14 @@ const DocumentInfo = ({ clientData }) => {
 
             <div className="tu-profilewrapper mt-4">
                 <div className="tu-btnarea-two">
-                    <a className="tu-primbtn-lg my-previous-btn">
+                    <a
+                        className="tu-primbtn-lg my-previous-btn"
+                        onClick={() => setActiveState("tutor")}
+                    >
                         <i className="fa-solid fa-arrow-left"></i> Previous
                     </a>
                     <a className="tu-primbtn-lg my-btn">
-                        Next <i className="fa-solid fa-arrow-right"></i>
+                        Save & Update <i className="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
@@ -260,8 +324,10 @@ const DocumentInfo = ({ clientData }) => {
                                 <button
                                     type="button"
                                     className="w-50 text-white bg-danger border-0 rounded-2 py-2"
+                                    onClick={() => !imageDeleteLoading && handleDelete()}
                                 >
                                     Delete
+                                    {imageDeleteLoading && <div class="spinner-border spinner-border-sm ms-2"></div>}
                                 </button>
                             </div>
                         </div>
