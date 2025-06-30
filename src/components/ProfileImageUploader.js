@@ -7,9 +7,12 @@ import { UploadAvatarImg } from '@/redux/_redux/CommonAction';
 const ProfileImageUploader = ({ avatar: oldAvatar, clientData }) => {
     const { t } = useLanguage()
     const dispatch = useDispatch()
+    const { firstName, lastName, clientId, _id } = clientData || {}
     const [avatar, setAvatar] = useState(null)
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [copied, setCopied] = useState(false);
+    const [copiedBio, setCopiedBio] = useState(false);
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -38,7 +41,24 @@ const ProfileImageUploader = ({ avatar: oldAvatar, clientData }) => {
         //     });
         // }
     };
-
+    const handleCopy = async () => {
+        try {
+            await navigator.clipboard.writeText(clientId);
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000); // revert after 2s
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
+    const handleCopyBio = async () => {
+        try {
+            await navigator.clipboard.writeText(`rootUrl/details/${_id}`);
+            setCopiedBio(true);
+            setTimeout(() => setCopiedBio(false), 2000); // revert after 2s
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
     console.log('oldAvatar', oldAvatar)
     return (
         <>
@@ -64,9 +84,24 @@ const ProfileImageUploader = ({ avatar: oldAvatar, clientData }) => {
                     <div className="tu-uploadimgbtn">
 
                         <input type="file" name="file" className="tu-primbtn d-none" id="uploadimg" />
-                        <p className='profile-text'>Imran Hossain (TS-114488)</p>
-                        <label className='dash-copy'>Copy ID Link<img src='/images/icon.png' /></label>
-                        <label className='dash-copy mt-3'>Copy Bio Data Link<img src='/images/icon.png' /></label>
+                        <p className='profile-text'>{firstName + " " + lastName} ({clientId})</p>
+                        <label
+                            onClick={handleCopy}
+                            className={`dash-copy inline-flex items-center gap-2 cursor-pointer transition-all duration-300 ${copied ? 'text-green-600 scale-105' : 'text-black'
+                                }`}
+                        >
+                            {copied ? 'Copied!' : 'Copy ID Link'}
+                            <img src="/images/icon.png" alt="copy icon" className="w-4 h-4" />
+                        </label>
+                        <label
+                            onClick={handleCopyBio}
+                            className={`mt-3 dash-copy inline-flex items-center gap-2 cursor-pointer transition-all duration-300 ${copied ? 'text-green-600 scale-105' : 'text-black'
+                                }`}
+                        >
+                            {copiedBio ? 'Copied!' : 'Copy Bio Data Link'}
+                            <img src="/images/icon.png" alt="copy icon" className="w-4 h-4" />
+                        </label>
+                        {/* <label className='dash-copy mt-3'><img src='/images/icon.png' /></label> */}
                         {/* <label
                                                     className="tu-primbtn"
                                                     style={{ cursor: 'pointer' }}

@@ -16,6 +16,11 @@ export const genderOp = () => [
     { label: "Female", value: "Female" },
     { label: "Others", value: "Others" },
 ]
+export const studentGenderOp = () => [
+    { label: "Male", value: "Male" },
+    { label: "Female", value: "Female" },
+    { label: "Both", value: "Both" },
+]
 export const religionOp = () => [
     { label: "Islam", value: "Islam" },
     { label: "Hindu", value: "Hindu" },

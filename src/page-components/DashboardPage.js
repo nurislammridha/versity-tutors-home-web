@@ -13,6 +13,7 @@ import PrimaHeader from '@/components/PrimaHeader'
 import ProfileImageUploader from '@/components/ProfileImageUploader'
 import Settings from '@/components/Settings'
 import StudentPersonalDetails from '@/components/StudentPersonalDetails'
+import StudentTabs from '@/components/StudentTabs'
 import StudentTuitionInfo from '@/components/StudentTuitionInfo'
 import SubjectICanTeach from '@/components/SubjectICanTeach'
 import TuitionInfo from '@/components/TuitionInfo'
@@ -34,6 +35,7 @@ const DashboardPage = () => {
     const name = searchParams.get('name');
     const [state, setState] = useState("personal")//personal
     const [clientData, setClientData] = useState(null)
+    const [isTutor, setTutor] = useState(true)
     const [avatar, setAvatar] = useState(null)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLogin, setIsLogin] = useState(false)
@@ -61,8 +63,9 @@ const DashboardPage = () => {
         }
     };
     useEffect(() => {
-        if (clientData?.avatar) {
+        if (clientData) {
             setAvatar(clientData?.avatar)
+            setTutor(clientData?.isTutorAccount)
         }
     }, [clientData])
     useEffect(() => {
@@ -139,10 +142,10 @@ const DashboardPage = () => {
                                         </li>
                                         <li className="nav-item">
                                             <a className={state === 'subject' ? 'active nav-link' : 'nav-link'} onClick={() => setState('subject')}>
-                                                <i className="icon icon-book-open"></i><span>{clientData?.isTutorAccount ? t.subjectICanTeach : t.subjectINeedLearn}</span>
+                                                <i className="icon icon-book-open"></i><span>{isTutor ? t.subjectICanTeach : t.subjectINeedLearn}</span>
                                             </a>
                                         </li>
-                                        {clientData?.isTutorAccount && (
+                                        {isTutor && (
                                             <li className="nav-item">
                                                 <a className={state === 'document' ? 'active nav-link' : 'nav-link'} onClick={() => setState('document')}>
                                                     <i className="icon icon-file"></i><span>{t.uploadDocument}</span>
@@ -183,9 +186,8 @@ const DashboardPage = () => {
                                 </aside>
                             </div>
                             {/* Main content area */}
-                            {state === "personal" && <TutorTabs clientData={clientData} />}
-                            {/* {state === "personal" && <StudentPersonalDetails clientData={clientData} />} */}
-                            {/* {state === "personal" && <StudentTuitionInfo clientData={clientData} />} */}
+                            {state === "personal" && isTutor && <TutorTabs clientData={clientData} />}
+                            {state === "personal" && !isTutor && <StudentTabs clientData={clientData} />}
                             {state === "contact" && <ContactDetails clientData={clientData} />}
                             {state === "education" && <Education clientData={clientData} />}
                             {state === "subject" && <SubjectICanTeach clientData={clientData} />}

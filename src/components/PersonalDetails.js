@@ -642,8 +642,8 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Enter description"
                                                         value={tutorBriefIntroduction}
-                                                        onChange={(e) => handleInput("tutorBriefIntroduction", e.target.value)}
-                                                    // onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
+                                                        // onChange={(e) => handleInput("tutorBriefIntroduction", e.target.value)}
+                                                        onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                     ></textarea>
                                                     <div className="tu-placeholder">
                                                         <span>{"Write about yourself..."}</span>

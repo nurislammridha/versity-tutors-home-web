@@ -3,8 +3,8 @@ import { AddTuitionTab, AreaBySubDistrictId, DistrictByDivisionId, FalseUpdated,
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Select from 'react-select'
-import { daysPerMonthOp, daysPerWeekOp, demoClassOp, demoClassPricingOp, demoClassStyleOp, expectedSalaryOp, genderOp, GlobalOptions, groupOp, mediumOp, timeDurationOp, timingShiftOp, tuitionExperienceOp } from '../../public/function/optionProvider'
-const totalTabs = 5;
+import { daysPerMonthOp, daysPerWeekOp, demoClassOp, demoClassPricingOp, demoClassStyleOp, expectedSalaryOp, genderOp, GlobalOptions, groupOp, mediumOp, studentGenderOp, timeDurationOp, timingShiftOp, tuitionExperienceOp } from '../../public/function/optionProvider'
+
 const MAX_TABS = 5;
 const TuitionInfo = ({ clientData, setActiveState }) => {
     const { t, language } = useLanguage()
@@ -395,7 +395,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                             <div className="form-group form-group-3half">
                                                 <label className="tu-label">{"Student Gender"}</label>
                                                 <Select
-                                                    options={genderOp()}
+                                                    options={studentGenderOp()}
                                                     value={studentGender ? { label: studentGender, value: studentGender } : null}
                                                     classNamePrefix="react-select"
                                                     className="w-100"
