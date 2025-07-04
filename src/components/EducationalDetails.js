@@ -8,6 +8,7 @@ import { GlobalOptions, groupOp, mediumOp, passingYearOp } from '../../public/fu
 const EducationalDetails = ({ clientData, setActiveState }) => {
     const { t, language } = useLanguage()
     const dispatch = useDispatch()
+    const { isApproved } = clientData || {}
     const { falseUpdated, isPersonalLoading, education, instituteTypeList, bachelorInstituteNameList, postInstituteNameList, studyTypeList, bachelorDepartmentNameList, postDepartmentNameList } = useSelector((state) => state.homeInfo);
     const { sscInstituteName, sscMedium, sscGroup, sscSession, sscPassingYear,
         sscResult, hscInstituteName, hscMedium, hscGroup, hscSession, hscPassingYear,
@@ -22,7 +23,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
         dispatch(GetEducationInput(name, value))
     }
     const handleSubmit = () => {
-        dispatch(EducationalSubmit(education, clientData._id))
+        isApproved ? setActiveState("tutor") : dispatch(EducationalSubmit(education, clientData._id))
     }
     useEffect(() => {
         dispatch(GetInstituteTypeList());
@@ -69,6 +70,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Enter institute name"
                                                         value={sscInstituteName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("sscInstituteName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -87,6 +89,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select medium"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("sscMedium", e.value)}
                                                 />
                                             </div>
@@ -100,6 +103,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select group"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("sscGroup", e.value)}
                                                 />
                                             </div>
@@ -112,6 +116,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         // required=""
                                                         placeholder="Your first name"
                                                         value={sscSession}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("sscSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -128,6 +133,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select passing year"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("sscPassingYear", e.value)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
@@ -140,6 +146,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Your first name"
                                                         value={sscResult}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("sscResult", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -180,6 +187,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Enter institute name"
                                                         value={hscInstituteName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("hscInstituteName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -198,6 +206,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select medium"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("hscMedium", e.value)}
                                                 />
                                             </div>
@@ -211,6 +220,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select group"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("hscGroup", e.value)}
                                                 />
                                             </div>
@@ -223,6 +233,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         // required=""
                                                         placeholder="Your first name"
                                                         value={hscSession}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("hscSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -240,6 +251,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select passing year"
                                                     onChange={(e) => handleInput("hscPassingYear", e.value)}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -251,6 +263,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Your first name"
                                                         value={hscResult}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("hscResult", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -296,6 +309,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("bachelorInstituteName", "")
                                                         handleInput("bachelorInstituteNameId", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -311,6 +325,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("bachelorInstituteName", e.label)
                                                         handleInput("bachelorInstituteNameId", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -329,6 +344,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("bachelorDepartment", "")
                                                         handleInput("bachelorDepartmentId", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -345,6 +361,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("bachelorDepartment", e.label)
                                                         handleInput("bachelorDepartmentId", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -357,6 +374,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select medium"
                                                     onChange={(e) => handleInput("bachelorMedium", e.label)}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -368,6 +386,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Your first name"
                                                         value={bachelorSession}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("bachelorSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -384,6 +403,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select medium"
                                                     onChange={(e) => handleInput("bachelorPassingYear", e.label)}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -395,6 +415,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Your first name"
                                                         value={bachelorCgpa}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("bachelorCgpa", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -439,6 +460,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("postInstituteName", "")
                                                         handleInput("postInstituteNameId", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -454,6 +476,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("postInstituteName", e.label)
                                                         handleInput("postInstituteNameId", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -472,6 +495,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("postDepartment", "")
                                                         handleInput("postDepartmentId", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -488,6 +512,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("postDepartment", e.label)
                                                         handleInput("postDepartmentId", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -500,6 +525,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select medium"
                                                     onChange={(e) => handleInput("postMedium", e.label)}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -511,6 +537,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Your first name"
                                                         value={postSession}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("postSession", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -527,6 +554,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select medium"
                                                     onChange={(e) => handleInput("postPassingYear", e.label)}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -539,6 +567,7 @@ const EducationalDetails = ({ clientData, setActiveState }) => {
                                                         placeholder="Your first name"
                                                         value={postCgpa}
                                                         onChange={(e) => handleInput("postCgpa", e.target.value)}
+                                                        disabled={isApproved}
                                                     />
                                                     <div className="tu-placeholder">
                                                         <span>{"ex: 4:00"}</span>

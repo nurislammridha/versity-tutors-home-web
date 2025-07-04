@@ -11,7 +11,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
     const dispatch = useDispatch()
     const [activeTabIndex, setActiveTabIndex] = useState(0)
     const [isPreviousLocation, sePreviousLocation] = useState(false);
-
+    const { isApproved } = clientData || {}
     const { falseUpdated, isPersonalLoading, tuitionInfos, divisionList, districtList, subDistrictList, areaList, categoryList, subCategoryList } = useSelector((state) => state.homeInfo);
     const { division, divisionId, district, districtId, subDistrict, subDistrictId, area,
         areaId, detailsAddress, className, classId, medium, group, subjects, daysPerWeek,
@@ -29,7 +29,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
         if (index > tuitionInfos.length) return;
 
         // If clicked on the next white tab, add a new info item
-        if (index === tuitionInfos.length && tuitionInfos.length < MAX_TABS) {
+        if (index === tuitionInfos.length && tuitionInfos.length < MAX_TABS && !isApproved) {
             // const newInfos = [...infos, { name: "" }];
             // setInfos(newInfos);
             dispatch(AddTuitionTab(index))
@@ -38,7 +38,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
         setActiveTabIndex(index);
     };
     const handleSubmit = () => {
-        dispatch(TuitionSubmit(tuitionInfos, clientData._id))
+        isApproved ? setActiveState("document") : dispatch(TuitionSubmit(tuitionInfos, clientData._id))
     }
     useEffect(() => {
         dispatch(GetDivisionList());
@@ -83,7 +83,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
 
     }, [isPreviousLocation])
 
-    console.log('tuitionInfos', tuitionInfos)
+    // console.log('tuitionInfos', tuitionInfos)
     return (
         <>
             {/* tuition info tabs */}
@@ -139,6 +139,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                             id="demo-check"
                                             className="demo-check"
                                             checked={isPreviousLocation}
+                                            disabled={isApproved}
                                             onChange={() => sePreviousLocation(!isPreviousLocation)}
                                         />
                                         <span className="custom-checkmark"></span>
@@ -181,6 +182,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "area", [])
                                                         handleInput(activeTabIndex, "subDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -198,6 +200,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "area", [])
                                                         handleInput(activeTabIndex, "subDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -214,6 +217,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "subDistrictId", e.value)
                                                         handleInput(activeTabIndex, "area", [])
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -229,6 +233,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "area", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -241,6 +246,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your first name"
                                                         value={detailsAddress}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput(activeTabIndex, "detailsAddress", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -286,6 +292,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "classId", e.value)
                                                         handleInput(activeTabIndex, "subjects", [])
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -300,6 +307,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "medium", e.label)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -314,6 +322,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "group", e.label)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -329,6 +338,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "subjects", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -344,6 +354,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "daysPerWeek", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -359,6 +370,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "daysPerMonth", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -374,6 +386,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "timeDuration", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -389,6 +402,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "timeShift", e)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -403,6 +417,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "studentGender", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -418,6 +433,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "tuitionExperienceLabel", e.label)
                                                         handleInput(activeTabIndex, "tuitionExperience", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -433,6 +449,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                         handleInput(activeTabIndex, "expectedSalaryLabel", e.label)
                                                         handleInput(activeTabIndex, "expectedSalary", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -447,6 +464,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                                     id="home"
                                                                     name="expcheck"
                                                                     checked={isStudentHome}
+                                                                    disabled={isApproved}
                                                                     onChange={() => handleInput(activeTabIndex, "isStudentHome", !isStudentHome)}
                                                                 />
                                                                 <label for="home">{"Students home"}</label>
@@ -461,6 +479,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                                     id="home1"
                                                                     name="expcheck"
                                                                     checked={isMyHome}
+                                                                    disabled={isApproved}
                                                                     onChange={() => handleInput(activeTabIndex, "isMyHome", !isMyHome)}
                                                                 />
                                                                 <label for="home1">My home</label>
@@ -475,6 +494,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                                     id="online"
                                                                     name="expcheck"
                                                                     checked={isOnline}
+                                                                    disabled={isApproved}
                                                                     onChange={() => handleInput(activeTabIndex, "isOnline", !isOnline)}
                                                                 />
                                                                 <label for="online">{t.online}</label>
@@ -489,6 +509,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                                     id="group"
                                                                     name="expcheck"
                                                                     checked={isGroupStudy}
+                                                                    disabled={isApproved}
                                                                     onChange={() => handleInput(activeTabIndex, "isGroupStudy", !isGroupStudy)}
                                                                 />
                                                                 <label for="group">Group Study</label>
@@ -523,6 +544,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                             id="demo-check"
                                             className="demo-check"
                                             checked={isTakeDemoClass}
+                                            disabled={isApproved}
                                             onChange={() => handleInput(activeTabIndex, "isTakeDemoClass", !isTakeDemoClass)}
                                         />
                                         <span className="custom-checkmark"></span>
@@ -547,6 +569,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "demoClass", e.label)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -561,6 +584,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "demoClassStyle", e.label)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -576,6 +600,7 @@ const TuitionInfo = ({ clientData, setActiveState }) => {
                                                     onChange={(e) => {
                                                         handleInput(activeTabIndex, "demoClassPricing", e.label)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>

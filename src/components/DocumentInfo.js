@@ -3,7 +3,7 @@ import styles from './localCss/uploader.module.css';
 import docImg from '../../public/images/doc.png';
 import id from '../../public/images/id.png';
 import Image from 'next/image';
-import { FalseUpdated, GetDocumentByClientId, RemoveImgByPublicId, UploadDocInCloudinary } from '@/redux/_redux/CommonAction';
+import { FalseUpdated, GetDocumentByClientId, RemoveImgByPublicId, StatusSubmit, UploadDocInCloudinary } from '@/redux/_redux/CommonAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { mapApiDataToLocalObject } from '../../public/function/globalFunction';
 
@@ -35,7 +35,8 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
             return acc;
         }, {})
     );
-    const { documentData, falseUpdated, imageDeleteLoading } = useSelector((state) => state.homeInfo);
+    const { isApproved } = clientData || {}
+    const { documentData, falseUpdated, imageDeleteLoading, isStatusLoading } = useSelector((state) => state.homeInfo);
     console.log('uploadStates', uploadStates)
     // console.log('modalImage', modalImage)
     const handlePreview = (state) => {
@@ -119,6 +120,9 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
     const handleDelete = () => {
         dispatch(RemoveImgByPublicId(publicId, docId, clientData?._id))
     };
+    const handleRequestAdmin = () => {
+        dispatch(StatusSubmit({ reviewStatus: "requestToUpdate", isApproved: false }, clientData?._id, clientData))
+    };
     useEffect(() => {
         if (clientData?._id) {
             dispatch(GetDocumentByClientId(clientData?._id))
@@ -165,9 +169,12 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                 : 'bg-light text-dark'
                                 }`}
                             style={{ fontSize: '13px' }}
-                            onClick={() => setStatus('request')}
+                            onClick={() => {
+                                setStatus('request')
+                                !isStatusLoading && handleRequestAdmin()
+                            }}
                         >
-                            Request to Admin
+                            {isStatusLoading ? "Requesting.." : "Request to Admin"}
                         </button>
                     </div>
                 </div>
@@ -180,7 +187,7 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                 <div className={styles.uploadCard}>
                                     <div
                                         className={`${styles.cardTop} d-flex flex-column justify-content-center align-items-center`}
-                                        onDrop={(e) => handleDrop(e, item.id, item.docTitle)}
+                                        onDrop={(e) => !isApproved && handleDrop(e, item.id, item.docTitle)}
                                         onDragOver={(e) => e.preventDefault()}
                                         onClick={() =>
                                             state.image && !state.isUploading && handlePreview(state)
@@ -195,7 +202,7 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                                     height={100}
                                                     className="mb-2"
                                                     onClick={() =>
-                                                        document.getElementById(`${item.id}-upload`).click()
+                                                        !isApproved && document.getElementById(`${item.id}-upload`).click()
                                                     }
                                                     style={{ cursor: 'pointer' }}
                                                 />
@@ -203,7 +210,7 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                                     type="file"
                                                     hidden
                                                     id={`${item.id}-upload`}
-                                                    onChange={(e) => handleFileChange(e, item.id, item.docTitle)}
+                                                    onChange={(e) => !isApproved && !isApproved & handleFileChange(e, item.id, item.docTitle)}
                                                 />
                                             </>
                                         )}
@@ -243,16 +250,19 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                                         title="Preview"
                                                     // onClick={() => handlePreview(state?.image?.url ? state?.image?.url : state.image)}
                                                     ></i>
-                                                    <i
-                                                        className={`fas fa-trash ${styles.hoverIcon}`}
-                                                        title="Delete"
-                                                        onClick={() =>
-                                                            setUploadStates((prev) => ({
-                                                                ...prev,
-                                                                [item.id]: { ...prev[item.id], image: null },
-                                                            }))
-                                                        }
-                                                    ></i>
+                                                    {!isApproved &&
+                                                        <i
+                                                            className={`fas fa-trash ${styles.hoverIcon}`}
+                                                            title="Delete"
+                                                            onClick={() =>
+                                                                setUploadStates((prev) => ({
+                                                                    ...prev,
+                                                                    [item.id]: { ...prev[item.id], image: null },
+                                                                }))
+                                                            }
+                                                        ></i>
+                                                    }
+
                                                 </div>
                                             </>
                                         )}
@@ -321,14 +331,18 @@ const DocumentInfo = ({ clientData, setActiveState }) => {
                                 >
                                     Cancel
                                 </button>
-                                <button
-                                    type="button"
-                                    className="w-50 text-white bg-danger border-0 rounded-2 py-2"
-                                    onClick={() => !imageDeleteLoading && handleDelete()}
-                                >
-                                    Delete
-                                    {imageDeleteLoading && <div class="spinner-border spinner-border-sm ms-2"></div>}
-                                </button>
+                                {isApproved ?
+                                    <div></div> :
+                                    <button
+                                        type="button"
+                                        className="w-50 text-white bg-danger border-0 rounded-2 py-2"
+                                        onClick={() => !imageDeleteLoading && handleDelete()}
+                                    >
+                                        Delete
+                                        {imageDeleteLoading && <div class="spinner-border spinner-border-sm ms-2"></div>}
+                                    </button>
+                                }
+
                             </div>
                         </div>
                     </div>

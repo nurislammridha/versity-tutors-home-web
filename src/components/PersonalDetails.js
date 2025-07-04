@@ -21,12 +21,12 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
         falseUpdated
     } = useSelector((state) => state.homeInfo);
     const { firstName, lastName, email, phone, additionalPhone, whatsapp, gender, religion, language, division, divisionId, divisionInfo, district, districtId, districtInfo, subDistrict, subDistrictId, subDistrictInfo, area, areaId, areaInfo, address, zipCode, permanentDivision, permanentDivisionId, permanentDivisionInfo, permanentDistrict, permanentDistrictId, permanentDistrictInfo, permanentSubDistrict, permanentSubDistrictId, permanentSubDistrictInfo, permanentArea, permanentAreaId, permanentAreaInfo, permanentAddress, permanentZipCode, fatherName, fatherPhone, motherName, motherPhone, localGuardianPhone, guardianRelationship, tutorBriefIntroduction } = personal;
-
+    const { isApproved } = clientData || {}
     const handleInput = (name, value) => {
         dispatch(GetPersonalInput(name, value))
     }
     const handleSubmit = () => {
-        dispatch(PersonalSubmit(personal, clientData._id))
+        isApproved ? setActiveState("educational") : dispatch(PersonalSubmit(personal, clientData._id))
     }
     useEffect(() => {
         dispatch(GetDivisionList());
@@ -76,6 +76,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your first name"
                                                         value={firstName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("firstName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -93,6 +94,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your last name"
                                                         value={lastName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("lastName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -114,6 +116,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter email address"
                                                             value={email}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("email", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -136,6 +139,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter phone number"
                                                             value={phone}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("phone", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -158,6 +162,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter phone number"
                                                             value={additionalPhone}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("additionalPhone", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -179,6 +184,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             className="form-control"
                                                             placeholder="Enter whatsapp number"
                                                             value={whatsapp}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("whatsapp", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -196,6 +202,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select gender"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("gender", e.value)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
@@ -208,6 +215,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                     classNamePrefix="react-select"
                                                     className="w-100"
                                                     placeholder="Select religion"
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("religion", e.value)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
@@ -221,6 +229,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                     className="w-100"
                                                     placeholder="Select group"
                                                     isMulti
+                                                    isDisabled={isApproved}
                                                     onChange={(e) => handleInput("language", e)}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
@@ -264,6 +273,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("area", "")
                                                         handleInput("subDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -282,6 +292,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("area", "")
                                                         handleInput("subDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -299,6 +310,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("subDistrictInfo", e.value)
                                                         handleInput("area", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -315,6 +327,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("areaId", e.value)
                                                         handleInput("areaInfo", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -327,6 +340,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required
                                                         placeholder="Enter zipcode"
                                                         value={address}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("address", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -343,6 +357,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         required placeholder="Enter zipcode"
                                                         value={zipCode}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("zipCode", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -383,6 +398,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("permanentArea", "")
                                                         handleInput("permanentSubDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -401,6 +417,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("permanentArea", "")
                                                         handleInput("permanentSubDistrict", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -418,6 +435,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("permanentSubDistrictInfo", e.value)
                                                         handleInput("permanentArea", "")
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -434,6 +452,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         handleInput("permanentAreaId", e.value)
                                                         handleInput("permanentAreaInfo", e.value)
                                                     }}
+                                                    isDisabled={isApproved}
                                                     menuPortalTarget={typeof window !== 'undefined' ? document.body : null}
                                                 />
                                             </div>
@@ -446,6 +465,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required
                                                         placeholder="Enter zipcode"
                                                         value={permanentAddress}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("permanentAddress", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -462,6 +482,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         required placeholder="Enter zipcode"
                                                         value={permanentZipCode}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("permanentZipCode", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -503,6 +524,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your father name"
                                                         value={fatherName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("fatherName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -524,6 +546,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter phone number"
                                                             value={fatherPhone}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("fatherPhone", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -542,6 +565,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your last name"
                                                         value={motherName}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("motherName", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -563,6 +587,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter phone number"
                                                             value={motherPhone}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("motherPhone", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -609,6 +634,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                             required=""
                                                             placeholder="Enter phone number"
                                                             value={localGuardianPhone}
+                                                            disabled={isApproved}
                                                             onChange={(e) => handleInput("localGuardianPhone", e.target.value)}
                                                         />
                                                         <div className="tu-placeholder">
@@ -627,6 +653,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         required=""
                                                         placeholder="Your last name"
                                                         value={guardianRelationship}
+                                                        disabled={isApproved}
                                                         onChange={(e) => handleInput("guardianRelationship", e.target.value)}
                                                     />
                                                     <div className="tu-placeholder">
@@ -642,6 +669,7 @@ const PersonalDetails = ({ clientData, setActiveState }) => {
                                                         className="form-control"
                                                         placeholder="Enter description"
                                                         value={tutorBriefIntroduction}
+                                                        disabled={isApproved}
                                                         // onChange={(e) => handleInput("tutorBriefIntroduction", e.target.value)}
                                                         onChange={(e) => tutorBriefIntroduction?.length < 500 && handleInput("tutorBriefIntroduction", e.target.value)}
                                                     ></textarea>
